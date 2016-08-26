@@ -1,0 +1,1288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <Property Id="TablesReference" Value="1"/>
+    
+    <CustomTable Id="_InstallValidate">
+      <Column Id="Action" PrimaryKey="yes" Type="string" Width="50" Category="Identifier" Description="Name of action" Modularize="Column" />
+      <Column Id="SectionFlag" Type="int" Width="2" MinValue="0" MaxValue="2147483647" Description="Section flag for location in _InstallSequence table" />
+      <Column Id="Description" Type="string" Width="255" Nullable="yes" Category="Text" Description="Description of sections to which the action belongs" />
+      <Row>
+        <Data Column="Action">AppSearch</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">BindImage</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CCPSearch</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostFinalize</Data>
+        <Data Column="SectionFlag">6</Data>
+        <Data Column="Description">Costing / Selection Section Divider</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="SectionFlag">2</Data>
+        <Data Column="Description">Search / Costing Section Divider</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">FileCost</Data>
+        <Data Column="SectionFlag">2</Data>
+        <Data Column="Description">Costing Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">LaunchConditions</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RMCCPSearch</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ExecuteAction</Data>
+        <Data Column="SectionFlag">4</Data>
+        <Data Column="Description">Select Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ValidateProductID</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateFolders</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateShortcuts</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">DeleteServices</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">DuplicateFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallODBC</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallServices</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallValidate</Data>
+        <Data Column="SectionFlag">20</Data>
+        <Data Column="Description">Selection / Execution Section Divider</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">MoveFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PatchFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ProcessComponents</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PublishComponents</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execute Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PublishFeatures</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execute Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PublishProduct</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execute Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterClassInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterExtensionInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterFonts</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterMIMEInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterProduct</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execute section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterProgIdInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterTypeLibraries</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterUser</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveDuplicateFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveEnvironmentStrings</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFolders</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveIniValues</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveODBC</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveRegistryValues</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveShortcuts</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfRegModules</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfUnregModules</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SetODBCFolders</Data>
+        <Data Column="SectionFlag">4</Data>
+        <Data Column="Description">Selection Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">StartServices</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">StopServices</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnpublishComponents</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnpublishFeatures</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterClassInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterExtensionInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterFonts</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterProgIdInfo</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterTypeLibraries</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteEnvironmentStrings</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteIniValues</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteRegistryValues</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallFinalize</Data>
+        <Data Column="SectionFlag">17</Data>
+        <Data Column="Description">Execution Section, Reset to Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallInitialize</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterComPlus</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterComPlus</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ScheduleReboot</Data>
+        <Data Column="SectionFlag">20</Data>
+        <Data Column="Description">Select, or Execution Sections</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallAdminPackage</Data>
+        <Data Column="SectionFlag">23</Data>
+        <Data Column="Description">Search, Cost, Select, or Execution Sections</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ForceReboot</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">DetectRunningApps</Data>
+        <Data Column="SectionFlag">23</Data>
+        <Data Column="Description">Search, Cost, Select, Execution Sections</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SystemRestart</Data>
+        <Data Column="SectionFlag">16</Data>
+        <Data Column="Description">Execution Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SetCDInfo</Data>
+        <Data Column="SectionFlag">23</Data>
+        <Data Column="Description">Search, Cost, Select, or Execution Sections</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PISearch</Data>
+        <Data Column="SectionFlag">1</Data>
+        <Data Column="Description">Search Section</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">ADVERTISE</Data>
+        <Data Column="SectionFlag">23</Data>
+        <Data Column="Description">Search, Cost, Select, or Execution Sections</Data>
+      </Row>
+    </CustomTable>
+    <CustomTable Id="_Required">
+      <Column Id="Table" PrimaryKey="yes" Type="string" Width="50" Category="Identifier" Description="Name of table" Modularize="Column" />
+      <Column Id="Value" PrimaryKey="yes" Type="string" Width="255" Category="Text" Description="Required value" />
+      <Column Id="KeyCount" Type="int" Width="2" MinValue="1" MaxValue="32" Description="Number of primary keys (determines how to parse value string)" />
+      <Column Id="Description" Type="string" Width="255" Nullable="yes" Category="Text" Description="Description of required value" />
+      <Row>
+        <Data Column="Table">Property</Data>
+        <Data Column="Value">ProductCode</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description" />
+      </Row>
+      <Row>
+        <Data Column="Table">Property</Data>
+        <Data Column="Value">ProductName</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description" />
+      </Row>
+      <Row>
+        <Data Column="Table">Property</Data>
+        <Data Column="Value">ProductVersion</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description" />
+      </Row>
+      <Row>
+        <Data Column="Table">Property</Data>
+        <Data Column="Value">Manufacturer</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description" />
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">NewFolder</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Default name of newly created folder</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">AbsentPath</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Text to be shown if path is not available</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">bytes</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Local equivalent of bytes</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">GB</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Local equivalent of GB</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">KB</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Local equivalent of KB</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">MB</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Local equivalent of MB</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">MenuAbsent</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Absent choice in selection pop-up menu</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">MenuCD</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">CD choice in selection pop-up menu</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">MenuLocal</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Local choice in selection pop-up menu</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">MenuNetwork</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Network choice in selection pop-up menu</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelAbsentAbsent</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelAbsentCD</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelAbsentLocal</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelAbsentNetwork</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelCDAbsent</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelCDCD</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelCDLocal</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelChildCostNeg</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description if child cost is negative</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelChildCostPos</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description if child cost is positive</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelLocalAbsent</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelLocalCD</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelLocalLocal</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelLocalNetwork</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelNetworkAbsent</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelNetworkLocal</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelNetworkNetwork</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">State change description on selection dialog</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelParentCostNegNeg</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelParentCostNegPos</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelParentCostPosNeg</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">SelParentCostPosPos</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Cost description</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">VolumeCostAvailable</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Column title in VolumeCost table</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">VolumeCostDifference</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Column title in VolumeCost table</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">VolumeCostRequired</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Column title in VolumeCost table</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">VolumeCostSize</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Column title in VolumeCost table</Data>
+      </Row>
+      <Row>
+        <Data Column="Table">UIText</Data>
+        <Data Column="Value">VolumeCostVolume</Data>
+        <Data Column="KeyCount">1</Data>
+        <Data Column="Description">Column title in VolumeCost table</Data>
+      </Row>
+    </CustomTable>
+    <CustomTable Id="_Sequence">
+      <Column Id="Action" PrimaryKey="yes" Type="string" Width="50" Category="Identifier" Description="Name of action" Modularize="Column" />
+      <Column Id="Dependent" PrimaryKey="yes" Type="string" Width="50" Category="Identifier" Description="Name of dependent action" Modularize="Column" />
+      <Column Id="After" Type="int" Width="2" Set="0;1" Description="Whether Action is to come before (0) or after (1) dependent action" />
+      <Column Id="Optional" Type="int" Width="2" Set="0;1" Description="Whether dependent action is optional (1) or not (0)" />
+      <Row>
+        <Data Column="Action">AppSearch</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">BindImage</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CCPSearch</Data>
+        <Data Column="Dependent">AppSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CCPSearch</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CCPSearch</Data>
+        <Data Column="Dependent">RMCCPSearch</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostFinalize</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostFinalize</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">AppSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">CCPSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">CostFinalize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">RMCCPSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">AllocateRegistrySpace</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CostInitialize</Data>
+        <Data Column="Dependent">PISearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">FileCost</Data>
+        <Data Column="Dependent">CostFinalize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">FileCost</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RMCCPSearch</Data>
+        <Data Column="Dependent">AppSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RMCCPSearch</Data>
+        <Data Column="Dependent">CCPSearch</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RMCCPSearch</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateFolders</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateFolders</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateShortcuts</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateShortcuts</Data>
+        <Data Column="Dependent">RemoveShortcuts</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">CreateShortcuts</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">DeleteServices</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">DuplicateFiles</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallFiles</Data>
+        <Data Column="Dependent">CreateShortcuts</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallServices</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">InstallValidate</Data>
+        <Data Column="Dependent">CostFinalize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">MoveFiles</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">MoveFiles</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PublishProduct</Data>
+        <Data Column="Dependent">PublishFeatures</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterClassInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterClassInfo</Data>
+        <Data Column="Dependent">RegisterMIMEInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterClassInfo</Data>
+        <Data Column="Dependent">RegisterProgIdInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterClassInfo</Data>
+        <Data Column="Dependent">UnregisterClassInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterExtensionInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterExtensionInfo</Data>
+        <Data Column="Dependent">UnregisterExtensionInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterFonts</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterMIMEInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterMIMEInfo</Data>
+        <Data Column="Dependent">RegisterClassInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterMIMEInfo</Data>
+        <Data Column="Dependent">RegisterExtensionInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterMIMEInfo</Data>
+        <Data Column="Dependent">UnregisterMIMEInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterProgIdInfo</Data>
+        <Data Column="Dependent">RegisterClassInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterProgIdInfo</Data>
+        <Data Column="Dependent">RegisterExtensionInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterProgIdInfo</Data>
+        <Data Column="Dependent">UnregisterProgIdInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterTypeLibraries</Data>
+        <Data Column="Dependent">UnregisterTypeLibraries</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterUser</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveDuplicateFiles</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveDuplicateFiles</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveEnvironmentStrings</Data>
+        <Data Column="Dependent">WriteEnvironmentStrings</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveEnvironmentStrings</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="Dependent">MoveFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="Dependent">RemoveFolders</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="Dependent">UnregisterTypeLibraries</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFiles</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFolders</Data>
+        <Data Column="Dependent">RemoveFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveFolders</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveIniValues</Data>
+        <Data Column="Dependent">WriteIniValues</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveIniValues</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveRegistryValues</Data>
+        <Data Column="Dependent">UnregisterMIMEInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveRegistryValues</Data>
+        <Data Column="Dependent">UnregisterProgIdInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveRegistryValues</Data>
+        <Data Column="Dependent">WriteRegistryValues</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveRegistryValues</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveShortcuts</Data>
+        <Data Column="Dependent">CreateShortcuts</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RemoveShortcuts</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfRegModules</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfRegModules</Data>
+        <Data Column="Dependent">SelfUnregModules</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfRegModules</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfUnregModules</Data>
+        <Data Column="Dependent">InstallValidate</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfUnregModules</Data>
+        <Data Column="Dependent">SelfRegModules</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SelfUnregModules</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SetODBCFolders</Data>
+        <Data Column="Dependent">CostFinalize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">SetODBCFolders</Data>
+        <Data Column="Dependent">InstallValidate</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">StartServices</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">StopServices</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterClassInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterClassInfo</Data>
+        <Data Column="Dependent">RegisterClassInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterExtensionInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterExtensionInfo</Data>
+        <Data Column="Dependent">RegisterExtensionInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterFonts</Data>
+        <Data Column="Dependent">RemoveFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="Dependent">RegisterMIMEInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="Dependent">RemoveRegistryValues</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="Dependent">UnregisterClassInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterMIMEInfo</Data>
+        <Data Column="Dependent">UnregisterExtensionInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterProgIdInfo</Data>
+        <Data Column="Dependent">RegisterProgIdInfo</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterProgIdInfo</Data>
+        <Data Column="Dependent">RemoveRegistryValues</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterProgIdInfo</Data>
+        <Data Column="Dependent">UnregisterClassInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterProgIdInfo</Data>
+        <Data Column="Dependent">UnregisterExtensionInfo</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterTypeLibraries</Data>
+        <Data Column="Dependent">RegisterTypeLibraries</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">UnregisterTypeLibraries</Data>
+        <Data Column="Dependent">RemoveFiles</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteEnvironmentStrings</Data>
+        <Data Column="Dependent">RemoveEnvironmentStrings</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteEnvironmentStrings</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteIniValues</Data>
+        <Data Column="Dependent">RemoveIniValues</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteIniValues</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteRegistryValues</Data>
+        <Data Column="Dependent">RemoveRegistryValues</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">1</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">WriteRegistryValues</Data>
+        <Data Column="Dependent">InstallInitialize</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">PISearch</Data>
+        <Data Column="Dependent">CostInitialize</Data>
+        <Data Column="After">0</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+      <Row>
+        <Data Column="Action">RegisterTypeLIbraries</Data>
+        <Data Column="Dependent">InstallFiles</Data>
+        <Data Column="After">1</Data>
+        <Data Column="Optional">0</Data>
+      </Row>
+    </CustomTable>
+    <CustomTable Id="Cabs">
+      <Column Id="Name" PrimaryKey="yes" Type="string" Width="32" />
+      <Column Id="Data" Type="binary" Width="0" Nullable="yes" Category="Binary" />
+      <Row>
+        <Data Column="Name">w1.cab</Data>
+        <Data Column="Data">C:\Users\nfarrugia\Desktop\Fax Client\Cabs\w1.cab</Data>
+      </Row>
+    </CustomTable>
+    <!--
+        <CustomTable Id="WiseCustomActionDoc">
+            <Column Id="Action_" PrimaryKey="yes" Type="string" Width="0" />
+            <Column Id="Description" Type="string" Width="0" Nullable="yes" />
+            <Row>
+                <Data Column="Action_">ca_term_install_on64</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetCGWOnline</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">uninstall_printer</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetDomainSMS4Online</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetDomainFax4Online</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">ca_deferred_uninstall_printer_prew2k</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetCGWOnlineEI</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">Stop fmstart.exe</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">ca_deferred_uninstall_printer</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">ca_deferred_install_printer_prew2k</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetRootRegPermissionProperty</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">ca_deferred_install_printer</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetRootRegPermission</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">EncryptPasswordEx</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">SetPropAutoConfigureClientFromServer</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">AutoConfigureClientFromServer</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">CA_EncryptOFSCredentials</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">opentellmemore</Data>
+                <Data Column="Description" />
+            </Row>
+            <Row>
+                <Data Column="Action_">CA_FMOResetPassword</Data>
+                <Data Column="Description" />
+            </Row>
+        </CustomTable>
+    -->
+	</Fragment>
+</Wix>

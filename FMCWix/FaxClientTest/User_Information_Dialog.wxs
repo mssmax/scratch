@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="User_Information_Dialog_UI">
+      <Dialog Id="User_Information_Dialog" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="NameQ" Type="Text" X="30" Y="60" Width="80" Height="18" Text="Full N&amp;ame:" TabSkip="no" />
+        <Control Id="NameE" Type="Edit" X="112" Y="57" Width="194" Height="18" Property="USERNAME" Text="{47}" TabSkip="no" />
+        <Control Id="OrgQ" Type="Text" X="30" Y="86" Width="80" Height="18" Text="&amp;Organization:" TabSkip="no" />
+        <Control Id="OrgE" Type="Edit" X="112" Y="83" Width="194" Height="18" Property="COMPANYNAME" Text="{53}" TabSkip="no" />
+        <Control Id="PIDQ" Type="Text" X="30" Y="112" Width="64" Height="15" Text="Product &amp;ID:" TabSkip="no">
+          <Condition Action="hide">ProductID = "none"</Condition>
+        </Control>
+        <Control Id="PIDE" Type="MaskedEdit" X="112" Y="108" Width="194" Height="18" Property="PIDKEY" Text="[PIDTemplate]" TabSkip="no">
+          <Condition Action="hide">ProductID = "none"</Condition>
+        </Control>
+        <Control Id="Text8" Type="Text" X="30" Y="134" Width="309" Height="33" Text="The settings for this application can be installed for the current user or for all users that share this computer. You must have administrator rights to install the settings for all users. Install this application for:" TabSkip="no">
+          <Condition Action="hide">NOT Privileged OR Version9X</Condition>
+        </Control>
+        <Control Id="RadioButtonGroup" Type="RadioButtonGroup" X="112" Y="170" Width="219" Height="44" Property="ApplicationUsers" TabSkip="no">
+          <Condition Action="hide">NOT Privileged OR Version9X</Condition>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="ValidateProductID" Value="0"><![CDATA[ProductID<>"none"]]></Publish>
+          <Publish Event="NewDialog" Value="fmserver">ProductID AND NOT Preselected</Publish>
+          <Publish Event="NewDialog" Value="Start_Installation_Dialog">ProductID AND Preselected</Publish>
+          <Publish Property="ALLUSERS" Value="1">ApplicationUsers = "AllUsers" AND Privileged</Publish>
+          <Publish Property="ALLUSERS"><![CDATA[ApplicationUsers<>"AllUsers" OR NOT Privileged]]></Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="Readme_Dialog">0</Publish>
+          <Publish Event="NewDialog" Value="Welcome_Dialog">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text16" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[DIALOG_TITLE_FONT_DEFAULT]User Information" TabSkip="yes" Transparent="yes" />
+        <Control Id="Line15" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text46" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+        <Control Id="Line4" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap30" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text7" Type="Text" X="20" Y="22" Width="290" Height="24" Text="Enter the following information to personalize your installation." TabSkip="yes" Transparent="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Single_Feature_Destination_UI">
+      <Dialog Id="Single_Feature_Destination" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="NewDialog" Value="Installation_Type_Dialog">0</Publish>
+          <Publish Event="NewDialog" Value="Palm_User_Information_Dialog">InstallMode = "Custom" AND PALMUSERS = 1</Publish>
+          <Publish Event="NewDialog" Value="Start_Installation_Dialog"><![CDATA[InstallMode<>"Custom"]]></Publish>
+          <Publish Event="NewDialog" Value="Start_Installation_Dialog"><![CDATA[InstallMode="Custom" AND OutOfDiskSpace<>1]]></Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Condition Action="disable">Version9x OR BIT=16</Condition>
+          <Publish Event="NewDialog" Value="fmmessageform"><![CDATA[(((FAXSERVERNAME~="null" AND SERVEREXIST<>1) AND (USEOUTLOOKFORM="0")) OR MAILAUTH<>"1") AND ONLINE="0"]]></Publish>
+          <Publish Event="NewDialog" Value="fmmessageform"><![CDATA[USEOUTLOOKFORM="1" AND ONLINE="0"]]></Publish>
+          <Publish Event="NewDialog" Value="fmserverdetails"><![CDATA[(((FAXSERVERNAME~="null" AND SERVEREXIST<>1) AND (USEOUTLOOKFORM="0")) OR MAILAUTH<>"1") AND ONLINE="0"]]></Publish>
+          <Publish Event="NewDialog" Value="fmserver"><![CDATA[(FAXSERVERNAME~="null" AND SERVEREXIST=1) AND (USEOUTLOOKFORM="0") AND ONLINE="0"]]></Publish>
+          <Publish Event="NewDialog" Value="smtpauthform"><![CDATA[MAILAUTHENTICATION="1" AND ONLINE="0"]]></Publish>
+          <Publish Event="NewDialog" Value="FMOUserDetails">ONLINE="1"</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Line7" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text19" Type="Text" X="20" Y="22" Width="290" Height="24" Text="Select a folder where the application will be installed." TabSkip="yes" Transparent="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="44" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="44" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[DIALOG_TITLE_FONT_DEFAULT]Destination Folder" TabSkip="yes" Transparent="yes" />
+        <Control Id="GroupBox" Type="GroupBox" X="31" Y="136" Width="309" Height="33" Text="Destination Folder" TabSkip="yes" />
+        <Control Id="Text42" Type="Text" X="30" Y="60" Width="312" Height="40" Text="The Installation Wizard will install the files for [ProductName] in the following folder.&#xD;&#xA;&#xD;&#xA;To install into a different folder, click the Browse button, and select another folder. " TabSkip="yes" />
+        <Control Id="Text47" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+        <Control Id="Text43" Type="Text" X="38" Y="150" Width="228" Height="17" Property="INSTALLDIR" Text="[INSTALLDIR]" TabSkip="yes" />
+        <Control Id="PushButton44" Type="PushButton" X="278" Y="147" Width="56" Height="17" Text="B&amp;rowse" TabSkip="yes">
+          <Publish Property="_BrowseProperty" Value="INSTALLDIR">1</Publish>
+          <Publish Event="SpawnDialog" Value="Browse">1</Publish>
+        </Control>
+        <Control Id="Text42a" Type="Text" X="30" Y="100" Width="312" Height="30" Text="You can choose not to install [ProductName] by clicking Cancel to exit the Installation Wizard." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

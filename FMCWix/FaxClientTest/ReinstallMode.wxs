@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="ReinstallMode">
+      <Dialog Id="ReinstallMode" X="50" Y="50" Width="321" Height="241" Title="[ProductName] Reinstall Mode Dialog">
+        <Control Id="OK" Type="PushButton" X="164" Y="213" Width="70" Height="18" Text="OK" TabSkip="no" Default="yes">
+          <Publish Property="REINSTALLMODE" Value="[ReinstallRepair][ReinstallFilePresent][ReinstallFileOlderVersion][ReinstallFileDifferingVersion][ReinstallFileChecksum][ReinstallFileForceAll][ReinstallUserData][ReinstallMachineData][ReinstallShortcut]">1</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="ReinstallRepair" Type="CheckBox" X="11" Y="10" Width="280" Height="18" Property="ReinstallRepair" Text="&amp;Repair all detected reinstall problems" CheckBoxValue="r" TabSkip="no" />
+        <Control Id="ReinstallFilePresent" Type="CheckBox" X="11" Y="30" Width="280" Height="18" Property="ReinstallFilePresent" Text="Reinstall only if file is missing" CheckBoxValue="p" TabSkip="no" />
+        <Control Id="ReinstallFileOlderVersion" Type="CheckBox" X="11" Y="50" Width="280" Height="18" Property="ReinstallFileOlderVersion" Text="Reinstall if file is missing, or an older version exists" CheckBoxValue="o" TabSkip="no" />
+        <Control Id="ReinstallFileEqualVersion" Type="CheckBox" X="11" Y="70" Width="280" Height="18" Property="ReinstallFileEqualVersion" Text="Reinstall if file is missing, or an older or equal version exists" CheckBoxValue="e" TabSkip="no" />
+        <Control Id="ReinstallFileExact" Type="CheckBox" X="11" Y="90" Width="280" Height="18" Property="ReinstallFileDifferingVersion" Text="Reinstall if existing file has a different version" CheckBoxValue="d" TabSkip="no" />
+        <Control Id="ReinstallFileChecksum" Type="CheckBox" X="11" Y="110" Width="280" Height="18" Property="ReinstallFileChecksum" Text="Reinstall if EXE or DLL has an invalid checksum" CheckBoxValue="c" TabSkip="no" />
+        <Control Id="ReinstallFileForce" Type="CheckBox" X="11" Y="130" Width="280" Height="18" Property="ReinstallFileForceAll" Text="&amp;Force all files to be reinstalled, regardless of checksum or version" CheckBoxValue="a" TabSkip="no" />
+        <Control Id="ReinstallUserData" Type="CheckBox" X="11" Y="150" Width="280" Height="18" Property="ReinstallUserData" Text="Verify that required &amp;user registry entries are present" CheckBoxValue="u" TabSkip="no" />
+        <Control Id="ReinstallMachineData" Type="CheckBox" X="11" Y="170" Width="280" Height="18" Property="ReinstallMachineData" Text="Verify that required local &amp;machine registry entries are present" CheckBoxValue="m" TabSkip="no" />
+        <Control Id="ReinstallShortcut" Type="CheckBox" X="11" Y="190" Width="280" Height="18" Property="ReinstallShortcut" Text="Validate shortcuts" CheckBoxValue="s" TabSkip="no" />
+        <Control Id="Cancel" Type="PushButton" X="240" Y="213" Width="70" Height="18" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="Reset" Value="0">1</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="Exit_Dialog" X="50" Y="50" Width="375" Height="270" Title="!(loc.IDS_DIALOGTITLE)">
+        <Control Id="OK" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="[DefDialogFont]&amp;Finish" TabSkip="no" Default="yes">
+          <Publish Event="DoAction" Value="start_wizard">FAXSERVER=1 AND NOT Installed AND ((NOT UPGRADINGPREVIOUSBUILD AND LICENSEKEY) OR (UPGRADINGPREVIOUSBUILD AND NOT LICENSEKEY))</Publish>
+          <Publish Event="DoAction" Value="start_config">FAXSERVER=1 AND NOT Installed AND NOT LICENSEKEY  AND NOT UPGRADINGPREVIOUSBUILD</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="PushButton" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="[DefDialogFont]&lt; &amp;Back" TabSkip="no">
+          <Condition Action="disable">1</Condition>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="PushButton1" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="[DefDialogFont]Cancel" TabSkip="no">
+          <Condition Action="disable">1</Condition>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="136" Y="6" Width="227" Height="53" Text="{&amp;Arial14}[ProductName] has been successfully installed.&#xD;&#xA;" TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">WiseUninstall</Condition>
+        </Control>
+        <Control Id="Text6" Type="Text" X="136" Y="60" Width="228" Height="19" Text="[DefDialogFont]Click the Finish button to exit this installation." TabSkip="yes" Transparent="yes" />
+        <Control Id="Bitmap31" Type="Bitmap" X="0" Y="0" Width="375" Height="234" Text="side16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Line11" Type="Line" X="0" Y="234" Width="309" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text56" Type="Text" X="136" Y="6" Width="227" Height="53" Text="{&amp;Arial14}[ProductName] has been successfully uninstalled." TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">NOT WiseUninstall</Condition>
+        </Control>
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

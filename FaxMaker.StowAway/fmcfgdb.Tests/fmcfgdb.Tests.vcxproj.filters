@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="Unit Testing">
+      <UniqueIdentifier>{3d1b4f12-6978-4b36-9684-aaafbaec308e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Testing\Header Files">
+      <UniqueIdentifier>{525bac24-bd14-48b3-bb74-cb77e7dd0ed2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Unit Testing\Source Files">
+      <UniqueIdentifier>{01abdad4-ab30-4899-a9e2-122fb3385ac5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\EnumGFIRules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GFIDB.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\GFIRULE.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CBase64.tests.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="EnumGFIRules.tests.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GFIDB.tests.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GFIRULE.tests.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.tests.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Common\Source\mfg.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Unit Testing\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\CBase64.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\EnumGFIRules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\FmDbRuleHdr.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GFIDB.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\GFIRULE.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EnumGFIRules.tests.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GFIDB.tests.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GFIRULE.tests.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Common\Include\tests\mfg.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UnitTesting.h">
+      <Filter>Unit Testing\Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

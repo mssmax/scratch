@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="OutOfDisk_UI">
+      <Dialog Id="OutOfDisk" X="50" Y="50" Width="354" Height="168" Title="[ProductName] Setup">
+        <Control Id="OK" Type="PushButton" X="286" Y="144" Width="56" Height="17" Text="OK" TabSkip="no" Default="yes">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="10" Y="9" Width="333" Height="31" Text="Out of disk space. The highlighted volumes do not have enough disk space available for the selected features." TabSkip="yes" />
+        <Control Id="List" Type="VolumeCostList" X="10" Y="39" Width="332" Height="100" TabSkip="yes" />
+      </Dialog>
+    </UI>
+  </Fragment>
+</Wix>

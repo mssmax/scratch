@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="WaitForCosting" X="50" Y="50" Width="240" Height="87" Title="!(loc.IDS_DIALOGTITLE)">
+        <Control Id="Cancel" Type="PushButton" X="157" Y="57" Width="70" Height="18" Text="[DefDialogFont]Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="DoAction" Value="WiseCleanup">1</Publish>
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="TextMessage" Type="Text" X="10" Y="9" Width="216" Height="37" Text="[DefDialogFont]Please wait while the installer determines your disk space requirements..." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

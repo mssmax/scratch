@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Setup_Dialog_UI">
+      <Dialog Id="Setup_Dialog" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" Modeless="yes" CustomPalette="yes">
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Default="yes">
+          <Condition Action="disable">0</Condition>
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="ActionText" Type="Text" X="136" Y="64" Width="227" Height="39" Text="Please wait while the Installation Wizard prepares the Windows Installer." TabSkip="yes" Transparent="yes">
+          <!--®-->
+          <Subscribe Event="ActionText" Attribute="Text" />
+        </Control>
+        <Control Id="Text15" Type="Text" X="136" Y="6" Width="227" Height="54" Text="{&amp;Arial14}Welcome to the [ProductName] Installation Wizard" TabSkip="yes" Transparent="yes" />
+        <Control Id="Bitmap33" Type="Bitmap" X="0" Y="0" Width="375" Height="234" Text="side16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Line2" Type="Line" X="0" Y="234" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

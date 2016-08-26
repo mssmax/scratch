@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Browse_UI">
+      <Dialog Id="Browse" X="50" Y="50" Width="348" Height="193" Title="[ProductName] Setup">
+        <Control Id="TailText" Type="Text" X="9" Y="151" Width="55" Height="14" Text="&amp;Folder name:" TabSkip="no" />
+        <Control Id="Tail" Type="PathEdit" X="65" Y="147" Width="212" Height="18" Property="_BrowseProperty" TabSkip="no" Indirect="yes" />
+        <Control Id="OK" Type="PushButton" X="282" Y="148" Width="56" Height="17" Text="OK" TabSkip="no" Default="yes">
+          <Publish Event="SetTargetPath" Value="[_BrowseProperty]">1</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="282" Y="169" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="Reset" Value="0">1</Publish>
+          <Publish Event="EndDialog" Value="Return">NOT BaseBrowse</Publish>
+          <Publish Event="SpawnDialog" Value="Cancel">BaseBrowse</Publish>
+        </Control>
+        <Control Id="ComboText" Type="Text" X="10" Y="13" Width="54" Height="15" Text="&amp;Look in:" TabSkip="no" />
+        <Control Id="Combo" Type="DirectoryCombo" X="65" Y="10" Width="230" Height="80" Property="_BrowseProperty" TabSkip="no" Indirect="yes" Removable="yes" Fixed="yes" Remote="yes" CDROM="yes">
+          <Subscribe Event="IgnoreChange" Attribute="IgnoreChange" />
+        </Control>
+        <Control Id="Up" Type="PushButton" X="300" Y="9" Width="17" Height="17" Text="Up" ToolTip="Go to parent folder" TabSkip="no" IconSize="16" FixedSize="yes" Icon="yes">
+          <Publish Event="DirectoryListUp" Value="0">1</Publish>
+        </Control>
+        <Control Id="NewFolder" Type="PushButton" X="320" Y="9" Width="17" Height="17" Text="New" ToolTip="Create new folder" TabSkip="no" IconSize="16" FixedSize="yes" Icon="yes">
+          <Publish Event="DirectoryListNew" Value="0">1</Publish>
+        </Control>
+        <Control Id="List" Type="DirectoryList" X="8" Y="29" Width="330" Height="115" Property="_BrowseProperty" TabSkip="no" Sunken="yes" Indirect="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

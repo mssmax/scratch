@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="fmserver_UI">
+      <Dialog Id="fmserver" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Edit" Type="Edit" X="40" Y="120" Width="244" Height="18" Property="EXNAME" TabSkip="no" />
+        <Control Id="PushButton" Type="PushButton" X="289" Y="120" Width="18" Height="18" Text="..." TabSkip="no">
+          <!--<Publish Event="DoAction" Value="browse32"><![CDATA[BIT=32 AND VersionNT>=500]]></Publish>-->
+          <Publish Property="EXNAME" Value="[EXNAME]">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="DoAction" Value="check_faxserver"><![CDATA[SKIPSERVER<>"1"]]></Publish>
+          <Publish Event="DoAction" Value="CostFinalize"><![CDATA[(EXNAME<>"" AND SERVEREXIST=1) AND (Version9x OR BIT=16)]]></Publish>
+          <Publish Event="SpawnDialog" Value="invalidserver"><![CDATA[EXNAME="" AND SKIPSERVER<>"1"]]></Publish>
+          <Publish Event="NewDialog" Value="fmserverdetails"><![CDATA[(SERVEREXIST<>1 AND EXNAME<>"") OR SKIPSERVER="1"]]></Publish>
+          <Publish Event="NewDialog" Value="Single_Feature_Destination"><![CDATA[EXNAME<>"" AND SERVEREXIST=1]]></Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="fmmessageform">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="40" Y="104" Width="36" Height="14" Text="Machine:&#xD;&#xA;" TabSkip="yes" />
+        <!--
+        Needs Property or CheckBoxPropertyRef
+        <Control Id="CheckBox" Type="CheckBox" X="41" Y="145" Width="200" Height="14" Text="Skip this dialog, I will enter the details manually." TabSkip="yes" />  
+        -->
+        <Control Id="CustomText" Type="Text" X="40" Y="70" Width="288" Height="33" Text="Enter the name of the GFI FaxMaker server." TabSkip="yes" />
+        <Control Id="Line7" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text19" Type="Text" X="23" Y="23" Width="221" Height="14" Text="Set the machine name of the GFI FaxMaker Server." TabSkip="yes" Transparent="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="44" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="44" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="8" Y="8" Width="150" Height="13" Text="[DIALOG_TITLE_FONT_DEFAULT]Specify Server Machine" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text20" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

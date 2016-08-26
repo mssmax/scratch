@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="wrongkey" X="50" Y="50" Width="210" Height="74" Title="!(loc.IDS_DIALOGTITLE)" CustomPalette="yes">
+        <Control Id="Cancel" Type="PushButton" X="77" Y="42" Width="56" Height="17" Text="[DefDialogFont]OK" TabSkip="no" Cancel="yes">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="CustomText" Type="Text" X="10" Y="17" Width="190" Height="20" Text="[DefDialogFont]The license key that you have entered is incorrect." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

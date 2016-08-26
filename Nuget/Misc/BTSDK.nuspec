@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>BTSDK</id>
+    <version>6.7.1</version>
+    <authors>max</authors>
+    <owners>max</owners>
+    <description>Brooktrout SDK</description>
+    <releaseNotes>First release</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+  <files>
+	<file src="BTSDK.props" target="build"/>
+	<file src="SDK\SDK\6.7.1\**"/>
+  </files>
+</package>

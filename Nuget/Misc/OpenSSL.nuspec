@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>OpenSSL</id>
+    <version>1.0.1</version>
+    <authors>max</authors>
+    <owners>max</owners>
+    <description>Open SSL package 1.0.1g</description>
+    <releaseNotes>First release</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+  </metadata>
+  <files>
+	<file src="bin\**" target="bin"/>
+	<file src="include\**" target="include"/>
+	<file src="lib\**" target="lib"/>
+	<file src="OpenSSL.props" target="build"/>
+  </files>
+</package>

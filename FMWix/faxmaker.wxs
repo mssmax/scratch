@@ -1,0 +1,1704 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="{1F69A3C6-0CF0-4DEB-8699-A4897021F90B}" Language="!(loc.LANGID)" Manufacturer="GFI Software Ltd." Name="GFI FaxMaker 2014" UpgradeCode="{BE7A8EA1-F8BE-4BDE-92BF-4700DCAB5A0A}" Version="17.0.2014.1021">
+    <Package Compressed="yes" InstallerVersion="200" Manufacturer="GFI Software Ltd." Platform="$(var.Platform)" />
+
+    <!-- Base cab file containing main components of the product -->
+    <Media Id="1" Cabinet="faxmaker.cab" DiskPrompt="LABEL" EmbedCab="no"/>
+    <!-- TODO: this needs to be replaced with proper MSM -->
+    <Media Id="2" Cabinet="msxml4.cab" />
+    <!-- 
+         Localized content, such cabs get embedded into the .msi itself so whenever bootstrapper 
+         chooses the appopriate .msi to run the localizable content would be inside already
+    -->
+    <Media Id="3" Cabinet="!(loc.LANGUAGE)" DiskPrompt="LABEL" EmbedCab="yes"/>
+
+    <Binary Id="Icon" SourceFile="$(var.SourceFiles)\Binary\Icon" />
+    <Binary Id="Complete" SourceFile="$(var.SourceFiles)\Binary\Complete" />
+    <Binary Id="New" SourceFile="$(var.SourceFiles)\Binary\New" />
+    <Binary Id="Up" SourceFile="$(var.SourceFiles)\Binary\Up" />
+    <Binary Id="side16" SourceFile="$(var.SourceFiles)\Binary\side16" />
+    <Binary Id="trash1" SourceFile="$(var.SourceFiles)\Binary\trash1" />
+    <Binary Id="Custom" SourceFile="$(var.SourceFiles)\Binary\Custom" />
+    <Binary Id="top16" SourceFile="$(var.SourceFiles)\Binary\top16" />
+    <Binary Id="Music" SourceFile="$(var.SourceFiles)\Binary\Music" />
+    <Binary Id="Typical" SourceFile="$(var.SourceFiles)\Binary\Typical" />
+    <Binary Id="CD" SourceFile="$(var.SourceFiles)\Binary\CD" />
+    <Binary Id="Info" SourceFile="$(var.SourceFiles)\Binary\Info" />
+    <Binary Id="WiseCustomCalla4" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla4" />
+    <Binary Id="WiseCustomCall" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCall" />
+    <Binary Id="WiseCustomCalla11" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla11" />
+    <Binary Id="WiseCustomCalla13" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla13" />
+    <Binary Id="WiseCustomCalla20" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla20" />
+    <Binary Id="WiseCustomCalla7" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla7" />
+    <Binary Id="libca.dll" SourceFile="$(var.SourceFiles)\Binary\libca.dll" />
+    <Binary Id="WiseCustomCalla15" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla15" />
+    <Binary Id="WiseScriptDll" SourceFile="$(var.SourceFiles)\Binary\WiseScriptDll" />
+    <Binary Id="WiseCustomCalla5" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla5" />
+    <Binary Id="regperm.dll" SourceFile="$(var.SourceFiles)\Binary\regperm.dll" />
+    <Binary Id="Callcheck_upgrade" SourceFile="$(var.SourceFiles)\Binary\Callcheck_upgrade" />
+    <Binary Id="fileperm.dll" SourceFile="$(var.SourceFiles)\Binary\fileperm.dll" />
+    <Binary Id="Calldelete_alias2" SourceFile="$(var.SourceFiles)\Binary\Calldelete_alias2" />
+    <Binary Id="Callcreate_mdb" SourceFile="$(var.SourceFiles)\Binary\Callcreate_mdb" />
+    <Binary Id="Callgetdomain" SourceFile="$(var.SourceFiles)\Binary\Callgetdomain" />
+    <Binary Id="btupd.dll" SourceFile="$(var.SourceFiles)\Binary\btupd.dll" />
+    <Binary Id="Callidgen" SourceFile="$(var.SourceFiles)\Binary\Callidgen" />
+    <Binary Id="WiseCustomCalla1" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla1" />
+    <Binary Id="Callcheck_fax_server" SourceFile="$(var.SourceFiles)\Binary\Callcheck_fax_server" />
+    <Binary Id="Callxs2knfo_x64" SourceFile="$(var.SourceFiles)\Binary\Callxs2knfo_x64" />
+    <Binary Id="dbschema" SourceFile="$(var.SourceFiles)\Binary\dbschema.xml" />
+    <Binary Id="Callwisepatch" SourceFile="$(var.SourceFiles)\Binary\Callwisepatch" />
+    <Binary Id="shares.dll" SourceFile="$(var.SourceFiles)\Binary\shares.dll" />
+    <Binary Id="WiseCustomCalla21" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla21" />
+    <Binary Id="Calllaunchurl" SourceFile="$(var.SourceFiles)\Binary\Calllaunchurl" />
+    <Binary Id="Callget_tel_data" SourceFile="$(var.SourceFiles)\Binary\Callget_tel_data" />
+    <Binary Id="Callask_iis_restart1" SourceFile="$(var.SourceFiles)\Binary\Callask_iis_restart1" />
+    <Binary Id="WiseCustomCalla22" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla22" />
+    <Binary Id="WiseCustomCalla24" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla24" />
+    <Binary Id="Callchecksmtp" SourceFile="$(var.SourceFiles)\Binary\Callchecksmtp" />
+    <Binary Id="Callcreate_alias1" SourceFile="$(var.SourceFiles)\Binary\Callcreate_alias1" />
+    <Binary Id="Callinsthlps2" SourceFile="$(var.SourceFiles)\Binary\Callinsthlps2" />
+    <Binary Id="WiseCustomCalla9" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla9" />
+    <Binary Id="WiseCustomCalla23" SourceFile="$(var.SourceFiles)\Binary\WiseCustomCalla23" />
+    
+    <Condition Message="Not supported">NOT VersionNT OR (VersionNT &gt;= 501)</Condition>
+    <Condition Message="Not supported">NOT Version9X</Condition>
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Component Id="ServiceControl" Guid="{4ED85FDF-4D25-4CAB-9956-739C63F38494}" KeyPath="yes">
+        <Condition>FAXSERVER=1</Condition>
+        <ServiceControl Id="fmservic" Name="FaxMaker Fax Server" Stop="uninstall" Remove="uninstall" Wait="yes" />
+        <ServiceControl Id="fmgwinet" Name="FaxMaker MTA Service" Stop="uninstall" Remove="uninstall" Wait="yes" />
+        <ServiceControl Id="GFI_FaxMaker_WSAPI" Name="GFI FaxMaker WSAPI" Start="install" Stop="uninstall" Remove="uninstall" Wait="yes" />
+      </Component>
+      <Component Id="registry" Guid="{E9F35141-B750-4E38-9C70-D77C448A7F03}">
+        <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+        <RegistryKey Id="registry320" ForceDeleteOnUninstall="yes" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\licnot" Root="HKLM" />
+        <RegistryKey Id="registry11" ForceCreateOnInstall="yes" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Configuration Mappings\gfimntr.ini" Root="HKLM" />
+        <RegistryValue Id="registry" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice" Name="FAXMAKER TYPE" Value="EXCHANGE" Type="string" />
+        <RegistryValue Id="registry66" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Connector" Name="EXNAME" Value="[EXNAME]" Type="string" KeyPath="yes" />
+        <RegistryValue Id="registry282" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Value="" Type="string" />
+        <RegistryValue Id="registry311" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="Managing" Value="0" Type="integer" />
+        <RegistryValue Id="registry57" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="DLECache1" Value="[INSTALLDIR]archive\dlefmcache1.chc" Type="string" />
+        <RegistryValue Id="registry431" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\StandardSchema\FM\Miscellaneous" Name="AutoPatchCheck" Value="support.gfi.com/patchcheck/patch.asp" Type="string" />
+        <RegistryValue Id="registry312" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="Interval" Value="60000" Type="integer" />
+        <RegistryValue Id="registry55" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="Interval" Value="60000" Type="integer" />
+        <RegistryValue Id="registry60" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Sink" Name="DropPath" Value="[INSTALLDIR]SinkDrop" Type="string" />
+        <RegistryValue Id="registry23" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="Country" Value="[COUNTRY]" Type="string" />
+        <RegistryValue Id="registry430" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\StandardSchema\FM\Miscellaneous" Value="" Type="string" />
+        <RegistryValue Id="registry54" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="Managing" Value="0" Type="integer" />
+        <RegistryValue Id="registry59" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="ServiceThreadRunning" Value="0" Type="integer" />
+        <RegistryValue Id="registry24" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="ServiceLogonAccount" Value="[LOGIN]" Type="string" />
+        <RegistryValue Id="registry58" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="DLECache2" Value="[INSTALLDIR]archive\dlefmcache2.chc" Type="string" />
+        <RegistryValue Id="registry9" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="LOGDIR" Value="[INSTALLDIR]logs" Type="string" />
+        <RegistryValue Id="registry332" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="language" Value="[LANGUAGE]" Type="string" />
+        <RegistryValue Id="registry333" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="AdvancedRequests" Value="[ADVANCEDREQUESTS]" Type="integer" />
+        <RegistryValue Id="registry334" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="StatusNotifications" Value="[STATUSNOTIFICATIONS]" Type="integer" />
+        <RegistryValue Id="registry6" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DBPATH" Value="[INSTALLDIR]" Type="string" />
+        <RegistryValue Id="registry56" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\20" Name="Tags" Value="[INSTALLDIR]archive\tags.xml" Type="string" />
+        <RegistryValue Id="registry428" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\StandardSchema" Name="Default" Value="FM" Type="string" />
+        <RegistryValue Id="registry16" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\GFi Print Monitor" Name="do.doc.conv." Value="false" Type="string" />
+        <RegistryValue Id="registry12" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Configuration Mappings\gfimntr.ini\GFi_Print_Monitor" Name="Temp_Directory" Value="[INSTALLDIR]temp" Type="string" />
+        <RegistryValue Id="registry427" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\StandardSchema" Value="" Type="string" />
+        <RegistryValue Id="registry25" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="CountryCode" Value="[COUNTRYCODE]" Type="string" />
+        <RegistryValue Id="registry26" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="InternationalRule" Value="[INTERNATIONALRULE]" Type="string" />
+        <RegistryValue Id="registry315" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="DLECache1" Value="[INSTALLDIR]archive\dlefmsmscache1.chc" Type="string" />
+        <RegistryValue Id="registry14" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\GFi Print Monitor" Name="out.file." Value="" Type="string" />
+        <RegistryValue Id="registry61" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Sink" Name="SMTPPort" Value="25" Type="integer" />
+        <RegistryValue Id="registry313" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="ServiceThreadRunning" Value="0" Type="integer" />
+        <RegistryValue Id="registry62" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Sink" Name="Mailbox" Value="" Type="string" />
+        <RegistryValue Id="registry314" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="Tags" Value="[INSTALLDIR]archive\tags.xml" Type="string" />
+        <RegistryValue Id="registry27" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="LongDistanceRule" Value="[LONGDISTANCERULE]" Type="string" />
+        <RegistryValue Id="registry426" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\ECOM" Name="CHUPDATEURL" Value="https://update.gfi.com/license/gfi.key" Type="string" />
+        <RegistryValue Id="registry331" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="temppath" Value="[INSTALLDIR]temp" Type="string" />
+        <RegistryValue Id="registry28" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="SameAreaRule" Value="[SAMEAREARULE]" Type="string" />
+        <RegistryValue Id="registry429" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\StandardSchema\FM" Value="" Type="string" />
+        <RegistryValue Id="registry15" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\GFi Print Monitor" Name="conv.op." Value="none" Type="string" />
+        <RegistryValue Id="registry424" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\ECOM" Name="URL" Value="https://www.gfi.com/link/entry.aspx" Type="string" />
+        <RegistryValue Id="registry316" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\DLE\21" Name="DLECache2" Value="[INSTALLDIR]archive\dlefmsmscache2.chc" Type="string" />
+        <RegistryValue Id="registry21" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="FaxNumber" Value="[FAXNUMBER]" Type="string" />
+      </Component>
+      <Component Id="registry288" Guid="{7763D16C-22C8-4994-BE62-3AA14F6DB3C6}">
+        <RegistryKey Id="registry317" ForceCreateOnInstall="yes" Key="SOFTWARE\GFI Fax &amp; Voice\GFi Print Monitor" Root="HKLM">
+          <Permission User="Administrators" Read="yes" Delete="yes" ReadPermission="yes" ChangePermission="yes" TakeOwnership="yes" Write="yes" CreateSubkeys="yes" EnumerateSubkeys="yes" Notify="yes" CreateLink="yes" />
+          <Permission User="Everyone" Read="yes" Delete="yes" ReadPermission="yes" Write="yes" CreateSubkeys="yes" EnumerateSubkeys="yes" Notify="yes" CreateLink="yes" />
+        </RegistryKey>
+        <RegistryValue Id="registry288" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="EXCHANGECONNECTOR" Value="[EXCHANGECONNECTOR]" Type="string" KeyPath="yes" />
+        <RegistryValue Id="registry290" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="FAXSERVER" Value="[FAXSERVER]" Type="string" />
+        <RegistryValue Id="registry64" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Connector" Name="CONNAME" Value="[CONNAME]" Type="string" />
+        <RegistryValue Id="registry289" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="REMOTEMONITOR" Value="[REMOTEMONITOR]" Type="string" />
+        <RegistryValue Id="registry65" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Connector" Name="CONGUID" Value="[CONGUID]" Type="string" />
+        <RegistryValue Id="registry291" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="EXNAME" Value="[EXNAME]" Type="string" />
+      </Component>
+      <Component Id="registry287" Guid="{5538710B-0D4C-48F6-BEA1-AAE15D45F039}">
+        <Condition>FAXSERVER=1</Condition>
+        <RegistryValue Id="registry287" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="Remote" Value="0" Type="integer" KeyPath="yes" />
+        <RegistryValue Id="registry293" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="InitConfig" Value="0" Type="integer" />
+      </Component>
+      <Component Id="registry283" Guid="{DC0C21DC-7B8A-4393-B89B-C614F1D2E32A}">
+        <Condition>REMOTEMONITOR=1</Condition>
+        <RegistryValue Id="registry283" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="Remote" Value="2" Type="integer" KeyPath="yes" />
+        <RegistryValue Id="registry286" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="MonitorMachine" Value="[FMSERVER]" Type="string" />
+        <RegistryValue Id="registry285" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="Machine" Value="[FMSERVER]" Type="string" />
+      </Component>
+      <Component Id="RegistryInstallSettings" Guid="{3EA5ECFE-3AC7-4CEA-868C-8E991739C4B9}" KeyPath="yes">
+        <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+        <RegistryValue Id="registry31" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="DetectedExchange" Value="[EXVER]" Type="integer"/>
+        <RegistryValue Id="registry29" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="DetectedIIS" Value="[IISSMTP]" Type="integer"/>
+      </Component>
+      <Component Id="RegUserModeAD" Guid="{DF665CF7-D587-41C7-95C4-C4258898E846}" NeverOverwrite="yes" Permanent="yes">
+        <Condition>(AD = 1) AND ((FAXSERVER=1) OR (REMOTEMONITOR=1))</Condition>
+        <RegistryValue Id="registry19" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="UserMode" Value="1" Type="integer" KeyPath="yes" />
+        <RegistryValue Id="registry35" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="DetectedAD" Value="1" Type="integer" />
+      </Component>
+      <Component Id="RegUserModeNonAD" Guid="{1D37249D-A93D-460E-BCF0-BC8EF2E4A01B}" NeverOverwrite="yes" Permanent="yes">
+        <Condition>(AD = 0) AND ((FAXSERVER=1) OR (REMOTEMONITOR=1))</Condition>
+        <RegistryValue Id="registry18" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="UserMode" Value="3" Type="integer" KeyPath="yes" />
+        <RegistryValue Id="registry34" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="DetectedAD" Value="0" Type="integer" />
+      </Component>
+      <Component Id="RegOcrEnableRouting" Guid="{1436E963-DE52-40C6-A25C-4DA1FC0809E5}" NeverOverwrite="yes" Permanent="yes">
+        <Condition>FAXSERVER = 1</Condition>
+        <RegistryValue Id="registry310" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\fmserver_advanced" Name="ocr_enable_routing" Value="1" Type="integer" KeyPath="yes" />
+      </Component>
+      <Component Id="RegistryVersionInfo" Guid="{562415C4-3C11-4552-BE4B-E7749AD7590D}" Permanent="yes">
+        <RegistryValue Id="registry3" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="Build" Value="[BUILD]" Type="integer" KeyPath="yes" />
+        <RegistryValue Id="registry2" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="MajorVer" Value="[MajorVer]" Type="integer" />
+        <RegistryValue Id="registry4" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="PATH" Value="[INSTALLDIR]" Type="string" />
+        <RegistryValue Id="registry5" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="MinorVer" Value="[MinorVer]" Type="integer" />
+      </Component>
+
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="GFI_FAXmaker_StartMenu" Name="GFI FaxMaker">
+          <Directory Id="StartMenuDocumentation" Name="Documentation"/>
+        </Directory>
+      </Directory>
+      
+      <Directory Id="CommonFilesFolder">
+        <Directory Id="GFICommon" Name="GFI">
+          <Directory Id="userlookup" Name="userlookup"/>
+          <Directory Id="common" Name="common"/>
+        </Directory>
+      </Directory>
+
+      <!-- Installing of msxml4 package ( in Wise it used to be pulled via an MSM ) -->
+      <Directory Id="SystemFolder" SourceName="SysWow64">
+        <Directory Id="WinSXS.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="SXS" SourceName="System">
+          <Component Id="MSXML4_Unicode.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Guid="{5617BF49-9195-4C35-B9AD-F8D165DE25BB}">
+            <Condition> VersionNT &gt;= 501 </Condition>
+            <File Id="msxml4r.cat.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4r.cat" DiskId="2" Source="$(var.SourceFiles)\File\msxml4r.cat.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+            <File Id="msxml4r.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4r.Manifest"  DiskId="2" Source="$(var.SourceFiles)\File\msxml4r.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+            <File Id="msxml4r.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4r.dll" KeyPath="yes" Assembly="win32" AssemblyManifest="msxml4r.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" DiskId="2" Source="$(var.SourceFiles)\File\msxml4r.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+          </Component>
+          <Component Id="MSXML4_Parser.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Guid="{303994BA-6487-47AE-AF1D-7AF6088EEBDB}">
+            <Condition> VersionNT &gt;= 501 </Condition>
+            <File Id="msxml4.cat.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4.cat" DiskId="2" Source="$(var.SourceFiles)\File\msxml4.cat.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+            <File Id="msxml4.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4.Manifest"  DiskId="2" Source="$(var.SourceFiles)\File\msxml4.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+            <File Id="msxml4.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4.dll" KeyPath="yes" Assembly="win32" AssemblyManifest="msxml4.Manifest.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" DiskId="2" Source="$(var.SourceFiles)\File\msxml4.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+          </Component>
+        </Directory>
+        <Directory Id="SystemFolder.21206420_6BA8_4CFB_A48C_C72A6BFE80C0">
+          <Component Id="MSXML4_ANSI.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Guid="{3AAE95CD-F592-46E7-89A1-9B56717C4413}">
+            <Condition> Version9X </Condition>
+            <File Id="msxml4a.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4a.dll" KeyPath="yes" DiskId="2" Source="$(var.SourceFiles)\File\msxml4a.dll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+          </Component>
+          <Component Id="MSXML4_SystemRes.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Guid="{62846705-2671-4547-AB45-854DCC93B3C7}">
+            <File Id="msxml4rsysdll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4r.dll" KeyPath="yes" DiskId="2" Source="$(var.SourceFiles)\File\msxml4rsysdll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+          </Component>
+          <Component Id="MSXML4_System.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Guid="{4B1F71A7-50C6-44B7-A3AD-B6C3574BB896}">
+            <File Id="msxml4sysdll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Name="msxml4.dll" KeyPath="yes" SelfRegCost="5" DiskId="2" Source="$(var.SourceFiles)\File\msxml4sysdll.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+          </Component>
+        </Directory>
+      </Directory>
+      <Directory Id="System64Folder" SourceName="System32" />
+      <Directory Id="TempFolder" SourceName="Temp" />
+      <Directory Id="WinSxS" SourceName="WinSxS" />
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="GFI" Name="GFI">
+          <Directory Id="INSTALLDIR" Name="FaxMaker">
+            <Component Id="IniFile" Guid="{01BC0F18-AE6D-4FF1-A015-83A17343752B}" KeyPath="yes">
+              <Condition>FAXSERVER=1 OR REMOTEMONITOR=1</Condition>
+              <IniFile Id="usekey" Action="addLine" Directory="INSTALLDIR" Key="usekey" Name="registrykey.ini" Section="registrykey"  Value="[REGISTRYINI]" />
+            </Component>
+            <!-- TODO: look into whether this is needed anymore
+            <Component Id="inimappings" Guid="{49B87824-4961-4044-9A11-7BAB5736C3E3}" Permanent="yes">
+              <RegistryValue Id="registry295" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\fmprog.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmprog.ini" Type="string" KeyPath="yes" />
+              <RegistryValue Id="registry296" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\gfimntr.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\gfimntr.ini" Type="string" />
+              <RegistryValue Id="registry294" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\fmclient.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmclient.ini" Type="string" />
+            </Component>
+-->
+            <Component Id="findcont.dll" Guid="{A58F07F5-EEFF-4003-A774-178B1859A57D}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="findcont.dll" Name="findcont.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\findcont.dll" />
+            </Component>
+            <Component Id="faxmaker.inf" Guid="{7C74EE64-B906-4D03-875E-BA7F552D25EB}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="faxmaker.inf" Name="faxmaker.inf" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\faxmaker.inf" />
+              <File Id="uninst.ico" Name="uninst.ico" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\uninst.ico" />
+              <File Id="FAXmaker.gpd" Name="FAXmaker.gpd" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\FAXmaker.gpd" />
+            </Component>
+            <Component Id="fmusrdbupg" Guid="{87DB9349-A23B-4997-9C52-454BC2485596}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmusrdbupgrade.exe" Name="fmusrdbupgrade.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmusrdbupgrade.exe" />
+            </Component>
+            <Component Id="fmdb_usr.mdb" Guid="{9C9C6944-1F16-497F-9705-8C8A0FB19502}" NeverOverwrite="yes" Permanent="yes">
+              <File Id="fmdb_usr.mdb" Name="fmdb_usr.mdb" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmdb_usr.mdb" />
+            </Component>
+            <Component Id="gfimntr.dll" Guid="{5FFEF8B2-EBB1-436F-A2EF-F16294B6DE99}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmprinter_install.cmd" Name="fmprinter_install.cmd" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmprinter_install.cmd" />
+              <File Id="add_ip.vbs" Name="add_ip.vbs" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\add_ip.vbs" />
+              <File Id="fmprinter_uninstall.cmd" Name="fmprinter_uninstall.cmd"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmprinter_uninstall.cmd" />
+              <File Id="capi.dev" Name="capi.dev" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\capi.dev" />
+            </Component>
+            <Component Id="insthlps2.dll" Guid="{863C861A-3870-4022-A14A-09A1E2D9F78C}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="insthlps2.dll" Name="insthlps2.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\insthlps2.dll" />
+            </Component>
+            <Component Id="RegInstallID" Guid="{06F66649-7AE7-45BE-AF3D-92A24F474ABE}">
+              <RegistryValue Id="registry335" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="ID" Value="[GFI_UNIQUEID]" Type="string" KeyPath="yes" />
+              <RegistryValue Id="registry435" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="instanceID" Value="[PRE_INSTANCEID]" Type="string" />
+              <RegistryValue Id="registry436" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" Name="sessionDate" Value="[HKCUSESSIONDATE]" Type="string" />
+            </Component>
+            <Component Id="tiffcvtex.exe" Guid="{5C8136C6-0CAC-4663-B4D9-E69E9774D3D9}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="tiffcvtex.exe" Name="tiffcvtex.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\tiffcvtex.exe" />
+            </Component>
+            <Component Id="test.fax" Guid="{B1C9F207-477F-4941-9173-784F13A72665}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="test.fax" Name="test.fax" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\test.fax" />
+            </Component>
+            <Component Id="print_html.exe" Guid="{70E0C4F8-16DF-4A52-AA87-9604D4BF1D69}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="print_html.exe" Name="print_html.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\print_html.exe" />
+            </Component>
+            <Component Id="print_pdf.exe" Guid="{DA517A0C-9B7D-45E7-B276-F4179456E676}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="print_pdf.exe" Name="print_pdf.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\print_pdf.exe" />
+            </Component>
+            <Component Id="CfgStore.dll" Guid="{5E5FC462-4FE7-449D-9256-4F2E9AF5E18C}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="CfgStore.dll" Name="CfgStore.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\CfgStore.dll" />
+            </Component>
+            <Component Id="fgwconfg.exe" Guid="{EE076388-5DF3-4615-975E-692E21EAE1D0}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fgwconfg.exe" Name="fgwconfg.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fgwconfg.exe" />
+            </Component>
+            <Component Id="fmconv.dll" Guid="{4F29E8BB-29FC-4C1C-9B80-908D3454B85A}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmconv.dll" Name="fmconv.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmconv.dll" />
+            </Component>
+            <Component Id="fmgwinet.exe" Guid="{66FB0075-184C-4F20-B28A-411E335BC5F6}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmgwinet.exe" Name="fmgwinet.exe" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmgwinet.exe" />
+              <ServiceInstall Id="fmgwinet" Name="FAXmaker MTA Service" DisplayName="GFI FaxMaker Message Transfer Agent" Type="ownProcess" Start="auto" ErrorControl="ignore" Account="[LOGIN]" Password="[PASSWORD]" Arguments="-service" Description="Transport for SMTP, POP3 and SMS messages." />
+            </Component>
+            <Component Id="gdiplus.dll" Guid="{CDC452C6-BE21-4041-8034-F26872D13EC7}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="gdiplus.dll" Name="gdiplus.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\gdiplus.dll" />
+            </Component>
+            <Component Id="fmcomdrv.fxd" Guid="{22933A8C-DCFB-4763-BD0B-D299C9B97B38}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmcomdrv.fxd" Name="fmcomdrv.fxd" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmcomdrv.fxd" />
+              <File Id="resetmdm.dev" Name="resetmdm.dev" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\resetmdm.dev" CompanionFile="fmcomdrv.fxd" />
+              <File Id="modems.dev" Name="modems.dev" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\modems.dev" CompanionFile="fmcomdrv.fxd" />
+            </Component>
+            <Component Id="libeay32.dll" Guid="{7EA9F3C2-5955-420F-8B88-486868E0A4FF}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="libeay32.dll" Name="libeay32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\libeay32.dll" />
+            </Component>
+            <Component Id="rtfcvt32.dll" Guid="{4A3D660F-3C25-4DA9-94AC-556F851F2466}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="rtfcvt32.dll" Name="rtfcvt32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\rtfcvt32.dll" />
+            </Component>
+            <Component Id="FMstore.dll" Guid="{3EB44CA6-7DA8-4CAB-836D-6D5C1746CF4B}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="FMstore.dll" Name="FMstore.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FMstore.dll" />
+            </Component>
+            <Component Id="lineman.dll" Guid="{E13C04E4-8CE2-4827-84F9-734918EA1BBB}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="lineman.dll" Name="lineman.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\lineman.dll" />
+            </Component>
+            <Component Id="trb_ext.dll" Guid="{E562262A-4251-408B-B71C-03D5E3366B94}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="trb_ext.dll" Name="trb_ext.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\trb_ext.dll" />
+              <File Id="trb_ques.trb" Name="trb_ques.trb" Vital="no" DiskId="1" CompanionFile="trb_ext.dll" Source="$(var.SourceFiles)\File\trb_ques.trb" />
+              <File Id="filectrl.ver" Name="filectrl.ver" Vital="no" DiskId="1" CompanionFile="trb_ext.dll" Source="$(var.SourceFiles)\File\filectrl.ver" />
+            </Component>
+            <Component Id="InitCfgWiz.exe" Guid="{B90823AD-67AB-4495-AB4A-651F39A606B9}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="InitCfgWiz.exe" Name="InitCfgWiz.exe" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\InitCfgWiz.exe" />
+            </Component>
+            <Component Id="MsnStore.dll" Guid="{8AF10525-1063-4747-90AF-10B5AAF79103}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="MsnStore.dll" Name="MsnStore.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\MsnStore.dll" />
+            </Component>
+            <Component Id="textapi.dll" Guid="{59BF1973-37D4-4F74-9632-8BAE8E697805}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="textapi.dll" Name="textapi.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\textapi.dll" />
+            </Component>
+            <Component Id="Tiff32.dll" Guid="{87996E1B-7547-49A2-82F3-DBF4C3E99387}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="Tiff32.dll" Name="Tiff32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\Tiff32.dll" />
+            </Component>
+            <Component Id="fmimport.exe" Guid="{37241C19-06A1-46F8-8939-1178A1408361}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmimport.exe" Name="fmimport.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmimport.exe" />
+            </Component>
+            <Component Id="tiffcvt_gdiplus.dll" Guid="{5A029B0D-6D74-4B92-8E32-3B4933344420}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="tiffcvt_gdiplus.dll" Name="tiffcvt_gdiplus.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\tiffcvt_gdiplus.dll" />
+            </Component>
+            <Component Id="fmservic.exe" Guid="{C34357CA-DD4E-418E-81BB-3E3058DCF77B}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmservic.exe" Name="fmservic.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmservic.exe" />
+              <ServiceInstall Id="fmservic" Name="FAXmaker Fax Server" DisplayName="GFI FaxMaker Fax Server" Type="ownProcess" Start="auto" ErrorControl="ignore" Account="[LOGIN]" Password="[PASSWORD]" Description="Fax server engine that sends and receives faxes.">
+                <ServiceDependency Id="MSMQ" />
+              </ServiceInstall>
+            </Component>
+            <Component Id="MMICOM.dll" Guid="{8170E5EB-1990-4BC7-8B2D-53C21C9F8395}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="MMICOM.dll" Name="MMICOM.dll" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\MMICOM.dll" />
+            </Component>
+            <Component Id="fmsrv2000drv.fxd" Guid="{9122FCC9-C541-4FB9-BF7E-7A5DFF51BA5D}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmsrv2000drv.fxd" Name="fmsrv2000drv.fxd" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmsrv2000drv.fxd" />
+            </Component>
+            <Component Id="userutil.dll" Guid="{829D19B5-2CA8-454F-A504-C979E91EC18E}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="userutil.dll" Name="userutil.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\userutil.dll" />
+            </Component>
+            <Component Id="ssleay32.dll" Guid="{C6091B75-B46B-4C00-901C-5E2B90018689}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ssleay32.dll" />
+            </Component>
+            <Component Id="repprint.dll" Guid="{EC289CDE-9B47-49F9-90BA-99D19314BC09}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="repprint.dll" Name="repprint.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\repprint.dll" />
+            </Component>
+            <Component Id="gfiphrasesearch.dll" Guid="{F6576949-E19B-4D15-B590-B40621A30D98}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="gfiphrasesearch.dll" Name="gfiphrasesearch.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\gfiphrasesearch.dll" />
+            </Component>
+            <Component Id="fmserver.exe" Guid="{3B6125FB-8A09-4B8F-A86C-1263D8447E7A}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmserver.exe" Name="fmserver.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmserver.exe" />
+            </Component>
+            <Component Id="faxfrmt.dll" Guid="{CCBAC62D-DC9E-4C60-82B3-65ADF3A8947B}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="faxfrmt.dll" Name="faxfrmt.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\faxfrmt.dll" />
+            </Component>
+            <Component Id="XpdfViewer.dll" Guid="{68D64130-A614-4E6C-8365-C607EDE4BCC2}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="XpdfViewer.dll" Name="XpdfViewer.dll" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\XpdfViewer.dll" />
+            </Component>
+            <Component Id="trouble.exe" Guid="{97729127-B28E-4ADC-941A-84BB4C87790C}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="trouble.exe" Name="trouble.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\trouble.exe" />
+            </Component>
+            <Component Id="TelStore.dll" Guid="{4D28982C-A1B6-4482-8425-AB0A05BBACD6}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="TelStore.dll" Name="TelStore.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\TelStore.dll" />
+            </Component>
+            <Component Id="fm_mon.dll" Guid="{5C6814BD-8519-4345-A84E-DB624C0C0FBB}">
+              <Condition>FAXSERVER=1 OR REMOTEMONITOR=1</Condition>
+              <File Id="fm_mon.dll" Name="fm_mon.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\fm_mon.dll" />
+            </Component>
+            <Component Id="fmon_ax.dll" Guid="{B203BA0E-33C7-4E57-AB2F-6C65ED00D440}">
+              <Condition>FAXSERVER=1 OR REMOTEMONITOR=1</Condition>
+              <File Id="fmon_ax.dll" Name="fmon_ax.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\fmon_ax.dll" />
+            </Component>
+            <Component Id="fmconfig.dll" Guid="{08598DDC-2AC2-4511-BFBB-F44B4821221F}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmconfig.dll" Name="fmconfig.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\fmconfig.dll" />
+            </Component>
+            <Component Id="Clickatell_COMAPI.dll" Guid="{82BB4031-1B20-42AE-BCB0-6B0A2C3AE7D7}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="Clickatell_COMAPI.dll" Name="Clickatell_COMAPI.dll" KeyPath="yes"  Vital="no" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\Clickatell_COMAPI.dll" />
+            </Component>
+            <Component Id="fmcfgdb.dll" Guid="{85986633-8C1B-481A-8FEE-DF033AA15C08}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmcfgdb.dll" Name="fmcfgdb.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\fmcfgdb.dll" />
+            </Component>
+            <Component Id="llPDFLibX.dll" Guid="{A7536F60-50A3-428E-BFF7-DA85A534418A}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="llPDFLibX.dll" Name="llPDFLibX.dll" KeyPath="yes"  Vital="no" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\llPDFLibX.dll" />
+            </Component>
+            <Component Id="gfiadrbk.dll" Guid="{3081D18D-3518-4B1C-B53F-48A7F5ED7194}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="gfiadrbk.dll" Name="gfiadrbk.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\gfiadrbk.dll" />
+            </Component>
+            <Component Id="fmimport.ger" Guid="{C04A88F0-4C66-4918-9E49-7A3FF4AAC7C3}">
+              <Condition>(LANGUAGE ~="german") AND ((FAXSERVER=1) OR (REMOTEMONITOR=1))</Condition>
+              <File Id="fmimport.ger" Name="fmimport.ger" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmimport.ger" />
+            </Component>
+            <Component Id="doccvt.ini" Guid="{DEE39AC7-B2DB-416F-AC46-1ABF82FFBE7E}" KeyPath="yes" Permanent="yes">
+              <Condition>FAXSERVER=1 AND VersionNT&lt;602</Condition>
+              <IniFile Id="jpeg" Action="addLine" Directory="INSTALLDIR" Key="jpeg" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="jpg" Action="addLine" Directory="INSTALLDIR" Key="jpg" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="gif" Action="addLine" Directory="INSTALLDIR" Key="gif" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="png" Action="addLine" Directory="INSTALLDIR" Key="png" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="htm" Action="addLine" Directory="INSTALLDIR" Key="htm" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="ignore_extensions" Action="addLine" Directory="INSTALLDIR" Key="ignore_extensions" Name="doccvt.ini" Section="doccvt" Value="p7s;vcf;dat" />
+              <IniFile Id="html" Action="addLine" Directory="INSTALLDIR" Key="html" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+              <IniFile Id="wri" Action="addLine" Directory="INSTALLDIR" Key="wri" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="snp" Action="addLine" Directory="INSTALLDIR" Key="snp" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="doc" Action="addLine" Directory="INSTALLDIR" Key="doc" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="docx" Action="addLine" Directory="INSTALLDIR" Key="docx" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="pdf" Action="addLine" Directory="INSTALLDIR" Key="pdf" Name="doccvt.ini" Section="internal_converters" Value="print_pdf.exe" />
+              <IniFile Id="xlsx" Action="addLine" Directory="INSTALLDIR" Key="xlsx" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="xls" Action="addLine" Directory="INSTALLDIR" Key="xls" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="mht" Action="addLine" Directory="INSTALLDIR" Key="mht" Name="doccvt.ini" Section="internal_converters" Value="print_html.exe" />
+            </Component>
+            <Component Id="dleupg.exe" Guid="{CAC49D1E-BA52-4CB8-8BE1-E9BD1C99101D}">
+              <File Id="dleupg.exe" Name="dleupg.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\dleupg.exe" />
+            </Component>
+            <Component Id="print_html2.exe" Guid="{58071DCE-1606-41C5-B5CF-A63B014AB1ED}">
+              <File Id="print_html2.exe" Name="print_html2.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\print_html2.exe" />
+            </Component>
+            <Component Id="msvcr80.dll" Guid="{728227ED-8875-4DEC-9E34-83D2D701B555}">
+              <File Id="msvcr80.dll" Name="msvcr80.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcr80.dll" />
+              <File Id="Microsoft.VC80.CRT.manifest" Name="Microsoft.VC80.CRT.manifest"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Microsoft.VC80.CRT.manifest" />
+            </Component>
+            <Component Id="prntinst.dll" Guid="{AFCB724C-93E5-4B3F-B2F0-5E92F0DC6BA6}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="prntinst.dll1" Name="prntinst.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\prntinst.dll1" />
+            </Component>
+            <Component Id="XCAPI_Installer" Guid="{704A1EB7-70F5-47E4-A512-AAA22BB3A079}">
+              <File Id="XCAPI_Install_3_3_178a_without_hardlock_driver.exe" Name="XCAPI_Install.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\XCAPI_Install_3_3_178a_without_hardlock_driver.exe" />
+            </Component>
+            <Component Id="leave_installed" Guid="{3ED425E8-69AD-4C0C-96F9-358FE6A5AD91}" Permanent="yes">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <RegistryValue Id="registry1" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice" Name="FAXMAKER PATH" Value="[INSTALLDIR]" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="gfi_log.dll" Guid="{9B763D2F-A94D-4604-97A6-EE391C32BA8A}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="gfi_log.dll" Name="gfi_log.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\gfi_log.dll" />
+            </Component>
+            <Component Id="gfi_log_x64.dll" Guid="{FD5F9B0D-975D-4ffb-A5BE-DE5FE5273E9B}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="gfi_log_x64.dll" Name="gfi_log_x64.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\gfi_log_x64.dll" />
+            </Component>
+            <Component Id="fmcmn_rc.dll" Guid="{3B47851E-F80C-429C-B196-04BC6BFD7724}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmcmn_rc.dll" Name="fmcmn_rc.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmcmn_rc.dll" />
+            </Component>
+            <Component Id="CopyME6UDBAndUrlFiles" Guid="{EFB36996-D317-4B1A-8099-B67AC5C5B34A}" KeyPath="yes">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <CopyFile Id="me6udb.dll" FileId="me6udb.dll" DestinationDirectory="INSTALLDIR" />
+              <CopyFile Id="GFI_Website.url" FileId="GFI_Website.url" DestinationDirectory="INSTALLDIR" />
+              <CopyFile Id="GFI_Support_Page.url" FileId="GFI_Support_Page.url" DestinationDirectory="INSTALLDIR" />
+            </Component>
+            <Component Id="autocheck.dll" Guid="{6D6C7910-8C5D-4F55-87F2-EE42D9AD4C21}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="autocheck.dll" Name="autocheck.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\autocheck.dll" />
+            </Component>
+            <Component Id="dlecfg.dll" Guid="{B674BD1F-F540-4636-92D5-6CBBEE12DEBC}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="dlecfg.dll" Name="dlecfg.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\dlecfg.dll" />
+            </Component>
+            <Component Id="fmarchiver.dll" Guid="{949A4D43-F860-49D7-90E6-CD7FF3970731}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmarchiver.dll" Name="fmarchiver.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmarchiver.dll" />
+            </Component>
+            <Component Id="config.mdb" Guid="{4B79EBD4-4D17-4264-86DB-8719EAB123BE}" NeverOverwrite="yes" Permanent="yes">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="config.mdb" Name="config.mdb" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\config.mdb" />
+            </Component>
+            <Component Id="htmlayout.dll" Guid="{57BC6D96-A9C6-420D-9445-1ED78DC24296}">
+              <File Id="htmlayout.dll" Name="htmlayout.dll" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\htmlayout.dll" />
+            </Component>
+            <Component Id="Tnef2Mime.dll" Guid="{206796DC-74D1-43C6-85F5-475DAF2BA737}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="Tnef2Mime.dll" Name="Tnef2Mime.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\Tnef2Mime.dll" />
+            </Component>
+            <Component Id="svcrst.exe" Guid="{BE50DCE7-F8FB-4486-888A-DA07AB27E9F8}">
+              <File Id="svcrst.exe" Name="svcrst.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\svcrst.exe" />
+            </Component>
+            <Component Id="fngen.dll" Guid="{46DA8264-3BEE-42F3-976E-1D9ECBC58D3C}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fngen.dll" Name="fngen.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fngen.dll" />
+            </Component>
+            <Component Id="msvcp90.dll" Guid="{5667367B-530A-4ED4-AE8F-4615B591FBEE}">
+              <File Id="msvcp90.dll" Name="msvcp90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcp90.dll" />
+            </Component>
+            <Component Id="setlite.dll" Guid="{6088D22D-4475-496B-8DDC-E26E2E5C61C6}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="setlite.dll" Name="setlite.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\setlite.dll" />
+            </Component>
+            <Component Id="basiclog.dll" Guid="{9323F940-9F1F-4BAC-B779-D43C6BE4A279}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="basiclog.dll" Name="basiclog.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\basiclog.dll" />
+            </Component>
+            <Component Id="utf8_slayer.dll" Guid="{EEE0F24C-71D4-4DE7-8414-480B711773D3}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="utf8_slayer.dll" Name="utf8_slayer.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\utf8_slayer.dll" />
+            </Component>
+            <Component Id="html_slayer.dll" Guid="{62C4E58A-2CFE-4737-8A52-91C99C2353C9}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="html_slayer.dll" Name="html_slayer.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\html_slayer.dll" />
+            </Component>
+            <Component Id="xmlapifolder_reg" Guid="{AF1D280A-1457-46F9-A988-BBEBB5A8FA70}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry318" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="XMLAPIFolder" Value="[INSTALLDIR]XMLAPI" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="msvcp80.dll" Guid="{41F42CC7-4B19-4510-86A5-CF0B2466FAD9}">
+              <File Id="msvcp80.dll" Name="msvcp80.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcp80.dll" />
+            </Component>
+            <Component Id="fmcapidrv.fxd" Guid="{21916B6A-EDF5-4959-B07A-180DFE1A5F35}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmcapidrv.fxd" Name="fmcapidrv.fxd" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmcapidrv.fxd" />
+            </Component>
+            <Component Id="msvcm90.dll" Guid="{71291E8F-4F23-4AF4-B432-F0F3FD2EE87A}">
+              <File Id="msvcm90.dll" Name="msvcm90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcm90.dll" />
+            </Component>
+            <Component Id="registry_ecom" Guid="{998803D3-91C3-4492-A2F1-6ABCEC8EECF7}">
+              <RegistryValue Id="registry425" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\ECOM" Name="CHURL" Value="[CHURL]" Type="string" KeyPath="yes" />
+            </Component>
+            <!--
+            <Component Id="npqf_folder_x86" Guid="{E2FF460E-A259-49C4-94B4-D4F5E648945E}" KeyPath="yes">
+              <Condition>VersionNT&gt;=501 AND FAXSERVER=1</Condition>
+              <CreateFolder Directory="i3861" />
+            </Component>
+            <Component Id="npqf_folder_x64" Guid="{F7321865-5FC2-4A23-9E45-8B298196BB1F}" KeyPath="yes">
+              <Condition>VersionNT&gt;=501 AND FAXSERVER=1</Condition>
+              <CreateFolder Directory="amd64" />
+            </Component>
+            -->
+            <Component Id="autopatchchk.dll" Guid="{04D15EB8-8D13-4B11-A477-66DCBE06D1E8}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="autopatchchk.dll" Name="autopatchchk.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\autopatchchk.dll" />
+            </Component>
+            <Component Id="registry_debug" Guid="{9343272D-82F4-49E8-B1AF-9D22F66C0BEF}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry8" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DEBUG" Value="0" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="AutoCheck2.dll" Guid="{49A245F9-088A-4120-9B94-91F2AFAB58F9}" Permanent="yes">
+              <Condition>FAXSERVER=1 OR REMOTEMONITOR=1</Condition>
+              <File Id="autocheck2.dll" Name="autocheck2.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\autocheck2.dll" />
+            </Component>
+            <Component Id="fmp_drv_x86.dll" Guid="{66B3D402-BF0E-4D70-9503-556C5A777B7F}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmp_drv_x86.dll" Name="fmp_drv.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmp_drv.dll" />
+            </Component>
+            <Component Id="fmp_drv.ini" Guid="{8A9BD532-BABD-48B4-BA6D-C8521DBAC1DC}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmp_drv.ini" Name="fmp_drv.ini" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmp_drv.ini" />
+            </Component>
+            <Component Id="fmp_invertpixels" Guid="{FE7691FE-670E-480F-80C0-17DACA91E42E}">
+              <Condition>(VersionNT&lt;501) AND FAXSERVER=1</Condition>
+              <RegistryValue Id="registry336" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="fmp_invertpixels" Value="1" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="itucolor.dll" Guid="{159183BC-9D95-4F7F-8878-9921A637B9D7}">
+              <File Id="ITUColor.dll" Name="ITUColor.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ITUColor.dll" />
+            </Component>
+            <Component Id="libtiff.dll" Guid="{68B252E8-FE7E-4511-A94E-DDB9272E20CC}">
+              <File Id="libtiff.dll" Name="libtiff.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\libtiff.dll" />
+            </Component>
+            <Component Id="fmcfgdb_old.dll" Guid="{C0E329A2-2530-4329-9D4E-58857727859C}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmcfgdb_old.dll" Name="fmcfgdb_old.dll" KeyPath="yes"  Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\fmcfgdb_old.dll" />
+            </Component>
+            <Component Id="FMNotifications.dll" Guid="{E5A63C36-96BB-4B73-9326-FE6C4143DDB1}">
+              <File Id="fmNotifications.dll" Name="fmNotifications.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmNotifications.dll" />
+            </Component>
+            <Component Id="msvcr90.dll" Guid="{616E1AC8-4B76-4705-B4D1-4902C6DDE81D}">
+              <File Id="msvcr90.dll" Name="msvcr90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcr90.dll" />
+              <File Id="Microsoft.VC90.CRT.manifest" Name="Microsoft.VC90.CRT.manifest"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Microsoft.VC90.CRT.manifest" />
+            </Component>
+            <Component Id="RegAdvancedSettings" Guid="{24D7504E-BEDF-4072-AB90-AFB8659828F0}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry48" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="AdvancedSettings" Value="0" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="Notifications.dll" Guid="{DB10F7C9-E754-4223-9DEC-0185D62C7448}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="Notifications.dll" Name="Notifications.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\Notifications.dll" />
+            </Component>
+            <Component Id="fmdb_rul.mdb" Guid="{6F94E5E2-724C-4245-ACB6-8147734FC3BD}" NeverOverwrite="yes" Permanent="yes">
+              <File Id="fmdb_rul.mdb" Name="fmdb_rul.mdb" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\fmdb_rul.mdb" />
+            </Component>
+            <Component Id="allow_same_number_dial_registry" Guid="{BBBE7F1B-F88A-4220-B9A3-13C8B660DDFE}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry422" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\fmserver_advanced" Name="allow_same_number_dial" Value="1" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="fmcfgupg.exe" Guid="{C17B5EE5-1F16-45FD-912F-7A508C5C9D39}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmcfgupg.exe" Name="fmcfgupg.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmcfgupg.exe" />
+            </Component>
+            <Component Id="no_user_cache" Guid="{816321FA-9E4B-49BF-BA9C-75DF2B80601A}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry423" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\fmserver_advanced" Name="no_user_cache" Value="1" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="gsmservicesiface.dll" Guid="{D8DB092D-1C60-4998-B77B-2FFC4E8BE7ED}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="GSMServicesInterface.dll" Name="GSMServicesInterface.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\GSMServicesInterface.dll" />
+            </Component>
+            <Component Id="RegAutoPrint121" Guid="{3D165DE2-BE41-4A4F-A2A5-310EFCE4BB4A}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry49" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="AutoPrint121" Value="0" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="RegSyncOcr" Guid="{749C19AB-0619-4573-AFC4-B7C657459860}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry337" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="sync_ocr" Value="1" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="RegDomainFAX" Guid="{A2C9AA87-5800-464F-B519-AB0A51E509FB}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry50" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DomainFax" Value="[DOMAINFAX]" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="RegDomainSMS" Guid="{A38FDB9E-BF96-437B-AED7-3DAA72B03A93}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry51" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DomainSMS" Value="[DOMAINSMS]" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="RegAddressTypes" Guid="{D2DDC4C4-EE46-4039-B059-1B0934F54E0E}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry53" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Sink" Name="AddressTypes" Value="FAX;SMS" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="RegDomain" Guid="{5993B4E6-3086-4D8A-A105-02F794140268}" NeverOverwrite="yes" Permanent="yes">
+              <RegistryValue Id="registry52" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Sink" Name="Domain" Value="[DOMAINFAX];[DOMAINSMS]" Type="string" KeyPath="yes" />
+            </Component>
+            <Component Id="faxmaker.cat" Guid="{E33874EA-3DC0-41FD-BD53-8300BA727438}">
+              <File Id="faxmaker.cat_" Name="faxmaker.cat " KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\faxmaker.cat_" />
+            </Component>
+            <Component Id="fmgsmcomdrv.fxd" Guid="{985B8224-93F4-4380-89BD-799010F5FE50}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmGSMcomdrv.Fxd" Name="fmGSMcomdrv.Fxd" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmGSMcomdrv.Fxd" />
+            </Component>
+            <Component Id="ipworksssl8.dll" Guid="{21365300-0E73-41EB-8FEB-7163DAD5B192}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="ipwssl6.dll" Name="ipworksssl8.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ipwssl6.dll" />
+            </Component>
+            <Component Id="fmetherfax.fxd" Guid="{2E5E0F77-48EA-4902-A2E5-5A0E00024268}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="fmetherfax.fxd" Name="fmetherfax.fxd" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmetherfax.fxd" />
+            </Component>
+            <Component Id="shex" Guid="{73300BAD-5203-4EFF-845A-B6D13A731A97}">
+              <File Id="shex.exe" Name="shex.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\shex.exe" />
+            </Component>
+            <Component Id="gfidevicedetection.dll" Guid="{C54A111D-54C3-4A9E-970C-6A9DD92233A0}">
+              <File Id="gfidevicedetection.dll" Name="gfidevicedetection.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\gfidevicedetection.dll" />
+            </Component>
+            <Component Id="ch.dll" Guid="{22461A45-1008-41BF-85D7-55A4BA6EEE90}">
+              <File Id="ch.dll" Name="ch.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ch.dll" />
+              <RemoveFile Id="RemoveFile" Directory="INSTALLDIR" Name="ch_mmf.dat" On="install" />
+            </Component>
+            <Component Id="GSMConfigUpgradeTool" Guid="{61E0249F-E93B-469C-B6CF-34724FB8C27F}">
+              <File Id="GSMConfigUpgradeTool.exe" Name="GSMConfigUpgradeTool.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\GSMConfigUpgradeTool.exe" />
+            </Component>
+            <Component Id="SendFaxSubmitter.dll" Guid="{3216B08A-CFBA-4E4C-8947-6D8F20192A8C}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="SendFaxSubmitter.dll" Name="SendFaxSubmitter.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\SendFaxSubmitter.dll" />
+            </Component>
+            <Component Id="fmlserver.dll" Guid="{C4E33652-B23B-4077-8AD5-028E984A8FFB}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmlserver.dll" Name="fmlserver.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmlserver.dll" />
+            </Component>
+            <Component Id="fm_ofs.fxd" Guid="{BE327E94-2485-4441-8202-9A2C0152C44E}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="FM_OFS.fxd" Name="FM_OFS.fxd" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FM_OFS.fxd" />
+              <File Id="cacerts.pem" Name="cacerts.pem" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\cacerts.pem" />
+            </Component>
+            <Component Id="fmlclient.dll" Guid="{0BC589C9-52E5-4F5F-AEC9-D24A45A784A4}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="fmlclient.dll" Name="fmlclient.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmlclient.dll" />
+            </Component>
+            <Component Id="FSTtoMDBConv.exe" Guid="{D9F313C9-2AAC-49A4-8BE2-D85012B28470}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="FSTsToMDBConv.exe" Name="FSTsToMDBConv.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FSTsToMDBConv.exe" />
+            </Component>
+            <Component Id="GFI.Common.Localization.dll" Guid="{8D0207CF-9387-4C61-9CFA-3C04D83A7736}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="GFI.Common.Localization.dll" Name="GFI.Common.Localization.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\GFI.Common.Localization.dll" />
+            </Component>
+            <Component Id="icudt48.dll" Guid="{AF175C3E-A27D-41EE-BBC3-5D24F351D8A4}">
+              <File Id="icudt48.dll" Name="icudt48.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\icudt48.dll" />
+            </Component>
+            <Component Id="icuin48.dll" Guid="{F721CF2F-57DE-4519-A45E-86D4B56A3B68}">
+              <File Id="icuin48.dll" Name="icuin48.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\icuin48.dll" />
+            </Component>
+            <Component Id="icuuc48.dll" Guid="{62CC4180-86F4-4739-BF6F-5BDFC6ED8C50}">
+              <File Id="icuuc48.dll" Name="icuuc48.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\icuuc48.dll" />
+            </Component>
+            <Component Id="msvcp100.dll" Guid="{571ACB04-4C4D-46DB-BFBA-E0F736835E99}">
+              <CopyFile Id="msvcp100.dll2" FileId="msvcp100.dll" DestinationDirectory="ocr" DestinationName="msvcp100.dll" />
+              <File Id="msvcp100.dll" Name="msvcp100.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcp100.dll" />
+            </Component>
+            <Component Id="msvcr100.dll" Guid="{3F75A24D-A2AB-4CC7-83B4-60D8191A383D}">
+              <CopyFile Id="msvcr100.dll1" FileId="msvcr100.dll" DestinationDirectory="ocr" DestinationName="msvcr100.dll" />
+              <CopyFile Id="MoveFile" SourceDirectory="INSTALLDIR" SourceName="msvcr100.dll" DestinationDirectory="ocr" DestinationName="msvcr100.dll" />
+              <File Id="msvcr100.dll" Name="msvcr100.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\msvcr100.dll" />
+            </Component>
+            <Component Id="RegNonWin2012Rendering" Guid="{63F4585F-1827-4DE4-87A4-C7E11C9E678D}">
+              <Condition>VersionNT64&lt;602</Condition>
+              <RegistryValue Id="registry434" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="render_with_mshtml" Value="1" Type="integer" KeyPath="yes" />
+            </Component>
+            <Component Id="RegWin2012Rendring" Guid="{11BFB488-7E7F-4B26-9CEB-D27EE1FB3ECB}">
+              <Condition>VersionNT64&gt;=602</Condition>
+              <RegistryValue Id="registry433" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="render_with_mshtml" Value="0" Type="integer" KeyPath="yes" />
+              <RegistryValue Id="registry432" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="render_with_mshtml" Value="0" Type="integer" />
+            </Component>
+            <Component Id="CfgStoreOld.dll" Guid="{BD7DDF55-A71A-4FFE-B044-9CA38A251945}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="CfgStoreOld.dll" Name="CfgStoreOld.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\CfgStoreOld.dll" />
+            </Component>
+            <Component Id="doccvt.ini_Win2012" Guid="{108785EC-FD5C-425F-B5A3-997203F8139C}" KeyPath="yes" Permanent="yes">
+              <Condition>FAXSERVER=1 AND VersionNT&gt;=602</Condition>
+              <IniFile Id="jpeg14" Action="addLine" Directory="INSTALLDIR" Key="jpeg" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="jpg9" Action="addLine" Directory="INSTALLDIR" Key="jpg" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="gif11" Action="addLine" Directory="INSTALLDIR" Key="gif" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="png12" Action="addLine" Directory="INSTALLDIR" Key="png" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="htm8" Action="addLine" Directory="INSTALLDIR" Key="htm" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="ignore_extensions7" Action="addLine" Directory="INSTALLDIR" Key="ignore_extensions" Name="doccvt.ini" Section="doccvt" Value="p7s;vcf;dat" />
+              <IniFile Id="html15" Action="addLine" Directory="INSTALLDIR" Key="html" Name="doccvt.ini" Section="internal_converters" Value="print_html2.exe" />
+              <IniFile Id="wri2" Action="addLine" Directory="INSTALLDIR" Key="wri" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="snp5" Action="addLine" Directory="INSTALLDIR" Key="snp" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="doc6" Action="addLine" Directory="INSTALLDIR" Key="doc" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="docx4" Action="addLine" Directory="INSTALLDIR" Key="docx" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="pdf10" Action="addLine" Directory="INSTALLDIR" Key="pdf" Name="doccvt.ini" Section="internal_converters" Value="print_pdf.exe" />
+              <IniFile Id="xlsx3" Action="addLine" Directory="INSTALLDIR" Key="xlsx" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+              <IniFile Id="xls1" Action="addLine" Directory="INSTALLDIR" Key="xls" Name="doccvt.ini" Section="allowed_extensions" Value="[~]" />
+            </Component>
+            <Component Id="FMDataContract.dll" Guid="{4465516B-863F-42DF-856F-D974C4F1993D}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FMDataContract.dll" Name="FMDataContract.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FMDataContract.dll" />
+            </Component>
+            <Component Id="MSMQReceiver.dll" Guid="{139F19A2-1915-406B-861B-AD9C96F6286A}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="MSMQReceiver.dll" Name="MSMQReceiver.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\MSMQReceiver.dll" />
+            </Component>
+            <Component Id="MsnStoreOld.dll" Guid="{659A96B4-D001-45C2-9543-2257E057C8D9}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="MsnStoreOld.dll" Name="MsnStoreOld.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\MsnStoreOld.dll" />
+            </Component>
+            <Component Id="UserAuthentication.dll" Guid="{DE982B92-90C9-42AE-8D79-83AD1E7EE7D7}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="UserAuthentication.dll" Name="UserAuthentication.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\UserAuthentication.dll" />
+            </Component>
+            <Component Id="FMWSAPIHost.dll" Guid="{22C0BB92-4851-4370-A920-2459FC956E93}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FMWSAPIHost.dll" Name="FMWSAPIHost.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FMWSAPIHost.dll" />
+            </Component>
+            <Component Id="ML.Svc.Base.dll" Guid="{BE4FE093-6329-497A-8927-FD98F56F7A40}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="ML.Svc.Base.dll" Name="ML.Svc.Base.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ML.Svc.Base.dll" />
+            </Component>
+            <Component Id="TesStoreOld.dll" Guid="{D013018B-5454-42C6-814E-3D5D5BD1E75A}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="TelStoreOld.dll" Name="TelStoreOld.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\TelStoreOld.dll" />
+            </Component>
+            <Component Id="FMWSAPI.Base.dll" Guid="{F0EBB560-AF83-4046-9F57-CB101052FAAC}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FMWSAPI.Base.dll" Name="FMWSAPI.Base.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FMWSAPI.Base.dll" />
+            </Component>
+            <Component Id="WSAPI.dll" Guid="{A6D1F7E7-8ED8-42BF-B2B0-9CCBD8998D74}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="WSAPI.dll" Name="WSAPI.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\WSAPI.dll" />
+            </Component>
+            <Component Id="fmBladerwaredrv.dll" Guid="{3FA322C0-7219-4B9B-A094-537D3D2D74E6}">
+              <File Id="fmBladewaredrv.dll" Name="fmBladewaredrv.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmBladewaredrv.dll" />
+            </Component>
+            <Component Id="ML.Svc.Attendant.exe" Guid="{4C667C11-563A-4E44-A7A3-566B0E99740F}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="ML.Svc.Attendant.exe" Name="ML.Svc.Attendant.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ML.Svc.Attendant.exe" />
+              <File Id="asettings.xml" Name="asettings.xml"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\asettings.xml" />
+              <File Id="ML.Svc.Attendant.exe.config" Name="ML.Svc.Attendant.exe.config"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\ML.Svc.Attendant.exe.config" />
+              <ServiceInstall Id="Attendant" Name="GFI FaxMaker WSAPI" DisplayName="GFI FaxMaker WSAPI" Type="ownProcess" Start="auto" ErrorControl="ignore" Arguments="-service" Description="GFI FaxMaker Web Service API Attendant Service">
+                <ServiceDependency Id="MSMQ" />
+              </ServiceInstall>
+            </Component>
+            <Component Id="RetentionManager.dll" Guid="{E4ED55A5-CD70-4534-B3DB-4C2FEB028915}">
+              <File Id="RetentionManager.dll" Name="RetentionManager.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\RetentionManager.dll" />
+            </Component>
+            <Component Id="FireBird_DBEngine.dll" Guid="{500B5579-9741-4B52-BBC4-DB45DFF98BA6}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FireBird_DBEngine.dll" Name="FireBird_DBEngine.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FireBird_DBEngine.dll" />
+            </Component>
+            <Component Id="prophold.dll" Guid="{041CE2EA-89D2-4B0C-94B2-F6554612EC62}">
+              <File Id="PropHold.dll" Name="PropHold.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\PropHold.dll" />
+            </Component>
+            <Component Id="fmOCRTool.exe" Guid="{C37F4352-2985-4739-9DEA-48ED6AE60151}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="fmOCRTool.exe" Name="fmOCRTool.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmOCRTool.exe" />
+            </Component>
+            <Component Id="GFI.Common.LocalizedException.dll" Guid="{DF061BF4-0B37-441E-8D50-9E4C922D378E}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="GFI.Common.LocalizedException.dll" Name="GFI.Common.LocalizedException.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\GFI.Common.LocalizedException.dll" />
+            </Component>
+            <Component Id="outofprocdrv.exe" Guid="{9384599A-9944-4627-9524-327F9EB293D4}">
+              <File Id="outofprocdrv.exe" Name="outofprocdrv.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\outofprocdrv.exe" />
+            </Component>
+            <Component Id="fmRPCdrv.fxd" Guid="{1F86599C-6C36-4D57-96DE-8AEE34826569}">
+              <File Id="fmRPCdrv.fxd" Name="fmRPCdrv.fxd" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fmRPCdrv.fxd" />
+            </Component>
+            <Component Id="usrdbupg.exe" Guid="{6A3719B4-DC8B-428F-9A1F-E49D2756C0CC}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="usrdbupg.exe" Name="usrdbupg.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\usrdbupg.exe" />
+            </Component>
+            <Component Id="SangomaConfigUI" Guid="{C38C05F9-58A9-4488-B6EA-FD7C0E58BFCA}">
+              <File Id="SangomaConfigUI.exe" Name="SangomaConfigUI.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\SangomaConfigUI.exe" />
+            </Component>
+            <Component Id="FMWSAPI.Resources.dll" Guid="{4389E063-5624-46D2-BAF5-5EE161CEEA9B}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FMWSAPI.Resources.dll" Name="FMWSAPI.Resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FMWSAPI.Resources.dll" />
+            </Component>
+            <Component Id="fbembed.dll" Guid="{B757D47E-FFFA-47E6-AC4F-F2BBE9E9BA34}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="fbembed.dll" Name="fbembed.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\fbembed.dll" />
+            </Component>
+            <Component Id="FirebirdSql.Data.FirebirdClient.dll" Guid="{D8DAC9D0-8C99-43B7-82D4-B35D10571E93}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="FirebirdSql.Data.FirebirdClient.dll" Name="FirebirdSql.Data.FirebirdClient.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\FirebirdSql.Data.FirebirdClient.dll" />
+            </Component>
+            <Component Id="icuuc30.dll" Guid="{B0D0AF43-1946-460C-8BF7-C6B0DD037DCE}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="icuuc30.dll" Name="icuuc30.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\icuuc30.dll" />
+            </Component>
+            <Component Id="icuin30.dll" Guid="{295FA558-C864-4011-AA97-426374CA017A}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="icuin30.dll" Name="icuin30.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\icuin30.dll" />
+            </Component>
+            <Component Id="icudt30.dll" Guid="{CEB06A5F-9C00-492A-887C-11829EA75501}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="icudt30.dll" Name="icudt30.dll" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\icudt30.dll" />
+            </Component>
+            <Component Id="ib_util.dll" Guid="{66FFFCAF-2E3B-4387-9A30-463FE45E4572}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="ib_util.dll" Name="ib_util.dll" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\ib_util.dll" />
+            </Component>
+            <Component Id="GFI.Common.Tracing.dll" Guid="{5CBD5A53-DBA3-4FFE-A2D8-0A42D287B5A9}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <CopyFile Id="GFI.Common.Tracing.dll" FileId="GFI.Common.Tracing.dll" DestinationDirectory="ArchiveViewer" DestinationName="GFI.Common.Tracing.dll" />
+              <File Id="GFI.Common.Tracing.dll" Name="GFI.Common.Tracing.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\GFI.Common.Tracing.dll" />
+            </Component>
+            <Component Id="GFIUserDB.ML.dll" Guid="{E3BDFA03-E0DC-4434-B7F2-DFE672FE94A9}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="GFIUserDB.ML.dll" Name="GFIUserDB.ML.dll" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\GFIUserDB.ML.dll" />
+            </Component>
+            <Component Id="MiddleMan.ML.dll" Guid="{22F73C4B-D14C-4DB1-AB6E-35D0069B7ADE}">
+              <Condition>(FAXSERVER=1)</Condition>
+              <File Id="MiddleMan.ML.dll" Name="MiddleMan.ML.dll" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\MiddleMan.ML.dll" />
+            </Component>
+            <Component Id="sinkadmin.exe" Guid="{FAF2C221-54AE-4F1A-AA11-4B85819A5117}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="sinkadmin.exe" Name="sinkadmin.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin.exe" />
+              <File Id="sinkadmin.exe.jdb" Name="sinkadmin.exe.jdb"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin.exe.jdb" />
+            </Component>
+            <Component Id="FMSink.dll" Guid="{9AA2ED48-D12F-4AFA-8F73-BC63745DAF08}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="FMSink.dll" Name="FMSink.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\FMSink.dll" />
+              <File Id="sink_register.cmd" Name="sink_register.cmd"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sink_register.cmd" />
+              <File Id="sink_unregister.cmd" Name="sink_unregister.cmd"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sink_unregister.cmd" />
+            </Component>
+            <Component Id="sinkadmin.dll" Guid="{C79236C3-D195-4E79-A1BE-B5821F8450EC}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="sinkadmin.dll" Name="sinkadmin.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin.dll" />
+            </Component>
+
+            <Component Id="sinkadmin_x64.exe" Guid="{4397A32A-309A-4f5d-BB33-C45959090956}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="sinkadmin_x64.exe" Name="sinkadmin_x64.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin_x64.exe" />
+              <File Id="sinkadmin_x64.exe.jdb" Name="sinkadmin_x64.exe.jdb"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin_x64.exe.jdb" />
+            </Component>
+            <Component Id="FMSink_x64.dll" Guid="{2D5822D4-7819-4ab1-B9A8-F1ED8C8C10A7}">
+              <Condition>FAXSERVER=1</Condition>
+              <File Id="FMSink_x64.dll" Name="FMSink_x64.dll" KeyPath="yes" Vital="no" Checksum="yes" SelfRegCost="0" DiskId="1" Source="$(var.SourceFiles)\File\FMSink_x64.dll" />
+              <File Id="sink_register_x64.cmd" Name="sink_register_x64.cmd"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sink_register_x64.cmd" />
+              <File Id="sink_unregister_x64.cmd" Name="sink_unregister_x64.cmd"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\sink_unregister_x64.cmd" />
+            </Component>
+            <Component Id="sinkadmin_x64.dll" Guid="{6CA8A23D-943D-4abe-A2FF-96E63688458E}">
+              <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+              <File Id="sinkadmin_x64.dll" Name="sinkadmin_x64.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\sinkadmin_x64.dll" />
+            </Component>
+
+            <Component Id="FCAdmin.exe" Guid="{17333A40-E9CE-475D-BCA0-48647A17EB69}">
+              <File Id="FCAdmin.exe" KeyPath="yes" Source="$(var.SourceFiles)\File\Setup\FCAdmin.exe" />
+              <File Id="FCAdmin.exe.config" Source="$(var.SourceFiles)\File\Setup\FCAdmin.exe.config" />
+            </Component>
+            <Component Id="ForeignConnector.dll" Guid="{7716B36C-D4B1-427D-83C3-030D3A7AEA8E}">
+              <File Id="ForeignConnector.dll" KeyPath="yes" Source="$(var.SourceFiles)\File\Setup\ForeignConnector.dll" />
+            </Component>
+            <Component Id="PSExec.exe" Guid="{9853734C-DA2E-4478-A12A-D479705AC3E8}">
+              <File Id="PSExec.exe" KeyPath="yes" Source="$(var.SourceFiles)\File\Setup\PSExec.exe" />
+              <File Id="PSExec.exe.config" Source="$(var.SourceFiles)\File\Setup\PSExec.exe.config" />
+            </Component>
+
+
+            <Directory Id="FMPAMD64" Name="AMD64">
+              <Component Id="fmp_drv_x64.dll" Guid="{2544166B-671A-48ec-916D-AB8B60022639}">
+                <Condition>FAXSERVER=1</Condition>
+                <File Id="fmp_drv_x64.dll" Name="fmp_drv.dll" KeyPath="yes" Vital="yes" Source="$(var.SourceFiles)\File\AMD64\fmp_drv.dll"/>
+              </Component>
+            </Directory>
+
+            <Directory Id="data" Name="data">
+              <Directory Id="reports" Name="reports"/>
+              <Directory Id="attachments" Name="attachments"  />
+            </Directory>
+            <Directory Id="BROOKTROUT" Name="brooktrout" >
+              
+              <?if $(var.Platform)="x64"?>
+                <?define BrooktroutPkgName="brooktrout_tr1034_x64.exe"?>
+              <?else?>
+                <?define BrooktroutPkgName="brooktrout_tr1034.exe"?>
+              <?endif?>
+              
+              <Component Id="brooktrout_installer.exe" Guid="{7CE6EBF1-1F3F-4946-AF3A-2E4165C601A7}">
+                <Condition>FAXSERVER=1</Condition>
+                <File Id="brooktrout_installer.exe" Name="$(var.BrooktroutPkgName)" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Brooktrout\$(var.BrooktroutPkgName)" />
+              </Component>
+              
+              <?undef BrooktroutPkgName?>
+              
+            </Directory>
+            <Directory Id="XMLAPI" Name="XMLAPI" />
+            <Directory Id="t1fonts" Name="t1fonts">
+              <Component Id="xpdfvwr_fonts" Guid="{C1163A72-F92E-47DD-B215-07C046AC6A18}">
+                <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+                <File Id="d050000l.pfb" Name="d050000l.pfb" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\d050000l.pfb" />
+                <File Id="s050000l.pfb" Name="s050000l.pfb" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\s050000l.pfb" />
+                <File Id="README" Name="README" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\README" />
+                <File Id="COPYING" Name="COPYING" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\COPYING" />
+              </Component>
+            </Directory>
+            <Directory Id="coverpge" Name="coverpge">
+              <Component Id="FCover.rtf" Guid="{3B791481-C9A5-4BAB-ACA4-3A84BD888B25}" Permanent="yes">
+                <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+                <File Id="FCover.rtf" Name="FCover.rtf" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\FCover.rtf" />
+                <File Id="Fields.htm" Name="Fields.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Fields.htm" />
+                <File Id="Cover1.rtf" Name="Cover1.rtf" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Cover1.rtf" />
+                <File Id="Fields.rtf" Name="Fields.rtf" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Fields.rtf" />
+                <File Id="textapi.rtf" Name="textapi.rtf" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\textapi.rtf" />
+                <File Id="Cover.htm" Name="Cover.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Cover.htm" />
+                <File Id="FCover.htm" Name="FCover.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\FCover.htm" />
+                <File Id="Cover.rtf" Name="Cover.rtf" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Cover.rtf" />
+                <File Id="contemporary.htm" Name="contemporary.htm"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\contemporary.htm" />
+                <File Id="cinema.htm" Name="cinema.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\cinema.htm" />
+                <File Id="generic.htm" Name="generic.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\generic.htm" />
+                <File Id="feather.htm" Name="feather.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\feather.htm" />
+                <File Id="retro.htm" Name="retro.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\retro.htm" />
+                <File Id="patch.htm" Name="patch.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\patch.htm" />
+                <File Id="modern.htm" Name="modern.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\modern.htm" />
+                <File Id="triton.htm" Name="triton.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\triton.htm" />
+                <File Id="pixel.htm" Name="pixel.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\pixel.htm" />
+                <File Id="blot.htm" Name="blot.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\blot.htm" />
+                <File Id="railway.htm" Name="railway.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\railway.htm" />
+                <File Id="bouquet.htm" Name="bouquet.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\bouquet.htm" />
+                <File Id="textapi.htm" Name="textapi.htm" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\textapi.htm" />
+              </Component>
+              <Directory Id="images" Name="images">
+                <Component Id="_277log.gif" Guid="{6F0D4975-A5CC-4F5A-96D5-21CF0DFB0E6E}" Permanent="yes">
+                  <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+                  <File Id="_277log.gif" Name="277log.gif" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277log.gif" />
+                  <File Id="_277lhead.gif" Name="277lhead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277lhead.gif" />
+                  <File Id="_277ghead.gif" Name="277ghead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277ghead.gif" />
+                  <File Id="_277pic1a.gif" Name="277pic1a.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277pic1a.gif" />
+                  <File Id="_277khead.gif" Name="277khead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277khead.gif" />
+                  <File Id="_277fhead.gif" Name="277fhead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277fhead.gif" />
+                  <File Id="_277ahead.gif" Name="277ahead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277ahead.gif" />
+                  <File Id="_277dotssm.gif" Name="277dotssm.gif"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277dotssm.gif" />
+                  <File Id="_277jhead.gif" Name="277jhead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277jhead.gif" />
+                  <File Id="_277ehead.gif" Name="277ehead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277ehead.gif" />
+                  <File Id="dots.gif" Name="dots.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dots.gif" />
+                  <File Id="_277log2.gif" Name="277log2.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277log2.gif" />
+                  <File Id="_277ihead.gif" Name="277ihead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277ihead.gif" />
+                  <File Id="_277dots21.gif" Name="277dots21.gif"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277dots21.gif" />
+                  <File Id="_277dhead.gif" Name="277dhead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277dhead.gif" />
+                  <File Id="trans.gif" Name="trans.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\trans.gif" />
+                  <File Id="_277hhead.gif" Name="277hhead.gif" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\_277hhead.gif" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="archive" Name="archive">
+              <Component Id="CreateFolder" Guid="{556C2434-63C1-4C01-B4C1-6E14BDFD029C}">
+                <Condition>(FAXSERVER=1) OR (REMOTEMONITOR=1)</Condition>
+                <CreateFolder Directory="XMLAPI" />
+                <CreateFolder Directory="archive" />
+                <CreateFolder Directory="in" />
+                <CreateFolder Directory="out" />
+                <CreateFolder Directory="in4" />
+                <CreateFolder Directory="mba" />
+                <CreateFolder Directory="undeliverable" />
+                <CreateFolder Directory="unprocessed" />
+                <CreateFolder Directory="logs" />
+                <CreateFolder Directory="monitor" />
+                <CreateFolder Directory="out5" />
+                <CreateFolder Directory="administration" />
+                <CreateFolder Directory="pending" />
+                <CreateFolder Directory="sms" />
+                <CreateFolder Directory="process" />
+                <CreateFolder Directory="temp" />
+                <CreateFolder Directory="SinkDrop" />
+                <CreateFolder Directory="AutoPatchChk" />
+                <CreateFolder Directory="attachments" />
+                <File Id="dlefmcache1.chc" Name="dlefmcache1.chc" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmcache1.chc" />
+                <File Id="dlefmcache2.chc" Name="dlefmcache2.chc"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmcache2.chc" />
+                <File Id="tags.xml" Name="tags.xml" ReadOnly="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\tags.xml" />
+                <File Id="dlefmtmp.chc" Name="dlefmtmp.chc" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmtmp.chc" />
+                <File Id="dlefmsmstmp.chc" Name="dlefmsmstmp.chc"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmsmstmp.chc" />
+                <File Id="dlefmsmscache1.chc" Name="dlefmsmscache1.chc"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmsmscache1.chc" />
+                <File Id="dlefmsmscache2.chc" Name="dlefmsmscache2.chc"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\dlefmsmscache2.chc" />
+              </Component>
+              <Directory Id="in" Name="in" />
+              <Directory Id="out" Name="out" />
+            </Directory>
+            <Directory Id="in4" Name="in">
+              <Directory Id="mba" Name="mba" />
+              <Directory Id="undeliverable" Name="undeliverable"  />
+              <Directory Id="unprocessed" Name="unprocessed"  />
+            </Directory>
+            <Directory Id="logs" Name="logs" />
+            <Directory Id="monitor" Name="monitor" />
+            <Directory Id="out5" Name="out">
+              <Directory Id="administration" Name="administration"  />
+              <Directory Id="pending" Name="pending" />
+              <Directory Id="sms" Name="sms" />
+            </Directory>
+            <Directory Id="process" Name="process" />
+            <Directory Id="temp" Name="temp" />
+            <Directory Id="SinkDrop" Name="SinkDrop" />
+            <Directory Id="AutoPatchChk" Name="AutoPatchChk"  />
+            <Directory Id="ocr" Name="ocr">
+              <Component Id="NuanceOCREngine.dll" Guid="{FC528C99-F51E-4A39-990E-1A7C1D1A20E4}">
+                <Condition>(FAXSERVER=1)</Condition>
+                <File Id="NuanceOCREngine.dll" Name="NuanceOCREngine.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\NuanceOCREngine.dll" />
+              </Component>
+            </Directory>
+
+            <Directory Id="NetPrintQ2Fax" Name="NetPrintQ2Fax" >
+              <Directory Id="npqf_i386" Name="i386"/>
+              <Directory Id="npqf_amd64" Name="amd64"/>
+            </Directory>
+            
+            <Directory Id="qsg" Name="qsg"/>
+            <Directory Id="eses3" Name="es-es">
+              <Component Id="SangomaConfigUI.resources.es.dll" Guid="{6DC40594-B1FD-4A9B-A412-5D10EE92B02D}">
+                <File Id="SangomaConfigUI.resources.dll2" Name="SangomaConfigUI.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\SangomaConfigUI.resources.dll2" />
+              </Component>
+            </Directory>
+            <Directory Id="itit2" Name="it-it">
+              <Component Id="SangomaConfigUI.resources.it.dll" Guid="{9A3B05B5-5616-4E3A-9A43-C61DF895AF11}">
+                <File Id="SangomaConfigUI.resources.dll1" Name="SangomaConfigUI.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\SangomaConfigUI.resources.dll1" />
+              </Component>
+            </Directory>
+            <Directory Id="ArchiveViewer" Name="ArchiveViewer" >
+              <Component Id="GFI.FaxMaker.ArchiveViewer.exe" Guid="{2E3E2474-04CC-401F-99A7-46A5C51967EB}">
+                <File Id="ArchiveViewer.exe" Name="GFI.FaxMaker.ArchiveViewer.exe" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ArchiveViewer.exe" />
+                <File Id="ArchiveViewer.exe.config" Name="GFI.FaxMaker.ArchiveViewer.exe.config"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\ArchiveViewer.exe.config" />
+              </Component>
+              <Component Id="GFI.FaxMaker.ArchiveViewer.DBConnection.dll" Guid="{E5DA55E3-F773-4CA4-933E-D32917AFD33F}">
+                <File Id="DBArchiveConnection.dll" Name="GFI.FaxMaker.ArchiveViewer.DBConnection.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\DBArchiveConnection.dll" />
+              </Component>
+              <Component Id="GFI.FaxMaker.ArchiveViewer.IDatabase.dll" Guid="{E282EF6A-6539-4312-A6D4-5C5F9A9FB142}">
+                <File Id="IDatabase.dll" Name="GFI.FaxMaker.ArchiveViewer.IDatabase.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\IDatabase.dll" />
+              </Component>
+              <Directory Id="itit" Name="it-it">
+                <Component Id="GFI.FaxMaker.ArchiveViewer.resources.it.dll" Guid="{8B0FEECB-D8D7-4F8B-AA90-27AE22A761AB}">
+                  <File Id="ArchiveViewer.resources.dll2" Name="GFI.FaxMaker.ArchiveViewer.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ArchiveViewer.resources.dll2" />
+                </Component>
+              </Directory>
+              <Directory Id="eses" Name="es-es">
+                <Component Id="GFI.FaxMaker.ArchiveViewer.resources.es.dll" Guid="{BD6F7F7F-BF81-454C-96AD-7412B6C5F74B}">
+                  <File Id="ArchiveViewer.resources.dll1" Name="GFI.FaxMaker.ArchiveViewer.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ArchiveViewer.resources.dll1" />
+                </Component>
+              </Directory>
+              <Directory Id="dede" Name="de-de">
+                <Component Id="GFI.FaxMaker.ArchiveViewer.resources.de.dll" Guid="{41B64CF6-043B-4FF8-A48E-B1FFECBA27DE}">
+                  <File Id="ArchiveViewer.resources.dll" Name="GFI.FaxMaker.ArchiveViewer.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\ArchiveViewer.resources.dll" />
+                </Component>
+              </Directory>
+            </Directory>
+            <Directory Id="en" Name="en">
+              <Component Id="Notifications.resources.dll" Guid="{EBF868E4-1E42-476C-947F-F2F03193E194}">
+                <Condition>(FAXSERVER=1)</Condition>
+                <File Id="Notifications.resources.dll" Name="Notifications.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\Notifications.resources.dll" />
+              </Component>
+            </Directory>
+            <Directory Id="Bladeware" Name="Bladeware" >
+              <Component Id="Bladeware.msi" Guid="{327D9BFE-7EA8-4217-B98D-3D7B99B3FDD4}">
+                <File Id="Bladeware.msi" Name="Bladeware.msi" KeyPath="yes"  Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\Bladeware.msi" />
+              </Component>
+            </Directory>
+            <Directory Id="wsapi" Name="wsapi">
+              <Component Id="WSAPI.FDB" Guid="{8CC6C389-E34F-42EF-ABE6-D519F36BCB7F}" NeverOverwrite="yes" Permanent="yes">
+                <Condition>(FAXSERVER=1)</Condition>
+                <File Id="WSAPI.FDB" Name="WSAPI.FDB" KeyPath="yes" Vital="no" DiskId="1" Source="$(var.SourceFiles)\File\WSAPI.FDB" />
+              </Component>
+            </Directory>
+            <Directory Id="dede1" Name="de-de">
+              <Component Id="SangomaConfigUI.resources.de.dll" Guid="{4529B5F3-417F-4002-A053-43B171D74011}">
+                <File Id="SangomaConfigUI.resources.dll" Name="SangomaConfigUI.resources.dll" KeyPath="yes"  Vital="no" Checksum="yes" DiskId="1" Source="$(var.SourceFiles)\File\SangomaConfigUI.resources.dll" />
+              </Component>
+            </Directory>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+    
+    <Feature Id="always" Absent="disallow" AllowAdvertise="system" Display="hidden" Level="1" Title="always">
+      <ComponentRef Id="IniFile" />
+      <ComponentRef Id="CreateFolder" />
+      <ComponentRef Id="ServiceControl" />
+      <ComponentRef Id="DuplicateFile" />
+      <ComponentRef Id="findcont.dll" />
+      <ComponentRef Id="faxmaker.inf" />
+      <ComponentRef Id="fmusrdbupg" />
+      <ComponentRef Id="fmdb_usr.mdb" />
+      <ComponentRef Id="gfimntr.dll" />
+      <ComponentRef Id="insthlps2.dll" />
+      <ComponentRef Id="RegInstallID" />
+      <ComponentRef Id="tiffcvtex.exe" />
+      <ComponentRef Id="test.fax" />
+      <ComponentRef Id="print_html.exe" />
+      <ComponentRef Id="print_pdf.exe" />
+      <ComponentRef Id="CfgStore.dll" />
+      <ComponentRef Id="fgwconfg.exe" />
+      <ComponentRef Id="fmconv.dll" />
+      <ComponentRef Id="fmgwinet.exe" />
+      <ComponentRef Id="gdiplus.dll" />
+      <ComponentRef Id="fmcomdrv.fxd" />
+      <ComponentRef Id="libeay32.dll" />
+      <ComponentRef Id="rtfcvt32.dll" />
+      <ComponentRef Id="FMstore.dll" />
+      <ComponentRef Id="lineman.dll" />
+      <ComponentRef Id="trb_ext.dll" />
+      <ComponentRef Id="InitCfgWiz.exe" />
+      <ComponentRef Id="FCover.rtf" />
+      <ComponentRef Id="MsnStore.dll" />
+      <ComponentRef Id="textapi.dll" />
+      <ComponentRef Id="Tiff32.dll" />
+      <ComponentRef Id="fmimport.exe" />
+      <ComponentRef Id="tiffcvt_gdiplus.dll" />
+      <ComponentRef Id="fmservic.exe" />
+      <ComponentRef Id="MMICOM.dll" />
+      <ComponentRef Id="fmsrv2000drv.fxd" />
+      <ComponentRef Id="userutil.dll" />
+      <ComponentRef Id="ssleay32.dll" />
+      <ComponentRef Id="repprint.dll" />
+      <ComponentRef Id="gfiphrasesearch.dll" />
+      <ComponentRef Id="fmserver.exe" />
+      <ComponentRef Id="faxfrmt.dll" />
+      <ComponentRef Id="XpdfViewer.dll" />
+      <ComponentRef Id="trouble.exe" />
+      <ComponentRef Id="TelStore.dll" />
+      <ComponentRef Id="fm_mon.dll" />
+      <ComponentRef Id="fmon_ax.dll" />
+      <ComponentRef Id="fmconfig.dll" />
+      <ComponentRef Id="Clickatell_COMAPI.dll" />
+      <ComponentRef Id="fmcfgdb.dll" />
+      <ComponentRef Id="llPDFLibX.dll" />
+      <ComponentRef Id="gfiadrbk.dll" />
+      <ComponentRef Id="fmimport.ger" />
+      <ComponentRef Id="doccvt.ini" />
+      <ComponentRef Id="faxinstallmanual.chm" />
+      <ComponentRef Id="dleupg.exe" />
+      <ComponentRef Id="print_html2.exe" />
+      <ComponentRef Id="msvcr80.dll" />
+      <ComponentRef Id="faxmakermanual.chm" />
+      <ComponentRef Id="registry" />
+      <ComponentRef Id="prntinst.dll" />
+      <ComponentRef Id="XCAPI_Installer" />
+      <ComponentGroupRef Id="CommonFiles_userlookup"/>
+      <ComponentGroupRef Id="CommonFiles_common"/>
+      <ComponentRef Id="leave_installed" />
+      <ComponentRef Id="gfi_log.dll" />
+      <ComponentRef Id="fmcmn_rc.dll" />
+      <ComponentRef Id="CopyME6UDBAndUrlFiles" />
+      <ComponentRef Id="autocheck.dll" />
+      <ComponentRef Id="dlecfg.dll" />
+      <ComponentRef Id="fmarchiver.dll" />
+      <ComponentRef Id="config.mdb" />
+      <ComponentRef Id="htmlayout.dll" />
+      <ComponentRef Id="_277log.gif" />
+      <ComponentRef Id="Tnef2Mime.dll" />
+      <ComponentRef Id="svcrst.exe" />
+      <ComponentRef Id="fngen.dll" />
+      <ComponentRef Id="msvcp90.dll" />
+      <ComponentRef Id="setlite.dll" />
+      <ComponentRef Id="basiclog.dll" />
+      <ComponentGroupRef Id="StartMenuShortcuts" />
+      <ComponentRef Id="StartMenuManualShortcuts"/>
+      <ComponentGroupRef Id="NPQFDrivers" />
+      <ComponentRef Id="registry288" />
+      <ComponentRef Id="registry287" />
+      <ComponentRef Id="registry283" />
+      <ComponentRef Id="utf8_slayer.dll" />
+      <ComponentRef Id="html_slayer.dll" />
+      <ComponentRef Id="brooktrout_installer.exe" />
+      <ComponentRef Id="xmlapifolder_reg" />
+      <ComponentRef Id="msvcp80.dll" />
+      <ComponentRef Id="fmcapidrv.fxd" />
+      <ComponentRef Id="msvcm90.dll" />
+      <ComponentRef Id="RegistryInstallSettings" />
+      <ComponentRef Id="registry_ecom" />
+      <ComponentRef Id="autopatchchk.dll" />
+      <ComponentRef Id="RegistryVersionInfo" />
+      <ComponentRef Id="registry_debug" />
+      <ComponentRef Id="xpdfvwr_fonts" />
+      <ComponentRef Id="AutoCheck2.dll" />
+      <ComponentRef Id="QuickStartGuide" />
+      <ComponentRef Id="fmp_drv_x86.dll" />
+      <ComponentRef Id="fmp_drv.ini" />
+      <ComponentRef Id="fmp_invertpixels" />
+      <ComponentGroupRef Id="Reports" />
+      <ComponentRef Id="itucolor.dll" />
+      <ComponentRef Id="libtiff.dll" />
+      <ComponentRef Id="fmcfgdb_old.dll" />
+      <ComponentRef Id="RegUserModeAD" />
+      <ComponentRef Id="FMNotifications.dll" />
+      <ComponentRef Id="SangomaConfigUI.resources.es.dll" Primary="yes" />
+      <ComponentRef Id="msvcr90.dll" />
+      <ComponentRef Id="SangomaConfigUI.resources.it.dll" Primary="yes" />
+      <ComponentRef Id="RegAdvancedSettings" />
+      <ComponentRef Id="SangomaConfigUI.resources.de.dll" Primary="yes" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.exe" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.DBConnection.dll" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.IDatabase.dll" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.resources.de.dll" Primary="yes" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.resources.es.dll" Primary="yes" />
+      <ComponentRef Id="GFI.FaxMaker.ArchiveViewer.resources.it.dll" Primary="yes" />
+      <ComponentRef Id="Notifications.dll" />
+      <ComponentRef Id="Notifications.resources.dll" Primary="yes" />
+      <ComponentRef Id="fmdb_rul.mdb" />
+      <ComponentRef Id="allow_same_number_dial_registry" />
+      <ComponentRef Id="fmcfgupg.exe" />
+      <ComponentRef Id="no_user_cache" />
+      <ComponentRef Id="RegUserModeNonAD" />
+      <ComponentRef Id="gsmservicesiface.dll" />
+      <ComponentRef Id="RegAutoPrint121" />
+      <ComponentRef Id="RegOcrEnableRouting" />
+      <ComponentRef Id="RegSyncOcr" />
+      <ComponentRef Id="RegDomainFAX" />
+      <ComponentRef Id="RegDomainSMS" />
+      <ComponentRef Id="RegAddressTypes" />
+      <ComponentRef Id="RegDomain" />
+      <ComponentRef Id="faxmaker.cat" />
+      <ComponentRef Id="Bladeware.msi" />
+      <ComponentRef Id="fmgsmcomdrv.fxd" />
+      <ComponentRef Id="ipworksssl8.dll" />
+      <ComponentRef Id="fmetherfax.fxd" />
+      <ComponentRef Id="fmsmscomms_new.xml" />
+      <ComponentRef Id="shex" />
+      <ComponentRef Id="gfidevicedetection.dll" />
+      <ComponentRef Id="ch.dll" />
+      <ComponentRef Id="GSMConfigUpgradeTool" />
+      <ComponentRef Id="SendFaxSubmitter.dll" />
+      <ComponentRef Id="fmlserver.dll" />
+      <ComponentRef Id="fm_ofs.fxd" />
+      <ComponentRef Id="fmlclient.dll" />
+      <ComponentRef Id="FSTtoMDBConv.exe" />
+      <ComponentRef Id="GFI.Common.Localization.dll" Primary="yes" />
+      <ComponentRef Id="icudt48.dll" />
+      <ComponentRef Id="icuin48.dll" />
+      <ComponentRef Id="icuuc48.dll" />
+      <ComponentRef Id="msvcp100.dll" />
+      <ComponentRef Id="msvcr100.dll" />
+      <ComponentRef Id="RegNonWin2012Rendering" />
+      <ComponentRef Id="RegWin2012Rendring" />
+      <ComponentRef Id="CfgStoreOld.dll" />
+      <ComponentRef Id="doccvt.ini_Win2012" />
+      <ComponentRef Id="FMDataContract.dll" />
+      <ComponentRef Id="MSMQReceiver.dll" />
+      <ComponentRef Id="MsnStoreOld.dll" />
+      <ComponentRef Id="UserAuthentication.dll" />
+      <ComponentRef Id="FMWSAPIHost.dll" />
+      <ComponentRef Id="ML.Svc.Base.dll" />
+      <ComponentRef Id="TesStoreOld.dll" />
+      <ComponentRef Id="FMWSAPI.Base.dll" />
+      <ComponentRef Id="WSAPI.dll" />
+      <ComponentRef Id="fmBladerwaredrv.dll" />
+      <ComponentRef Id="ML.Svc.Attendant.exe" />
+      <ComponentRef Id="RetentionManager.dll" />
+      <ComponentRef Id="FireBird_DBEngine.dll" />
+      <ComponentRef Id="prophold.dll" />
+      <ComponentRef Id="NuanceOCREngine.dll" />
+      <ComponentRef Id="fmOCRTool.exe" />
+      <ComponentRef Id="GFI.Common.LocalizedException.dll" Primary="yes" />
+      <ComponentRef Id="outofprocdrv.exe" />
+      <ComponentRef Id="fmRPCdrv.fxd" />
+      <ComponentRef Id="usrdbupg.exe" />
+      <ComponentRef Id="SangomaConfigUI" />
+      <ComponentRef Id="FMWSAPI.Resources.dll" />
+      <ComponentRef Id="WSAPI.FDB" />
+      <ComponentRef Id="fbembed.dll" />
+      <ComponentRef Id="FirebirdSql.Data.FirebirdClient.dll" />
+      <ComponentRef Id="icuuc30.dll" />
+      <ComponentRef Id="icuin30.dll" />
+      <ComponentRef Id="icudt30.dll" />
+      <ComponentRef Id="ib_util.dll" />
+      <ComponentRef Id="GFI.Common.Tracing.dll" />
+      <ComponentRef Id="GFIUserDB.ML.dll" />
+      <ComponentRef Id="MiddleMan.ML.dll" />
+      <ComponentGroupRef Id="OCR"/>
+      <ComponentGroupRef Id="LocalizedFiles"/>
+      <ComponentRef Id="MSXML4_Unicode.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Primary="yes" />
+      <ComponentRef Id="MSXML4_Parser.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Primary="yes" />
+      <ComponentRef Id="MSXML4_ANSI.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+      <ComponentRef Id="MSXML4_SystemRes.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+      <ComponentRef Id="MSXML4_System.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" />
+    </Feature>
+    <Feature Id="X86PLATFORMSONLY" AllowAdvertise="system" Description="Contains 32-bit only components" Display="expand" Level="3" Title="X86PLATFORMSONLY">
+      <ComponentRef Id="sinkadmin.exe" />
+      <ComponentRef Id="FMSink.dll" />
+      <ComponentRef Id="sinkadmin.dll" />
+      <Condition Level="0">Intel64 OR Msix64</Condition>
+    </Feature>
+    <Feature Id="X64PLATFORMSONLY" AllowAdvertise="system" Description="Contains 64-bit only components" Display="expand" Level="3" Title="X64PLATFORMSONLY">
+      <ComponentRef Id="sinkadmin_x64.exe" />
+      <ComponentRef Id="FMSink_x64.dll" />
+      <ComponentRef Id="sinkadmin_x64.dll" />
+      <ComponentRef Id="pfi_x64.dll" />
+      <ComponentRef Id="gfi_log_x64.dll" />
+      <ComponentRef Id="fmp_drv_x64.dll" />
+      <ComponentRef Id="FCAdmin.exe" />
+      <ComponentRef Id="ForeignConnector.dll" />
+      <ComponentRef Id="PSExec.exe" />
+      <Condition Level="0">NOT(Intel64 OR Msix64)</Condition>
+    </Feature>
+
+    <Property Id="DISABLEADVTSHORTCUTS" Value="1"/>
+    <Property Id="DiskPrompt" Value="[1]" />
+    <Property Id="InstallMode" Value="Complete" />
+    <Property Id="ReinstallFileOlderVersion" Value="o" />
+    <Property Id="ReinstallRepair" Value="r" />
+    <Property Id="ErrorDialog" Value="ErrorDialog" />
+    <Property Id="EX2KVER" Value="0" />
+    <Property Id="BROWSEMACHINE" Value="Please choose the FaxMaker Server" />
+    <Property Id="ProductNameOriginal" Value="GFI FaxMaker 2014" />
+    <Property Id="LICSTRING1" Value="I &amp;do not accept the license agreement" />
+    <Property Id="INTERNATIONALRULE" Value="0" />
+    <Property Id="BUILD" Value="20141021" />
+    <Property Id="OLDINSTALL" Value="0" />
+    <Property Id="INSTALLPRINTER" Value="1" />
+    <Property Id="ARPHELPLINK" Value="http://www.gfi.com" />
+    <Property Id="ARPURLINFOABOUT" Value="http://www.gfi.com/fex/" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    <Property Id="APPS_TEST" Value="1" />
+    <Property Id="NOFORM" Value="0" />
+    <Property Id="REMCLUSTERNODE" Value="0" />
+    <Property Id="TMPEXNAME" Value="{}" />
+    <Property Id="REGISTRYINI" Value="SOFTWARE\GFI Fax &amp; Voice\FAXmaker" />
+    <Property Id="FMSTRING8" Value="SMTP Server" />
+    <Property Id="FMSTRING1" Value="Setup checking for updates" />
+    <Property Id="TELLMEMORELICURL" Value="http://go.gfi.com/?pageid=FM_Upgrading" />
+    <Property Id="SINKANDCONNECTOR" Value="0" />
+    <Property Id="MaintenanceMode" Value="Remove" />
+    <Property Id="WiseEditorVersion" Value="7.3.0.250" />
+    <Property Id="WiseInitSpaceError" Value="Could not create temporary file, not enough free temporary disk space. Please free up disk space and rerun this installation." />
+    <Property Id="SETCLUSTERNODE" Value="0" />
+    <Property Id="MNAME" Value="localhost" />
+    <Property Id="LANGUAGE" Value="english" />
+    <Property Id="PASSNOMATCH" Value="The user name and password you specified could not be verified. Make sure the user name and password are spelled correctly." />
+    <Property Id="PRIMARYFOLDER" Value="INSTALLDIR" />
+    <Property Id="IISSMTP" Value="0">
+      <RegistrySearch Id="SMTPSVCREGSEARCH"  Root="HKLM" Key="SYSTEM\CurrentControlSet\services\SMTPSVC" Name="ImagePath" Type="raw"/>
+    </Property>
+<!--<Property Id="ADEXIST" Value="0" />-->
+    <Property Id="WRONPASSDIALOG" Value="{}" />
+    <Property Id="EMPTYPASS" Value="The password fields are empty." />
+    <Property Id="Action20" Value="5" />
+    <Property Id="MajorVer" Value="17" />
+    <Property Id="ALLUSERS" Value="1" />
+    <Property Id="UNINSTEXNAME" Value="localhost" />
+    <Property Id="INSTALLDIR" Secure="yes" />
+    <Property Id="NPQFCMDLINEBOX" Value="1" Secure="yes" />
+    <Property Id="STATUSNOTIFICATIONS" Value="1" />
+    <Property Id="FMSTRING4" Value="A newer version of" />
+    <Property Id="SILENT" Value="0" />
+    <Property Id="SAMEAREARULE" Value="0" />
+    <Property Id="ARPCONTACT" Value="GFI Software Ltd" />
+    <Property Id="SourceFiles" Value="C:\Source\faxmaker\server\trunk\" Hidden="yes" />
+    <Property Id="EXCHANGE" Value="0" />
+    <Property Id="MinorVer" Value="0" />
+    <Property Id="FMSTRING5" Value="has been detected on the web site." />
+    <Property Id="CONNECTOR" Value="{}" />
+    <Property Id="_WiseDebugMode" Value="0" />
+    <Property Id="IISRESTART" Value="0" />
+    <Property Id="FMSTRING3" Value="New version detected" />
+    <Property Id="FMSTRING2" Value="Setup is checking the web site for newer builds." />
+    <Property Id="ARPURLUPDATEINFO" Value="http://www.gfi.com/fex/" />
+    <Property Id="AD" Value="0" />
+    <Property Id="WiseInitExistError" Value="%s Version %s is already installed. You must uninstall the existing version before installing %s Version %s. Do you want to uninstall the existing version of %s?" />
+    <Property Id="FAXSERVER" Value="1">
+      <RegistrySearch Id="AppReg11" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="FAXSERVER" Type="raw" />
+    </Property>
+    <Property Id="IISRESTARTBOX" Value="1" />
+    <Property Id="WiseInitLangDefault" Value="English,1033" />
+    <Property Id="REMOTEMONITOR" Value="1">
+      <RegistrySearch Id="AppReg10" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="REMOTEMONITOR" Type="raw" />
+    </Property>
+    <Property Id="DefaultUIFont" Value="MS_Sans_Serif_80" />
+    <Property Id="WiseInitCmdLine" Value="/L*v fm.log /I" />
+    <Property Id="CONGUID" Value="{}">
+      <RegistrySearch Id="AppReg" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Connector" Name="CONGUID" Type="raw" />
+    </Property>
+    <Property Id="LICSTRING2" Value="I &amp;accept the license agreement" />
+    <Property Id="CONNAME" Value="FaxMaker SMTP Connector">
+      <RegistrySearch Id="AppReg1" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config\Connector" Name="CONNAME" Type="raw" />
+    </Property>
+    <Property Id="EXNAME" Value="127.0.0.1">
+      <RegistrySearch Id="AppReg12" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="EXNAME" Type="raw" />
+    </Property>
+    <Property Id="PRINTINST" Value="-w2k -nostdmsg -noerrmsg" />
+    <Property Id="EXVER" Value="0" />
+    <Property Id="WiseInitPrefix" Value="Initializing" />
+    <Property Id="IISTITLE" Value="Your SMTP Server needs to be restarted" />
+    <Property Id="PIDTemplate" Value="12345&lt;###-%%%%%%%&gt;@@@@@" />
+    <Property Id="EMPTYPASSDISPLAYED" Value="0" />
+    <Property Id="REMOVEPRINTER" Value="0" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="RBRACKET" Value="]" />
+    <Property Id="FMSTRING10" Value="Your SMTP Server needs to be restarted. Please press YES if you want to continue." />
+    <Property Id="NEWBUILDSTRING2" Value="Do not check for a newer build." />
+    <Property Id="FMSTRING11" Value="Your SMTP Server needs to be restarted" />
+    <Property Id="WiseCRLF" Value="&#xD;&#xA;" />
+    <Property Id="KEYOK" Value="1" />
+    <Property Id="FORINI" Value="FM12" />
+    <Property Id="WISE_SQL_CONN_STR" Hidden="yes" />
+    <Property Id="_WiseDialogTitleFontDefault" Value="{\MS_Sans_Serif_81}" />
+    <Property Id="UNINSTALLPRINTER" Value="0" />
+    <Property Id="ASSUMEMAPI" Value="0" />
+    <Property Id="GFITM" Value="GFI FaxMaker 2014" />
+    <Property Id="NEWBUILDSTRING1" Value="Check for a newer build of GFI FaxMaker on the GFI web site." />
+    <Property Id="LONGDISTANCERULE" Value="0" />
+    <Property Id="FMSERVER" Value="{}" />
+    <Property Id="FMSTRING7" Value="Due to network problems it was not possible to detect if a newer build is available on the web site." />
+    <Property Id="DefDialogFont" Value="{\Microsoft_Sans_Serif8}" />
+    <Property Id="COUNTRY" Value="{}" />
+    <Property Id="TIMEOUT" Value="120" />
+    <Property Id="BIT" Value="32" />
+    <Property Id="NOCHECK" Value="1" />
+    <Property Id="HRESULT" Value="0" />
+    <Property Id="OVEX" Value="-1" />
+    <Property Id="MACHINENAME" Value="null" />
+    <Property Id="FMSTRING9" Value="Your SMTP Server is being restarted." />
+    <Property Id="NETWORKSUSERDB" Value="0" />
+    <Property Id="ReinstallFileVersion" Value="o" />
+    <Property Id="FEX4" Value="null">
+      <RegistrySearch Id="AppReg8" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FAXmaker for Exchange 6.1" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX3" Value="null">
+      <RegistrySearch Id="AppReg7" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FAXmaker for Networks/SMTP" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX2" Value="null">
+      <RegistrySearch Id="AppReg6" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{6850dae3-5c45-41db-bbc7-b2ffcc5bbe08}" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX1" Value="null">
+      <RegistrySearch Id="AppReg5" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{c9b52df8-3702-45c3-b227-2c0929a9520c}" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="INSTALLLEVEL" Value="3" />
+    <Property Id="GFIPRODUCTID" Value="78" />
+    <Property Id="MSECID" Value="#0">
+      <RegistrySearch Id="AppReg4" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\GFIAV\Config" Name="ProductID" Type="raw" />
+    </Property>
+    <Property Id="MSECMODE" Value="#0">
+      <RegistrySearch Id="AppReg3" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\GFIAV\Config" Name="ModeType" Type="raw" />
+    </Property>
+    <Property Id="FMSERVERSHOWN" Value="0" />
+    <Property Id="REMOTE" Value="0">
+      <RegistrySearch Id="AppReg2" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="Remote" Type="raw" />
+    </Property>
+    <Property Id="DONTINSTALL" Value="0" />
+    <Property Id="COUNTRYCODE" Value="1" />
+    <Property Id="IISQUESTION" Value="Your SMTP Server needs to be restarted. Please press YES if you want to continue." />
+    <Property Id="WiseInitSuffix" Value="Wizard..." />
+    <Property Id="ApplicationUsers" Value="AllUsers" />
+    <Property Id="SINK" Value="{}" />
+    <Property Id="NPQFCOMMANDLINE" Value="-noerrmsg -nostdmsg" />
+    <Property Id="LBRACKET" Value="[" />
+    <Property Id="MajorVerReg" Value="#17" />
+    <Property Id="MODE" Value="0" />
+    <Property Id="FMSTRING6" Value="Network problems detected" />
+    <Property Id="DOMAINFAX" Value="faxmaker.com">
+      <RegistrySearch Id="AppReg23" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DomainFax" Type="raw" />
+    </Property>
+    <Property Id="Accept" Value="No" />
+    <Property Id="MSMQINSTALLED" Value="0">
+      <RegistrySearch Id="AppReg25" Root="HKLM" Key="SOFTWARE\Microsoft\MSMQ\Setup" Name="msmq_Core" Type="raw" />
+      <RegistrySearch Id="AppReg26" Root="HKLM" Key="SOFTWARE\Microsoft\MSMQ\Setup" Name="msmq_CoreInstalled" Type="raw" />
+    </Property>
+    <Property Id="CHURL" Value="https://update.gfi.com/update/servicecheck.php">
+      <RegistrySearch Id="AppReg22" Root="HKLM" Key="Software\GFI FAX &amp; VOICE\Faxmaker\ECOM" Name="CHURL" Type="raw" />
+    </Property>
+    <Property Id="WiseInitAdminError" Value="You must have administrator rights to run this installation. Please login as an administrator and re-run this installation." />
+    <Property Id="DOMAINSMS" Value="smsmaker.com">
+      <RegistrySearch Id="AppReg24" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\Config" Name="DomainSMS" Type="raw" />
+    </Property>
+    <Property Id="ADVANCEDREQUESTS" Value="1" />
+    
+    <?if $(var.Platform)="x64"?>
+      <Property Id="ALLOWINSTALLON64BIT" Value="1" />
+    <?else?>
+      <Property Id="ALLOWINSTALLON64BIT" Value="0" />
+    <?endif?>
+    
+    <Property Id="UpgradeCode.21206420_6BA8_4CFB_A48C_C72A6BFE80C0" Value="{85F4C5BF-6BDF-4460-AC50-0D4AFEF851A4}" />
+    <Property Id="PRE_INSTANCEID">
+      <RegistrySearch Id="AppReg27" Root="HKCU" Key="Software\GFI\Preinstaller\FAX" Name="instanceID" Type="raw" />
+    </Property>
+    <Property Id="HKLMSESSIONDATE">
+      <RegistrySearch Id="AppReg30" Root="HKLM" Key="Software\GFI FAX &amp; Voice\Faxmaker" Name="sessionDate" Type="raw" />
+    </Property>
+    <Property Id="PREVBUILD">
+      <RegistrySearch Id="AppReg14" Root="HKLM" Key="Software\GFI FAX &amp; VOICE\Faxmaker" Name="Build" Type="raw" />
+    </Property>
+    <Property Id="EXCHANGECONNECTOR">
+      <RegistrySearch Id="AppReg9" Root="HKLM" Key="SOFTWARE\GFI Fax &amp; Voice\FAXmaker\InstallSettings" Name="EXCHANGECONNECTOR" Type="raw" />
+    </Property>
+    <Property Id="PREVMAJORVER">
+      <RegistrySearch Id="AppReg21" Root="HKLM" Key="Software\GFI FAX &amp; VOICE\Faxmaker" Name="MajorVer" Type="raw" />
+    </Property>
+    <Property Id="PREVINSTALLDIR">
+      <RegistrySearch Id="AppReg13" Root="HKLM" Key="Software\GFI FAX &amp; VOICE" Name="FAXMAKER PATH" Type="raw" />
+    </Property>
+    <Property Id="BROOKTROUTPATH">
+      <RegistrySearch Id="AppReg17" Root="HKLM" Key="Software\Brooktrout Technology\Brooktrout System Software" Name="InstallHome" Type="directory" />
+    </Property>
+    <Property Id="LICENSEKEY">
+      <RegistrySearch Id="AppReg28" Root="HKCU" Key="Software\GFI\Preinstaller\FAX" Name="evalKey" Type="raw" />
+    </Property>
+    <Property Id="BROOKTROUTCURBUILD">
+      <RegistrySearch Id="AppReg18" Root="HKLM" Key="Software\GFI FAX &amp; VOICE" Name="Brooktrout_Driver_Build" Type="raw" />
+    </Property>
+    <Property Id="HKCUSESSIONDATE">
+      <RegistrySearch Id="AppReg29" Root="HKCU" Key="Software\GFI\Preinstaller\FAX" Name="sessionDate" Type="raw" />
+    </Property>
+    <Property Id="GFI_UNIQUEID">
+      <RegistrySearch Id="AppReg19" Root="HKCU" Key="Software\GFI\Preinstaller\FAX" Name="InstallID" Type="raw" />
+    </Property>
+
+    <UIRef Id="FMUI"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="WiseStartup" Sequence="1" />
+      <Custom Action="WiseSetProfilesFolder" Sequence="137" />
+      <Custom Action="SetPatchMode" Sequence="250">PATCH</Custom>
+      <Custom Action="SetPatchReinstallMode" Sequence="325">PATCH AND NOT REINSTALLMODE</Custom>
+      <Custom Action="CA_TerminateWOEula" Sequence="343">NOT Installed AND (NOT IACCEPTEULA OR IACCEPTEULA&lt;&gt;1)</Custom>
+      <Custom Action="CA_GenInstallID" Sequence="650">NOT GFI_UNIQUEID</Custom>
+      <Custom Action="GetCurrentUser" Sequence="675">NOT LOGIN</Custom>
+      <Custom Action="CheckCredentials" Sequence="680">NOT Installed AND FAXSERVER=1 AND (NOT USERISVALID OR USERISVALID=0)</Custom>
+      <Custom Action="CA_TerminateOnWrongCredentials" Sequence="681">NOT Installed AND FAXSERVER=1 AND USERISVALID=0</Custom>
+      <Custom Action="SetCADforcreate_IIS_alias" Sequence="687" />
+      <Custom Action="SetCADfordelete_IIS_alias" Sequence="693" />
+      <Custom Action="CA_CheckForE2007_EI" Sequence="696">VersionNT64</Custom>
+      <Custom Action="CA_SetEXVER2EX2007_EI" Sequence="698">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+      <Custom Action="CA_SetExchange_EI" Sequence="699">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+      <Custom Action="CA_CheckForHubTransport_EI" After="CA_CheckForE2007_EI">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+<!--
+      TODO: find alternative means of detecting exchange 2000 and 2003
+      <Custom Action="checkeEXVersion" Sequence="701" />
+      <Custom Action="CheckExchange" Sequence="702" />
+      <Custom Action="checkAD" Sequence="704" />
+-->
+      <Custom Action="CA_SetExchangeConnector" Sequence="705" />
+<!--  <Custom Action="check_IISSMTP" Sequence="706" /> -->
+      <Custom Action="CA_OverrideSMTP" Sequence="707">OVIIS</Custom>
+      <Custom Action="CA_OverrideAD" Sequence="708">OVAD</Custom>
+      <Custom Action="WiseAltStartup" Sequence="1456" />
+      <Custom Action="CA_TerminateCrossPlatform" Sequence="1463">VersionNT64 AND ALLOWINSTALLON64BIT="0"</Custom>
+      <Custom Action="CA_TerminateSilentUpgrade" Sequence="1465">NOT Installed AND (PREVINSTALLDIR OR ((FEX1~&lt;&gt;"null") OR (FEX2~&lt;&gt;"null") OR (FEX3~&lt;&gt;"null") OR (FEX4~&lt;&gt;"null"))) AND UILevel&lt;5</Custom>
+      <Custom Action="CA_TerminateInstallInAbsenseOfHub" Sequence="1480">FAXSERVER=1 AND IISSMTP&lt;&gt;1 AND E2K7HUBTRANSPORTSERVER&lt;&gt;1 AND MsiNTProductType&lt;&gt;1</Custom>
+      <Custom Action="remove_share" Sequence="1482">REMOVE="ALL" AND FAXSERVER=1</Custom>
+<!--  <Custom Action="del_ini_file_mappings" Sequence="1483">REMOVE~="ALL" AND FAXSERVER=1</Custom> -->
+      <Custom Action="get_EXNAME_uninst" Sequence="1484">REMOVE="ALL"</Custom>
+      <!--  <Custom Action="set_IISRESTART" Sequence="1485">REMOVE="ALL"</Custom> -->
+      <Custom Action="UnInstallGWAYW" Sequence="1486">Installed AND EXCHANGECONNECTOR=1 AND E2K7HUBTRANSPORTSERVER&lt;&gt;1</Custom>
+      <!--      <Custom Action="unregister_sink_x64" Sequence="1500">(REMOVE~="ALL" AND IISSMTP=1 AND E2K7HUBTRANSPORTSERVER&lt;&gt;1)  AND  (VersionNT64)</Custom> -->
+      <Custom Action="unregister_sink" Sequence="1509">(REMOVE~="ALL" AND IISSMTP=1 AND E2K7HUBTRANSPORTSERVER&lt;&gt;1)  AND  (NOT VersionNT64)</Custom>
+      <Custom Action="delete_IIS_alias" Sequence="1511">REMOVE~="ALL" AND E2K7HUBTRANSPORTSERVER&lt;&gt;1</Custom>
+      <Custom Action="CA_RemoveFMPrinter" Sequence="1513">REMOVE="ALL" AND FAXSERVER="1"</Custom>
+      <Custom Action="CA_RemoveNPQFPrinter_SRV2003" Sequence="1514">REMOVE="ALL" AND FAXSERVER="1" AND VersionNT&gt;=501</Custom>
+      <Custom Action="CA_RemoveSendConnector" Sequence="1515">REMOVE="ALL" AND EXCHANGECONNECTOR="1"  AND FAXSERVER&lt;&gt;"1" AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1</Custom>
+      <Custom Action="CA_RemoveForeignConnector" Sequence="1516">REMOVE="ALL" AND FAXSERVER="1" AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1</Custom>
+      <Custom Action="CA_RemoveRecvConnector_ED" Sequence="1517">REMOVE="ALL" AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1</Custom>
+      <Custom Action="SetPropertyRemoveNPQFShare_CA" Before="RemoveNPQFShare_CA">REMOVE="ALL" AND VersionNT&gt;=501</Custom>
+      <Custom Action="RemoveNPQFShare_CA" Before="RemoveFiles">REMOVE="ALL" AND VersionNT&gt;=501 AND FAXSERVER=1</Custom>
+      <Custom Action="InstallMSMQ" Sequence="1519">VersionNT&lt;599 AND MSMQINSTALLED=0 AND NOT Installed</Custom>
+      <Custom Action="InstallMSMQ.2K8" Sequence="1520">VersionNT&gt;=600 AND VersionNT&lt;602 AND MSMQINSTALLED=0 AND NOT Installed</Custom>
+      <Custom Action="InstallMSMQ.2K12" Sequence="1521">VersionNT&gt;=602 AND MSMQINSTALLED=0 AND NOT Installed</Custom>
+      <Custom Action="SetSinkDropPermProperty" Before="SetSinkDropPermCA">(NOT Installed)  AND  (VersionNT&gt;=501 AND FAXSERVER=1)</Custom>
+      <Custom Action="SetDebugLogPermCAImed" Before="SetDebugLogPermCA">(NOT Installed)  AND  (VersionNT&gt;=501 AND FAXSERVER=1)</Custom>
+      <Custom Action="SetPermProcessCAImed" Before="SetProcessPermCA">(NOT Installed)  AND  (VersionNT&gt;=501 AND FAXSERVER=1)</Custom>
+      <Custom Action="SetTempPermCAImed" Before="SetTempPermCA">(NOT Installed)  AND  (VersionNT&gt;=501 AND FAXSERVER=1)</Custom>
+      <Custom Action="SetPropertyCreateNPQFShare_CA" Before="CreateNPQFShare_CA">NOT Installed and VersionNT&gt;=501</Custom>
+      
+      <Custom Action="CreateNPQFShare_CA" After="InstallFiles">NOT Installed and VersionNT&gt;=501 AND FAXSERVER=1</Custom>
+      <Custom Action="SetSinkDropPermCA" After="InstallFiles">NOT Installed AND FAXSERVER=1</Custom>
+      <Custom Action="SetDebugLogPermCA" After="InstallFiles">NOT Installed AND FAXSERVER=1</Custom>
+      <Custom Action="SetTempPermCA" After="InstallFiles">NOT Installed AND FAXSERVER=1</Custom>
+      <Custom Action="SetProcessPermCA" After="InstallFiles">NOT Installed AND FAXSERVER=1</Custom>
+      
+      <Custom Action="SetRootRegPermProperty" Before="SetRootRegPermCA">NOT Installed</Custom>
+      <Custom Action="SetRootRegPermCA" After="WriteRegistryValues">NOT Installed</Custom>
+      
+      <Custom Action="SetE2K7DomainFax" After="SelfRegModules">DOMAINFAX~&lt;&gt;"faxmaker.com"</Custom>
+      <Custom Action="SetE2K7DomainSMS" After="SelfRegModules">DOMAINSMS~&lt;&gt;"smsmaker.com"</Custom>
+      <Custom Action="CA_InstallSendConnector" After="SelfRegModules">NOT Installed AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1 AND FAXSERVER&lt;&gt;"1" AND EXCHANGECONNECTOR="1"</Custom>
+      <Custom Action="CA_InstallRecvConnector_ED" After="SelfRegModules">NOT Installed AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1 AND (FAXSERVER="1" OR EXCHANGECONNECTOR="1")</Custom>
+      <Custom Action="CA_InstallForeignConnector" After="SelfRegModules">NOT Installed AND VersionNT64 AND E2K7HUBTRANSPORTSERVER=1 AND FAXSERVER="1"</Custom>
+      <Custom Action="create_IIS_alias" Sequence="1650">REMOVE~&lt;&gt;"ALL" AND E2K7HUBTRANSPORTSERVER&lt;&gt;1</Custom>
+      <!--      <Custom Action="register_sink_x64" Sequence="6550">((REMOVE~&lt;&gt;"ALL") AND (FAXSERVER=1) AND (IISSMTP=1) AND E2K7HUBTRANSPORTSERVER&lt;&gt;1)  AND  (VersionNT64)</Custom> -->
+      <Custom Action="register_sink" Sequence="6575">((REMOVE~&lt;&gt;"ALL") AND (FAXSERVER=1) AND (IISSMTP=1) AND E2K7HUBTRANSPORTSERVER&lt;&gt;1)  AND  (NOT VersionNT64)</Custom>
+      <Custom Action="create_mdb" Sequence="6612">REMOVE~&lt;&gt;"ALL"</Custom>
+      <!--  <Custom Action="set_IISRESTART" Sequence="6625">(REMOVE~&lt;&gt;"ALL") AND (FAXSERVER=1) AND (IISSMTP=1)</Custom> -->
+      <Custom Action="InstallGWAYW" Sequence="6675">(REMOVE~&lt;&gt;"ALL") AND (EXCHANGE=1) AND ((FAXSERVER=1) OR (EXCHANGECONNECTOR=1)) AND E2K7HUBTRANSPORTSERVER&lt;&gt;1</Custom>
+      <Custom Action="UpgradeFST" Sequence="6687">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20110411" AND FAXSERVER=1</Custom>
+      <Custom Action="UpgradeGSMCfg" Sequence="6689">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20131008" AND FAXSERVER=1</Custom>
+      <Custom Action="UpgradeUserDB" Sequence="6691">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20120514" AND FAXSERVER=1 AND AD=0</Custom>
+      <Custom Action="UpgradeConfigDB" Sequence="6693">REMOVE~&lt;&gt;"ALL"</Custom>
+      <Custom Action="write_key" Sequence="6695">REMOVE~&lt;&gt;"ALL" AND FAXSERVER=1 AND NOT UPGRADINGPREVIOUSBUILD AND (LICENSEKEY OR (NOT LICENSEKEY AND PREVMAJORVER&lt;"#15"))</Custom>
+      <Custom Action="UpgradeOldFSTs" Sequence="6697">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20130312" AND FAXSERVER=1</Custom>
+      <Custom Action="UpgradeDLESchema" Sequence="6698">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20130429" AND FAXSERVER=1</Custom>
+      <Custom Action="UpgradeUsrDBforWSAPI" Sequence="6699">(GFISETUPUPGRADE OR UPGRADINGPREVIOUSBUILD) AND PREVBUILD AND PREVBUILD&lt;="#20131008" AND FAXSERVER=1 AND AD=0</Custom>
+      <Custom Action="ask_for_IISRESTART" Sequence="6915">(REMOVE~="ALL") AND (SINK=1) AND E2K7HUBTRANSPORTSERVER&lt;&gt;1 AND MsiNTProductType&lt;&gt;1</Custom>
+      
+      <!-- TODO: check about this <Custom Action="restart_SMTP" Sequence="6957">IISRESTARTBOX=1 AND SINK=1 AND E2K7HUBTRANSPORTSERVER&lt;&gt;1 AND MsiNTProductType&lt;&gt;1</Custom>-->
+      <Custom Action="CA_OpenUninstallPage" Sequence="6967">(NOT GFISETUPUPGRADE) AND REMOVE AND STATUSNOTIFICATIONS=1</Custom>
+      <Custom Action="CA_CallHome" Sequence="6978">(NOT GFISETUPUPGRADE) AND (ADVANCEDREQUESTS=1)</Custom>
+      <Custom Action="create_share" Sequence="6980">(NOT Installed AND NOT PATCH) AND (FAXSERVER=1) AND (UILevel&lt;5)</Custom>
+      <Custom Action="InstallPrinterDriver" Sequence="6982">(NOT Installed AND NOT PATCH) AND (FAXSERVER=1) AND (UILevel&lt;5)</Custom>
+      <Custom Action="CA_InstallNPQFPrinter_SRV2003" Sequence="6984">(NOT Installed AND NOT PATCH) AND (FAXSERVER=1) AND (UILevel&lt;5)</Custom>
+      <Custom Action="WiseCleanup" Sequence="7500" />
+    </InstallExecuteSequence>
+    <InstallUISequence>
+      <Custom Action="WiseStartup" Sequence="1" />
+      <Custom Action="WiseSetProfilesFolder" Sequence="110" />
+      <Custom Action="SetPatchMode" Sequence="120">PATCH</Custom>
+      <Custom Action="SetPatchReinstallMode" Sequence="130">PATCH AND NOT REINSTALLMODE</Custom>
+      <Custom Action="ca_determine_upgrade" Before="CostInitialize">NOT Installed AND PREVINSTALLDIR</Custom>
+      
+      <!-- TODO: review this as in the past there were problems with placing ca_set_target_path after CostFinalize -->
+      <Custom Action="ca_set_target_path" Before="CostFinalize">(NOT Installed AND PREVINSTALLDIR)  AND  (UPGRADINGPREVIOUSBUILD)</Custom>
+      
+      <Custom Action="ca_reset_upgrade" After="ca_set_target_path">NOT PREVBUILD OR PREVMAJORVER &lt; MajorVerReg</Custom>
+      <Custom Action="CA_TerminateCrossPlatform" Sequence="1050">VersionNT64 AND ALLOWINSTALLON64BIT="0"</Custom>
+      <Custom Action="CA_CheckForE2007_UI" Sequence="1062">VersionNT64</Custom>
+      <Custom Action="CA_SetEXVER2EX2007_UI" Sequence="1068">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+      <Custom Action="CA_SetExchange_UI" Sequence="1069">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+      <Custom Action="CA_CheckForHubTransport_UI" Sequence="1071">(VersionNT64)  AND  (EXCHANGE2007ORLATER=1)</Custom>
+      <Custom Action="GetCurrentUser" Sequence="1214">REMOVE~&lt;&gt;"ALL"</Custom>
+<!--  TODO: seems to be unused, we shoud find alternative ways of detecting it ex2000 and ex2003
+      <Custom Action="checkeEXVersion" Sequence="1220" />
+      <Custom Action="CheckExchange" Sequence="1221" />
+-->
+<!--  
+      TODO: can be done in a different way
+      <Custom Action="checkAD" Sequence="1230" />
+-->
+      <Custom Action="set_OLDINSTALL" Sequence="1231">((FEX1~&lt;&gt;"null") OR (FEX2~&lt;&gt;"null") OR (FEX3~&lt;&gt;"null") OR (FEX4~&lt;&gt;"null"))</Custom>
+<!--  <Custom Action="check_IISSMTP" Sequence="1232" /> -->
+      <Custom Action="SetIISSMTP2One" After="set_OLDINSTALL">IISSMTP&lt;&gt;0</Custom>
+      <Custom Action="CA_OverrideSMTP" Sequence="1233">OVIIS</Custom>
+      <Custom Action="CA_OverrideAD" Sequence="1236">OVAD</Custom>
+      <Custom Action="CA_OverrideEXCHANGE2Zero" After ="CA_OverrideAD">OVEX=0</Custom>
+      <Custom Action="CA_OverrideEXCHANGE2One" After ="CA_OverrideAD">OVEX&lt;&gt;0</Custom>
+      <Custom Action="CA_OverrideEXVER" After="CA_OverrideAD">OVEX</Custom>
+      <Custom Action="CA_Reset32NQPFDrivers" Sequence="1250">VersionNT64&gt;=600</Custom>
+      <Custom Action="WiseCleanup" Sequence="1350">EXECUTEMODE = "None"</Custom>
+      <Custom Action="CA_DetermineBTUpgradeStatus" Sequence="6600">NOT Installed AND BROOKTROUTCURBUILD</Custom>
+      <Custom Action="CA_SetBrookUninstallPath" Sequence="6601">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Custom Action="CA_StartBrooktroutUninstall" Sequence="6602">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Custom Action="Action20SetCustomActionData" Sequence="6603">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Custom Action="Action20" Sequence="6605">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Custom Action="CA_ReinstallBrooktrout_x86" Sequence="6606">((NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1))  AND  (NOT VersionNT64)</Custom>
+      <Custom Action="CA_ReinstallBrooktrout_x64" Sequence="6607">((NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1))  AND  (VersionNT64)</Custom>
+      <Custom Action="CA_SetBTConfigtoolProperty" Sequence="6608">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Custom Action="CA_RunBTConfig" Sequence="6609">(NOT Installed AND BROOKTROUTCURBUILD)  AND  (BTNEEDSUPGRADE=1)</Custom>
+      <Show Dialog="Fatal_Error" OnExit="error" />
+      <Show Dialog="User_Exit" OnExit="cancel">1</Show>
+      <Show Dialog="Exit_Dialog" OnExit="success" />
+      <Show Dialog="Setup_Dialog" Sequence="140" />
+      <Show Dialog="Welcome_Dialog" Sequence="1251">NOT Installed AND NOT PATCH</Show>
+      <Show Dialog="Progress_Dialog" Sequence="1280">1</Show>
+      <Show Dialog="iisrestart" Sequence="6599">(NOT Installed AND NOT PATCH) AND (FAXSERVER=1)</Show>
+    </InstallUISequence>
+  </Product>
+</Wix>

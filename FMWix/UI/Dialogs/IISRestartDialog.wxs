@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="iisrestart" X="50" Y="50" Width="375" Height="270" Title="!(loc.IDS_DIALOGTITLE)" CustomPalette="yes">
+        <Control Id="Next" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="[DefDialogFont]&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Property="IISRESTART" Value="1">IISRESTARTBOX=1</Publish>
+          <Publish Property="NPQFCOMMANDLINE" Value="-x86 -nostdmsg -noerrmsg">NPQFCMDLINEBOX="1"</Publish>
+          <Publish Event="DoAction" Value="create_share">1</Publish>
+          <Publish Event="DoAction" Value="InstallPrinterDriver">FAXSERVER=1</Publish>
+          <Publish Event="DoAction" Value="CA_InstallNPQFPrinter_SRV2003">VersionNT&gt;=501 AND FAXSERVER=1</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="44" Y="180" Width="280" Height="39" Text="[DefDialogFont]PLEASE NOTE: during printer driver installation you may be prompted for Windows Server 2003 ( x86 processor ) disk." TabSkip="yes">
+          <Condition Action="show">VersionNT64&lt;600</Condition>
+          <Condition Action="hide">NOT VersionNT64 OR VersionNT64&gt;=600</Condition>
+        </Control>
+        <Control Id="CheckBox" Type="CheckBox" X="30" Y="162" Width="298" Height="12" Text="[DefDialogFont]Install 32-bit drivers for GFI NetPrintQueue2Fax printer." TabSkip="yes" Integer="yes" Property="NPQFCMDLINEBOX">
+          <Condition Action="show">VersionNT64&lt;600</Condition>
+          <Condition Action="hide">NOT  VersionNT64 OR VersionNT64&gt;=600</Condition>
+        </Control>
+        <Control Id="CustomText" Type="Text" X="30" Y="65" Width="290" Height="39" Text="[DefDialogFont]The GFI FaxMaker Installation will now install the GFI FaxMaker printer driver and the GFI NetPrintQueue2Fax printer driver. These drivers are required for GFI FaxMaker to work correctly." TabSkip="yes" />
+        <Control Id="Line7" Type="Line" X="75" Y="234" Width="290" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="8" Y="8" Width="308" Height="13" Text="[_WiseDialogTitleFontDefault]Printer driver installation" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text19" Type="Text" X="11" Y="23" Width="308" Height="25" Text="[DefDialogFont]Click Next to begin printer driver installation&#xD;&#xA;" TabSkip="yes" Transparent="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text20" Type="Text" X="2" Y="230" Width="76" Height="12" Text="[DefDialogFont][GFITM]" TabSkip="yes" />
+        <Control Id="Text2526" Type="Text" X="30" Y="116" Width="290" Height="42" Text="[DefDialogFont]WARNING: You have selected not to restart the Microsoft IIS SMTP service now. You can do so at a later stage but until then GFI FaxMaker will not work correctly." TabSkip="yes" Hidden="yes">
+          <Condition Action="show">IISRESTARTBOX&lt;&gt;1 AND SINK=1</Condition>
+        </Control>
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

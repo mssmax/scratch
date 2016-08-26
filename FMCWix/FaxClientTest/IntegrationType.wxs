@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="IntegrationType_UI">
+      <Dialog Id="IntegrationType" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Condition Action="disable"><![CDATA[ONLINE<>"1" AND ONLINE<>"0"]]></Condition>
+          <Condition Action="enable"><![CDATA[ONLINE="1" OR ONLINE="0"]]></Condition>
+          <Publish Property="USEOUTLOOKFORM" Value="0">ONLINE="1"</Publish>
+          <Publish Event="NewDialog" Value="fmmessageform">ONLINE="0"</Publish>
+          <Publish Event="NewDialog" Value="FMOUserDetails">ONLINE="1"</Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="Welcome_Dialog">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="23" Y="78" Width="313" Height="22" Text="Select the type of fax server that will be used with [ProductName]" TabSkip="yes" />
+        <Control Id="PushButton" Type="PushButton" X="275" Y="203" Width="90" Height="20" Text="Tell me more" TabSkip="yes">
+          <Publish Event="DoAction" Value="opentellmemore">1</Publish>
+        </Control>
+        <Control Id="Line7" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="RadioButtonGroup" Type="RadioButtonGroup" X="39" Y="109" Width="309" Height="45" Property="ONLINE" TabSkip="yes" />
+        <Control Id="Text19" Type="Text" X="23" Y="22" Width="273" Height="23" Text="Select the type of fax server to use" TabSkip="yes" Transparent="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="8" Y="8" Width="150" Height="13" Text="[DIALOG_TITLE_FONT_DEFAULT]Type of fax server&#xD;&#xA;" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text20" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

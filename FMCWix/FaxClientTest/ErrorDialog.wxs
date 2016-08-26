@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="ErrorDialog_UI">
+      <Dialog Id="ErrorDialog" X="50" Y="10" Width="300" Height="134" Title="Installer Information" ErrorDialog="yes">
+        <Control Id="ErrorText" Type="Text" X="48" Y="12" Width="231" Height="81" TabSkip="no" />
+        <Control Id="Y" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;Yes" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorYes">1</Publish>
+        </Control>
+        <Control Id="A" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;Abort" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorAbort">1</Publish>
+        </Control>
+        <Control Id="C" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;Cancel" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorCancel">1</Publish>
+        </Control>
+        <Control Id="I" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;Ignore" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorIgnore">1</Publish>
+        </Control>
+        <Control Id="N" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;No" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorNo">1</Publish>
+        </Control>
+        <Control Id="O" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;OK" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorOk">1</Publish>
+        </Control>
+        <Control Id="R" Type="PushButton" X="111" Y="102" Width="70" Height="18" Text="&amp;Retry" TabSkip="yes">
+          <Publish Event="EndDialog" Value="ErrorRetry">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

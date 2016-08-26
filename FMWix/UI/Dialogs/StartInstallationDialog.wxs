@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="Start_Installation_Dialog" X="50" Y="50" Width="375" Height="270" Title="!(loc.IDS_DIALOGTITLE)" TrackDiskSpace="yes" CustomPalette="yes">
+        <Control Id="InstallNow" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="[DefDialogFont]&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Property="IISRESTART" Value="1">IISRESTARTBOX=1</Publish>
+          <Publish Property="IISRESTART" Value="0">SINK=0</Publish>
+          <Publish Event="DoAction" Value="get_tel_data">1</Publish>
+          <Publish Event="SpawnWaitDialog" Value="WaitForCosting">CostingComplete = 1</Publish>
+          <Publish Event="SpawnDialog" Value="OutOfDisk">OutOfDiskSpace = 1</Publish>
+          <Publish Event="Reinstall" Value="ALL">Installed AND MaintenanceMode="Repair"</Publish>
+          <Publish Event="EndDialog" Value="Return">OutOfDiskSpace &lt;&gt; 1</Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="[DefDialogFont]&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="fmserver">(FAXSERVER&lt;&gt;1) AND (EXCHANGECONNECTOR=1) AND (REMOTEMONITOR&lt;&gt;1)</Publish>
+          <Publish Event="NewDialog" Value="Single_Feature_Destination">(FAXSERVER=1 OR REMOTEMONITOR=1) AND NOT PREVINSTALLDIR</Publish>
+          <Publish Event="NewDialog" Value="userpass">(FAXSERVER=1 OR REMOTEMONITOR=1) AND PREVINSTALLDIR</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="[DefDialogFont]Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="43" Y="84" Width="277" Height="38" Text="[DefDialogFont]If you do not restart this service now, you can do so at a later stage but until then GFI FaxMaker will not work correctly." TabSkip="yes">
+          <Condition Action="show">SINK=1 AND NOT EXCHANGE2007ORLATER</Condition>
+          <Condition Action="hide">SINK&lt;&gt;1 OR EXCHANGE2007ORLATER</Condition>
+        </Control>
+        <Control Id="CheckBox" Type="CheckBox" X="30" Y="61" Width="318" Height="21" Text="[DefDialogFont]Re-start the Microsoft IIS SMTP service." TabSkip="yes" Integer="yes" Property="IISRESTARTBOX">
+          <Condition Action="show">SINK=1 AND NOT EXCHANGE2007ORLATER</Condition>
+          <Condition Action="hide">SINK&lt;&gt;1 OR EXCHANGE2007ORLATER</Condition>
+          <Publish Property="IISRESTART" Value="1">IISRESTARTBOX=1</Publish>
+        </Control>
+        <Control Id="Line5" Type="Line" X="80" Y="234" Width="285" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap29" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text244" Type="Text" X="20" Y="22" Width="290" Height="24" Text="[DefDialogFont]Click Next to begin installation." TabSkip="yes" Transparent="yes" />
+        <Control Id="Text26" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[_WiseDialogTitleFontDefault]Ready to Modify the Application" TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">Not Installed OR MaintenanceMode &lt;&gt; "Modify"</Condition>
+        </Control>
+        <Control Id="Text2512" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[_WiseDialogTitleFontDefault]Ready to Repair the Application" TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">Not Installed OR MaintenanceMode &lt;&gt; "Repair"  OR RESUME</Condition>
+        </Control>
+        <Control Id="Text251" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[_WiseDialogTitleFontDefault]Ready to Install the Application" TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">Installed OR RESUME</Condition>
+        </Control>
+        <Control Id="Text2513" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[_WiseDialogTitleFontDefault]Ready to Resume [ProductName] installation" TabSkip="yes" Transparent="yes">
+          <Condition Action="hide">NOT RESUME</Condition>
+        </Control>
+        <Control Id="Text50" Type="Text" X="2" Y="230" Width="75" Height="14" Text="{\MS_Sans_Serif_80}[GFITM]" TabSkip="yes" />
+        <Control Id="Line29" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

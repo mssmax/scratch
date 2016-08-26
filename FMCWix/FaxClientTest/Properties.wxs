@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <Property Id="PropertiesReference" Value="1"/>
+    <Property Id="DiskPrompt" Value="[ProductName] [1]" />
+    <Property Id="InstallMode" Value="Complete" />
+    <Property Id="ReinstallFileOlderVersion" Value="o" />
+    <Property Id="ReinstallRepair" Value="r" />
+    <Property Id="SourceFiles" Value="C:\Source\faxmaker\client\trunk\" Hidden="yes" />
+    <Property Id="ErrorDialog" Value="ErrorDialog" />
+    <Property Id="Accept" Value="No" />
+    <Property Id="PRIMARYFOLDER" Value="INSTALLDIR" />
+    <Property Id="ProductID" Value="1" />
+    <Property Id="USEFAXFORM" Value="Use GFI FaxMaker New Fax form (requires mailserver name and email address)" />
+    <Property Id="SMTPUSEONLINE" Value="Use GFI FaxMaker Online Relay Server" />
+    <Property Id="USEOWNSMTP" Value="0" />
+    <Property Id="ApplicationUsers" Value="AllUsers" />
+    <Property Id="INSTALLLEVEL" Value="3" />
+    <Property Id="SERVEREXIST" Value="0" />
+    <Property Id="FAXMAILBOX" Value="null" />
+    <Property Id="BIT" Value="32" />
+    <Property Id="APPS_TEST" Value="1" />
+    <Property Id="DIALOG_FONT_DEFAULT" Value="{\MSSansSerif8}" />
+    <Property Id="DETAILSEXCHANGE" Value="Exchange 2013/2010/2007/2003/2000/5.5" />
+    <Property Id="SMTPAUTH" Value="0" Secure="yes" />
+    <Property Id="DIALOG_TITLE_FONT_DEFAULT" Value="{\Arial8}" />
+    <Property Id="REMOVEPRINTER" Value="0" />
+    <Property Id="TELLMEMOREURL" Value="http://go.gfi.com/?pageid=FMClient_ServerType" />
+    <Property Id="MaintenanceMode" Value="Remove" />
+    <Property Id="USEOUTLOOKFORM" Value="0" />
+    <Property Id="GFITM" Value=" GFI FaxMaker Client" />
+    <!--®-->
+    <Property Id="FEX12" Value="{}">
+      <RegistrySearch Id="AppReg4" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{1F69A3C6-0CF0-4DEB-8699-A4897021F90B}" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="TYPEUSEONPREM" Value="GFI FaxMaker Server ( on-premise solution )" />
+    <Property Id="DETAILSISP" Value="ISP or SMTP/POP3 Mail server" />
+    <Property Id="MNAME" Value="localhost" />
+    <Property Id="BROWSEMACHINE" Value="Please choose the GFI FaxMaker Server" />
+    <Property Id="LANGUAGE" Value="ENGLISH" />
+    <Property Id="EXNAME" Value="{}" />
+    <Property Id="ARPURLINFOABOUT" Value="http://www.gfi.com/fex/" />
+    <Property Id="SHORTDIR" Value="{}" />
+    <Property Id="FAXSERVER" Value="null" />
+    <Property Id="TS" Value="0" />
+    <Property Id="FEX7" Value="null">
+      <RegistrySearch Id="AppReg" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FAXmaker for Exchange Client" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX8" Value="null">
+      <RegistrySearch Id="AppReg1" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\FAXmaker for Networks/SMTP Client" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX9" Value="null">
+      <RegistrySearch Id="AppReg2" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{74fa01a1-83d5-4217-b8c1-170548d34e55}" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="FEX10" Value="null">
+      <RegistrySearch Id="AppReg3" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{3be26504-5dd6-4da9-af65-2fb3db115f25}" Name="DisplayName" Type="raw" />
+    </Property>
+    <Property Id="OLDCLIENT" Value="0" />
+    <Property Id="ARPURLUPDATEINFO" Value="http://www.gfi.com/fex/" />
+    <!--<Property Id="DefaultUIFont" Value="Arial10" />-->
+    <Property Id="DefaultUIFont" Value="MSSansSerif8" />
+    <Property Id="MESSAGEFORM_E" Value="GFI FaxMaker Fax Message Form" />
+    <Property Id="ARPNOMODIFY" Value="1" />
+    <Property Id="ARPNOREPAIR" Value="1" />
+    <Property Id="TYPEUSEONLINE" Value="GFI FaxMaker Online ( cloud solution )" />
+    <Property Id="DOMAINSMS" Value="smsmaker.com" />
+    <Property Id="MAPI" Value="0" />
+    <Property Id="Action1" Value="CheckAutoconfiguring0" />
+    <Property Id="PRINTINST" Value="-w2k -nostdmsg -noerrmsg" />
+    <Property Id="DETAILSLOTUS" Value="Lotus Notes or SMTP/POP3 Mail server" />
+    <Property Id="SMTPUSEOWN" Value="Use own SMTP mail server" />
+    <Property Id="INSTALLDIR" Secure="yes" />
+    <Property Id="UPGRADE_1" Secure="yes" />
+    <Property Id="DETAILSTYPE" Value="1" Secure="yes" />
+    <Property Id="FAXMAILBOXEDIT" Secure="yes" />
+    <Property Id="SKIPSERVER" Secure="yes" />
+    <Property Id="SMTPACCOUNT" Secure="yes" />
+    <Property Id="SECUREPASS" Secure="yes" />
+    <Property Id="SMTPPASSWORD" Secure="yes" />
+    <Property Id="USESSL" Secure="yes" />
+    <Property Id="USESMTPAUTH" Secure="yes" />
+    <Property Id="USEOUTLOOKADDRESSBOOK" Secure="yes" />
+    <Property Id="MAILAUTHENTICATION" Secure="yes" />
+    <Property Id="DOMAINFAX" Value="faxmaker.com" />
+    <Property Id="CRLF" Value="&#xD;&#xA;" />
+    <Property Id="PATH" Value="{}" />
+    <Property Id="ReinstallFileVersion" Value="o" />
+    <Property Id="USEOUTLOOK" Value="Use Outlook New Message form (if using Exchange 2000/2003/2007/2010/2013)" />
+    <Property Id="USEBOTH" Value="Use Outlook but also install GFI FaxMaker New Fax form" />
+    <Property Id="FAXSERVERNAME" Value="null" />
+    <Property Id="PIDTemplate" Value="12345&lt;###-%%%%%%%&gt;@@@@@" />
+    <Property Id="INSTALLTYPE" Value="0" />
+    <Property Id="PALMUSERS" Value="0" />
+    <Property Id="CGW_FILE" Value="CDOSMTP.CGW" />
+    <Property Id="Action14" Value="Checkexname=[EXNAME]&#xD;&#xA;Installtype=[INSTALLTYPE]0" />
+    <Property Id="CLIENTNAME" Value="SendFax.exe" />
+    <Property Id="BUILD" Value="20140603" />
+    <Property Id="DEBUG" Value="0" />
+    <Property Id="FORINI" Value="FMC" />
+    <Property Id="SILENTPRINTERDRIVER" Value="0" />
+    <Property Id="UPGRADING9X" Value="0" />
+    <Property Id="ONLINE" Value="0" />
+    <Property Id="ALLOW64BIT" Value="0" />
+    <Property Id="ARPHELPLINK" Value="http://www.gfi.com" />
+    <Property Id="ONLINEEMAIL">
+      <RegistrySearch Id="AppReg5" Root="HKCU" Key="Software\GFI FAX &amp; VOICE\Intranet" Name="sender" Type="raw" />
+    </Property>
+	</Fragment>
+</Wix>

@@ -1,0 +1,21 @@
+<Settings>
+<Global>
+	<Scheme>https</Scheme>
+	<Host>+</Host>
+	<Port>8080</Port>
+</Global>
+<Handlers>
+	<Handler>
+		<URI>/telemetry</URI>
+		<Handler>Telemetry.CTelemetry</Handler>
+		<Path>debug\httpsrv.exe</Path>
+		<Verbs>GET</Verbs>
+	</Handler>
+	<Handler>
+		<URI>/tlm</URI>
+		<Handler>tele.TeleTest</Handler>
+		<Path>c:\Temp\trunk\Code\tele\bin\Debug\tele.dll</Path>
+		<Verbs>POST</Verbs>
+	</Handler>
+</Handlers>
+</Settings>

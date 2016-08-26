@@ -1,0 +1,931 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="{23CB3F72-4DE5-4654-B578-DBAB1B826261}" Language="0" Manufacturer="GFI Software Ltd." Name="GFI FaxMaker Client" UpgradeCode="{AF87006E-B408-42AE-92D6-D378CD05661E}" Version="16.0.2303">
+    <Package Compressed="yes" InstallerVersion="200" Languages="0" Manufacturer="GFI Software Ltd." Platform="x86" />
+      
+    <Upgrade Id="{AF87006E-B408-42AE-92D6-D378CD05661E}">
+      <UpgradeVersion Minimum="1.0.0.0" Maximum="16.0.2303" Property="UPGRADE_1" MigrateFeatures="yes" IgnoreRemoveFailure="yes" IncludeMinimum="yes" />
+    </Upgrade>
+    
+    <Media Id="1" Cabinet="w1.cab" DiskPrompt="LABEL" EmbedCab="yes" />
+
+    <UIRef Id="SetupUI"/>
+    <PropertyRef Id="PropertiesReference"/>
+    <PropertyRef Id="FeaturesReference"/>
+    <PropertyRef Id="TablesReference"/>
+    
+    <Binary Id="Icon" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Icon" />
+    <Binary Id="Complete" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Complete" />
+    <Binary Id="New" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\New" />
+    <Binary Id="Up" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Up" />
+    <Binary Id="side16" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\side16" />
+    <Binary Id="trash1" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\trash1" />
+    <Binary Id="top16" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\top16" />
+    <Binary Id="Custom" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Custom" />
+    <Binary Id="Music" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Music" />
+    <Binary Id="Typical" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Typical" />
+    <Binary Id="CD" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\CD" />
+    <Binary Id="Info" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Info" />
+    <!--
+    <Binary Id="WiseCustomCall" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\WiseCustomCall" />
+    <Binary Id="Callwiseapi" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callwiseapi" />
+    <Binary Id="Callwisepatch" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callwisepatch" />
+    -->
+    <Binary Id="Callcheck_fax_server" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callcheck_fax_server" />
+    <!--<Binary Id="WiseCustomCalla" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\WiseCustomCalla" />-->
+    <Binary Id="Callregperm1" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callregperm1" />
+    <Binary Id="Calllaunchurl1" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Calllaunchurl1" />
+    <Binary Id="Callinsthlps21" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callinsthlps21" />
+    <!--<Binary Id="WiseScriptDll" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\WiseScriptDll" />-->
+    <Binary Id="Callinsthlps2" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callinsthlps2" />
+    <Binary Id="Callkillfmstart" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Callkillfmstart" />
+    <Binary Id="Calllibca" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Calllibca" />
+    <Binary Id="Calllibca1" SourceFile="C:\Users\nfarrugia\Desktop\Fax Client\Binary\Calllibca1" />
+        
+    <Condition Message="[ProductName] can only be installed on Microsoft Windows 2000 or higher"><![CDATA[VersionNT>=500]]></Condition>
+    <Condition Message="[ProductName] does not support this operating system.">NOT Version9X</Condition>
+    
+    <!--
+    <CustomAction Id="Action14" BinaryKey="WiseScriptDll" DllEntry="DisplayMessage" />
+    <CustomAction Id="WiseSetProfilesFolder" BinaryKey="Callwisepatch" DllEntry="SetProfilesFolder" />
+    <CustomAction Id="SetPatchMode" BinaryKey="Callwisepatch" DllEntry="SetPatchProperties" />
+    <CustomAction Id="WiseStartup" BinaryKey="WiseCustomCall" DllEntry="Startup" Execute="firstSequence" />
+    <CustomAction Id="WiseCleanup" BinaryKey="WiseCustomCall" DllEntry="Cleanup" />
+    <CustomAction Id="WiseUpgradeCheck" BinaryKey="Callwiseapi" DllEntry="UpgradeCheck" Execute="firstSequence" />
+    <CustomAction Id="WiseUpgradeCheckEx" BinaryKey="Callwiseapi" DllEntry="UpgradeCheckEx" Execute="firstSequence" />
+    <CustomAction Id="WiseAltStartup" BinaryKey="WiseCustomCall" DllEntry="AltStartup" />  
+    -->
+    <CustomAction Id="Stop_fmstart.exe" BinaryKey="Callkillfmstart" VBScriptCall="killfmstart" />
+    <!--<CustomAction Id="uninstall_printer" BinaryKey="WiseCustomCall" DllEntry="g2" Execute="deferred" Impersonate="no" />-->
+    <CustomAction Id="SetRootRegPermission" BinaryKey="Callregperm1" DllEntry="SetPermissionsMsiCA" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="EncryptPasswordEx" BinaryKey="Callinsthlps2" DllEntry="insthlps2_encpassMSI" />
+    <CustomAction Id="AutoConfigureClientFromServer" BinaryKey="Callinsthlps21" DllEntry="insthlps2_autoconfigureclientfromfaxserverMSI" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="CA_EncryptOFSCredentials" BinaryKey="Calllibca1" DllEntry="MsiSaveOFSCredentials" />
+    <CustomAction Id="opentellmemore" BinaryKey="Calllaunchurl1" VBScriptCall="" Return="ignore" />
+    <CustomAction Id="CA_FMOResetPassword" BinaryKey="Calllibca" DllEntry="MsiResetPassword" />
+    <!--<CustomAction Id="browse32" BinaryKey="WiseCustomCall" DllEntry="f6" Return="ignore" />-->
+    <CustomAction Id="check_faxserver" BinaryKey="Callcheck_fax_server" VBScriptCall="" Return="ignore" />
+    <CustomAction Id="SetPatchReinstallMode" Property="REINSTALLMODE" Value="omus" />
+    <CustomAction Id="ca_term_install_on64" Error="[ProductName] cannot be installed on 64-bit platforms. Please obtain the x64 version of this package." />
+    <CustomAction Id="set_EXNAME" Property="EXNAME" Value="" />
+    <CustomAction Id="set_ALLUSERS" Property="ALLUSERS" Value="2" />
+    <CustomAction Id="_16BIT" Property="BIT" Value="16" />
+    <CustomAction Id="OLDCLIENT_found" Property="OLDCLIENT" Value="1" />
+    <CustomAction Id="SetInstallType3" Property="INSTALLTYPE" Value="3" />
+    <CustomAction Id="SetInstallType2" Property="INSTALLTYPE" Value="2" />
+    <CustomAction Id="SetEXNAME3" Property="EXNAME" Value="[MAILSERVER]" />
+    <CustomAction Id="SetEXNAME2" Property="EXNAME" Value="[FAXSERVER]" />
+    <CustomAction Id="SetEXNAMENAME" Property="EXNAME" Value="[FAXSERVERNAME]" />
+    <CustomAction Id="SETMAILBOXEDIT" Property="FAXMAILBOXEDIT" Value="[FAXMAILBOX]" />
+    <CustomAction Id="SetEXNAME4" Property="INSTALLTYPE" Value="0" />
+    <CustomAction Id="SETClientname1" Property="CLIENTNAME" Value="opnfrm32.exe" />
+    <CustomAction Id="SetCGW2" Property="CGW_FILE" Value="cdosmtp.cgw" />
+    <CustomAction Id="SETUSESMTPAUTH" Property="USESMTPAUTH" Value="[USEAUTH]" />
+    <CustomAction Id="SETSECUREPASS" Property="SECUREPASS" Value="[USESPA]" />
+    <CustomAction Id="SetCGWOnline" Property="CGW_FILE" Value="ofs.cgw" />
+    <CustomAction Id="SETSECUREPASS20" Property="SECUREPASS" Value="[USESPA]" />
+    <CustomAction Id="fmstart" FileKey="fmstart.exe" ExeCommand="" Return="asyncNoWait" />
+    <CustomAction Id="SetCGW16" Property="CGW_FILE" Value="FFMAPI.CGW" />
+    <CustomAction Id="set_ALLUSERS1" Property="ALLUSERS" Value="2" />
+    <CustomAction Id="set_EXNAME_FROM_SERVERNAME" Property="EXNAME" Value="[FAXSERVERNAME]" />
+    <CustomAction Id="SetDomainSMS4Online" Property="DOMAINSMS" Value="" />
+    <CustomAction Id="SetDomainFax4Online" Property="DOMAINFAX" Value="gfifax.com" />
+    <CustomAction Id="set_PRINTINST" Property="PRINTINST" Value="-nostdmsg" />
+    <CustomAction Id="ca_deferred_uninstall_printer_prew2k" Directory="INSTALLDIR" ExeCommand="rundll32 prntinst.dll,rundll_install_ex -nostdmsg -noerrmsg -uninstallonly  -refcount" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="SetCGWOnlineEI" Property="CGW_FILE" Value="ofs.cgw" />
+    <CustomAction Id="ca_deferred_uninstall_printer" Directory="INSTALLDIR" ExeCommand="rundll32 prntinst.dll,rundll_install_ex -w2k -nostdmsg -noerrmsg -uninstallonly -refcount" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="ca_deferred_install_printer_prew2k" Directory="INSTALLDIR" ExeCommand="rundll32 prntinst.dll,rundll_install_ex -nostdmsg -noerrmsg -refcount" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="SetRootRegPermissionProperty" Property="SetRootRegPermission" Value="SOFTWARE\GFI FAX &amp; VOICE|O:BAG:BAD:(A;OICI;KA;;;BA)(A;OICI;KA;;;SY)(A;OICI;KA;;;WD)" />
+    <CustomAction Id="SETUSESMTPAUTH19" Property="USESMTPAUTH" Value="[USEAUTH]" />
+    <CustomAction Id="SetEXNAME31" Property="EXNAME" Value="[MAILSERVER]" />
+    <CustomAction Id="SetEXNAME22" Property="EXNAME" Value="[FAXSERVER]" />
+    <CustomAction Id="SetInstallType33" Property="INSTALLTYPE" Value="3" />
+    <CustomAction Id="SetInstallType24" Property="INSTALLTYPE" Value="2" />
+    <CustomAction Id="SETMAILBOXEDIT5" Property="FAXMAILBOXEDIT" Value="[FAXMAILBOX]" />
+    <CustomAction Id="SetInstallType16" Property="INSTALLTYPE" Value="1" />
+    <CustomAction Id="Action14SetCustomActionData" Property="CustomActionData" Value="[Action14]" />
+    <CustomAction Id="SetEXNAME47" Property="INSTALLTYPE" Value="0" />
+    <CustomAction Id="SetEXNAMENAME8" Property="EXNAME" Value="[FAXSERVERNAME]" />
+    <CustomAction Id="ca_deferred_install_printer" Directory="INSTALLDIR" ExeCommand="rundll32.exe prntinst.dll,rundll_install_ex -w2k -noerrmsg -nostdmsg -refcount" Execute="deferred" Impersonate="no" />
+    <CustomAction Id="SETClientname" Property="CLIENTNAME" Value="opnfrm32.exe" />
+    <CustomAction Id="SetAuthProperties1" Property="USESSL" Value="0" />
+    <CustomAction Id="SetAuthProperties2" Property="USESMTPAUTH" Value="0" />
+    <CustomAction Id="SetAuthProperties3" Property="SECUREPASS" Value="0" />
+    <CustomAction Id="SetPropAutoConfigureClientFromServer" Property="AutoConfigureClientFromServer" Value="[EXNAME]|[INSTALLDIR]|[LANGUAGE]" />
+    <CustomAction Id="fmfaxapi" FileKey="fmfaxapi.exe" ExeCommand="" Return="asyncNoWait" />
+    <CustomAction Id="Action1SetCustomActionData" Property="CustomActionData" Value="[Action1]" />
+    <CustomAction Id="Action2SetCustomActionData" Property="CustomActionData" Value="[Action2]" />
+    
+    <Directory Id="TARGETDIR" Name="SourceDir">
+        <Component Id="registry2" Guid="{2462A66F-6442-4567-9091-2858E6595A44}">
+            <Condition>BIT=32</Condition>
+            <RegistryValue Id="registry2" Root="HKLM" Key="SOFTWARE\Microsoft\Windows\CurrentVersion\Run" Name="FMStart" Value="&quot;[INSTALLDIR]fmstart.exe&quot;" Type="string" KeyPath="yes" />
+        </Component>
+        <Component Id="registry" Guid="{C6D859B3-9DF3-4176-A758-3F7917A8C3C6}">
+            <RegistryKey Id="registry47" ForceCreateOnInstall="yes" Key="SOFTWARE\GFI FAX &amp; VOICE" Root="HKLM">
+                <Permission User="Administrators" Read="yes" Delete="yes" ReadPermission="yes" ChangePermission="yes" TakeOwnership="yes" Write="yes" CreateSubkeys="yes" EnumerateSubkeys="yes" Notify="yes" CreateLink="yes" />
+                <Permission User="Everyone" Read="yes" Delete="yes" ReadPermission="yes" ChangePermission="yes" TakeOwnership="yes" Write="yes" CreateSubkeys="yes" EnumerateSubkeys="yes" Notify="yes" CreateLink="yes" />
+            </RegistryKey>
+            <RegistryValue Id="registry" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="Debug" Value="[DEBUG]" Type="integer" KeyPath="yes" />
+            <RegistryValue Id="registry6" Root="HKCR" Key="GFI_Faxmaker\shell\open\command" Value="&quot;[INSTALLDIR]VIEWER.EXE&quot; %1" Type="string" />
+            <RegistryValue Id="registry25" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client" Value="" Type="string" />
+            <RegistryValue Id="registry5" Root="HKCR" Key="GFI_Faxmaker" Value="FAXmaker Fax File" Type="string" />
+            <RegistryValue Id="registry1" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="Logdir" Value="[INSTALLDIR]logs" Type="string" />
+            <RegistryValue Id="registry8" Root="HKCR" Key=".fax" Value="GFI_FAXmaker" Type="string" />
+            <RegistryValue Id="registry4" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="Build" Value="[BUILD]" Type="string" />
+            <RegistryValue Id="registry49" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="language" Value="[LANGUAGE]" Type="string" />
+            <RegistryValue Id="registry26" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE" Value="" Type="string" />
+            <RegistryValue Id="registry7" Root="HKCR" Key="GFI_Faxmaker\DefaultIcon" Value="[INSTALLDIR]VIEWER.EXE,0" Type="string" />
+            <RegistryValue Id="registry3" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="Path" Value="[INSTALLDIR]" Type="string" />
+        </Component>
+        <Directory Id="WindowsFolder" SourceName="Windows">
+            <Directory Id="ProfilesFolder" SourceName="Profiles">
+                <Directory Id="RecentFolder" SourceName="Recent" />
+                <Directory Id="DesktopFolder" SourceName="Desktop" />
+                <Directory Id="StartMenuFolder" ShortSourceName="StartMen" SourceName="Start Menu">
+                    <Directory Id="ProgramMenuFolder" SourceName="Programs">
+                        <Directory Id="StartupFolder" SourceName="Startup" />
+                        <Directory Id="GFI_FAXmaker_Client" Name="GFI FaxMaker Client" ShortName="GFIFAX~1">
+                            <Component Id="shortcuts_non_outlook" Guid="{5C48CC06-2B7F-48D2-BB62-E624CFCB3CB8}" KeyPath="yes">
+                                <Condition><![CDATA[USEOUTLOOKFORM<>"1"]]></Condition>
+                                <Shortcut Id="FAXmaker_Fax_Message_Form" Directory="GFI_FAXmaker_Client" Name="GFI FaxMaker Fax Message Form" ShortName="FAXMAK~1" Description="GFI FaxMaker Fax Message Form" Hotkey="0" IconIndex="0" Show="normal" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+                            </Component>
+                        </Directory>
+                    </Directory>
+                </Directory>
+                <Directory Id="NetHoodFolder" SourceName="NetHood" />
+                <Directory Id="PrintHoodFolder" ShortSourceName="PrintHoo" SourceName="PrintHood" />
+            </Directory>
+            <Directory Id="TempFolder" SourceName="Temp" />
+            <Directory Id="System64Folder" SourceName="System32" />
+            <Directory Id="SystemFolder" SourceName="SysWow64" />
+            <Directory Id="System16Folder" SourceName="System" />
+            <Directory Id="WinSxS" SourceName="WinSxS" />
+            <Directory Id="FontsFolder" SourceName="Fonts" />
+        </Directory>
+        <Directory Id="GAC" ShortSourceName="GLOBAL~1" SourceName="Global Assembly Cache" />
+        <Directory Id="CommonAppDataFolder" ShortSourceName="APPLIC~1" SourceName="Application Data" />
+        <Directory Id="ProgramFilesFolder" ShortSourceName="PROGRA~2" SourceName="Program Files (x86)">
+            <Directory Id="INSTALLDIR1" Name="GFI">
+                <Component Id="CreateFolder" Guid="{19173C1F-2462-46E0-AA6B-4F6A91259201}" KeyPath="yes">
+                    <CreateFolder Directory="INSTALLDIR">
+                        <Permission User="Administrators" Read="yes" Delete="yes" ReadPermission="yes" ChangePermission="yes" TakeOwnership="yes" ReadAttributes="yes" WriteAttributes="yes" ReadExtendedAttributes="yes" WriteExtendedAttributes="yes" CreateFile="yes" CreateChild="yes" DeleteChild="yes" Traverse="yes" GenericAll="yes" GenericExecute="yes" GenericWrite="yes" GenericRead="yes" />
+                        <Permission User="Everyone" Read="yes" Delete="yes" ReadPermission="yes" ReadAttributes="yes" WriteAttributes="yes" ReadExtendedAttributes="yes" WriteExtendedAttributes="yes" CreateFile="yes" CreateChild="yes" DeleteChild="yes" Traverse="yes" GenericAll="yes" GenericExecute="yes" GenericWrite="yes" GenericRead="yes" />
+                    </CreateFolder>
+                    <CreateFolder Directory="temp" />
+                    <CreateFolder Directory="logs" />
+                    <CreateFolder Directory="INSTALLDIR1" />
+                </Component>
+                <Directory Id="INSTALLDIR" Name="FaxMaker Client" ShortName="FAXMAK~2">
+                    <Component Id="SendFax.exe" Guid="{77129B63-5C62-4ABB-902F-6384070A394A}">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFax.exe" Name="SendFax.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFax.exe" />
+                    </Component>
+                    <Component Id="IniFileRegNT4OUTLOOK1" Guid="{D9698D21-815C-4B3B-AF91-9341D32A1164}" Permanent="yes">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>"0" AND VersionNT]]></Condition>
+                        <RegistryValue Id="registry18" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmprog.ini\GENERAL" Name="Clientname" Value="[INSTALLDIR][CLIENTNAME]" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="IniFileRegNT4ALL_mntr" Guid="{156E54F6-6C0E-4B37-B98E-622F11F162CA}">
+                        <Condition>VersionNT AND FEX12="{}"</Condition>
+                        <RegistryValue Id="registry46" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\gfimntr.ini\GFi_Print_Monitor" Name="Temp_Directory" Value="[INSTALLDIR]TEMP\" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="SMTPRegMode3" Guid="{C4A35396-6769-42C1-9FA7-67CDA2C4C58A}">
+                        <Condition>INSTALLTYPE=3</Condition>
+                        <RegistryValue Id="registry32" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="InstallMode" Value="3" Type="integer" KeyPath="yes" />
+                        <RegistryValue Id="registry35" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp" Value="[MAILSERVER]" Type="string" />
+                        <RegistryValue Id="registry37" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="faxmailbox" Value="[FAXMAILBOX]" Type="string" />
+                        <RegistryValue Id="registry36" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtpport" Value="25" Type="string" />
+                    </Component>
+                    <Component Id="SMTPRegMode2" Guid="{89ADFDA4-8107-4523-9604-77CA9FD0D9D3}">
+                        <Condition>INSTALLTYPE="2"</Condition>
+                        <RegistryValue Id="registry27" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="InstallMode" Value="2" Type="integer" KeyPath="yes" />
+                        <RegistryValue Id="registry31" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtpport" Value="25" Type="string" />
+                        <RegistryValue Id="registry30" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp" Value="[EXNAME]" Type="string" />
+                    </Component>
+                    <Component Id="IniFileRegNT4ALL" Guid="{5C03AA5F-DC0A-473D-A87B-119A806C4633}" Permanent="yes">
+                        <Condition>VersionNT</Condition>
+                        <RegistryValue Id="registry14" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmprog.ini\GENERAL" Name="Language" Value="[LANGUAGE]" Type="string" KeyPath="yes" />
+                        <RegistryValue Id="registry17" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmclient.ini\OPTIONS" Name="Language" Value="[LANGUAGE]" Type="string" />
+                    </Component>
+                    <Component Id="IniFileRegNT4OUTLOOK0" Guid="{0456552E-01D8-4E54-AE43-BC6E867A43CC}" Permanent="yes">
+                        <Condition>USEOUTLOOKFORM=0 AND VersionNT</Condition>
+                        <RegistryValue Id="registry20" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmprog.ini\GENERAL" Name="Clientname" Value="[INSTALLDIR][CLIENTNAME]" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="IniFileRegNT4MAPI" Guid="{9A9C0EAB-5980-46F7-8FB3-9F994F3FEF69}" Permanent="yes">
+                        <Condition>VersionNT AND MAPI=1</Condition>
+                        <RegistryValue Id="registry23" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmclient.ini\OPTIONS" Name="Clientgateway" Value="[INSTALLDIR][CGW_FILE]" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="IniFileRegNT4SMTP" Guid="{FC9AC708-68EE-4D6F-A7FF-8185F9B4D11A}">
+                        <Condition>VersionNT AND MAPI=0</Condition>
+                        <RegistryValue Id="registry24" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmclient.ini\OPTIONS" Name="Clientgateway" Value="[INSTALLDIR][CGW_FILE]" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="getemail.vbs" Guid="{ED29F1EF-B773-4C30-99E1-2F5D1ABCA310}">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="getemail.vbs" Name="getemail.vbs" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\getemail.vbs" />
+                    </Component>
+                    <Component Id="smtpregistry" Guid="{3C1DBBEF-725E-439B-8D09-7B8BF79B71A1}">
+                        <Condition><![CDATA[BIT=32 AND VersionNT>=500]]></Condition>
+                        <RegistryValue Id="registry39" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp_account" Value="[SMTPACCOUNT]" Type="string" KeyPath="yes" />
+                        <RegistryValue Id="registry41" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp_usessl" Value="[USESSL]" Type="integer" />
+                        <RegistryValue Id="registry42" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp_useauth" Value="[USESMTPAUTH]" Type="integer" />
+                        <RegistryValue Id="registry40" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp_password" Value="[SMTPPASSWORD]" Type="string" />
+                        <RegistryValue Id="registry43" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\SendFax Options" Name="smtp_usespa" Value="[SECUREPASS]" Type="integer" />
+                    </Component>
+                    <Component Id="gfimntr.ini" Guid="{E906B1E2-1191-460F-9F78-C2A1AAA3D63D}" KeyPath="yes">
+                        <IniFile Id="Temp_Directory" Action="addLine" Directory="WindowsFolder" Key="Temp_Directory" Name="gfimntr.ini" Section="GFi_Print_Monitor" Value="[INSTALLDIR]temp\" />
+                    </Component>
+                    <Component Id="RegOnlineSender" Guid="{F5DCEF60-1897-4D37-979F-19EF530B2D6A}" Permanent="yes">
+                        <Condition>ONLINE=1</Condition>
+                        <RegistryValue Id="registry52" Root="HKCU" Key="Software\GFI FAX &amp; VOICE\Intranet" Name="sender" Value="[ONLINEEMAIL]" Type="string" KeyPath="yes" />
+                    </Component>
+                    <Component Id="viewer.exe" Guid="{C3D0C3AC-7980-4246-BBC0-F19F9D76DE23}">
+                        <File Id="viewer.exe" Name="viewer.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewer.exe" />
+                    </Component>
+                    <Component Id="stmp32.dll" Guid="{3A93F754-4CB1-428B-BD85-5D67B7C3C2E4}">
+                        <File Id="stmp32.dll" Name="stmp32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\stmp32.dll" />
+                    </Component>
+                    <Component Id="img32vi.dll" Guid="{56B8FC88-ACEB-41D1-A9F3-07497D917AA1}">
+                        <File Id="img32vi.dll" Name="img32vi.dll" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\img32vi.dll" />
+                    </Component>
+                    <Component Id="img32qq.dll" Guid="{C3124A74-29A3-40C0-B6DA-58380A254C6D}">
+                        <File Id="img32qq.dll" Name="img32qq.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\img32qq.dll" />
+                    </Component>
+                    <Component Id="img32an.dll" Guid="{75AF94C0-13CA-45F5-8AA2-8C36C10C950A}">
+                        <File Id="img32an.dll" Name="img32an.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\img32an.dll" />
+                    </Component>
+                    <Component Id="PROCHOOK.DLL" Guid="{4B095F37-68A5-4CA8-A8A2-34EB01ADC967}">
+                        <Condition>BIT=16</Condition>
+                        <File Id="PROCHOOK.DLL" Name="PROCHOOK.DLL" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\PROCHOOK.DLL" />
+                    </Component>
+                    <Component Id="faxmaker.drv" Guid="{DE45B1BC-1A2A-4911-82E2-E5EEA87DE51C}">
+                        <Condition>BIT=16</Condition>
+                        <File Id="faxmaker.drv" Name="faxmaker.drv" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxmaker.drv" />
+                    </Component>
+                    <Component Id="RASDDUI.HLP" Guid="{D02534D6-4111-483C-ABE4-69B44493053E}">
+                        <Condition>(SILENTPRINTERDRIVER=1) OR (VersionNT=400)</Condition>
+                        <File Id="RASDDUI.HLP" Name="RASDDUI.HLP" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\RASDDUI.HLP" />
+                    </Component>
+                    <Component Id="RASDDUI.DLL" Guid="{F220ED2C-E1C8-47D2-A1CF-CEF5D39932E1}">
+                        <Condition>(SILENTPRINTERDRIVER=1) OR (VersionNT=400)</Condition>
+                        <File Id="RASDDUI.DLL" Name="RASDDUI.DLL" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\RASDDUI.DLL" />
+                    </Component>
+                    <Component Id="RASDD.DLL" Guid="{13003EB9-818B-4470-8AF7-9E443B143809}">
+                        <Condition>(SILENTPRINTERDRIVER=1) OR (VersionNT=400)</Condition>
+                        <File Id="RASDD.DLL" Name="RASDD.DLL" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\RASDD.DLL" />
+                    </Component>
+                    <Component Id="FAXMAKER.DLL" Guid="{FDB35702-B031-43F2-A8B6-44A63AC9DD1D}">
+                        <Condition>(SILENTPRINTERDRIVER=1) OR (VersionNT=400)</Condition>
+                        <File Id="FAXMAKER.DLL" Name="FAXMAKER.DLL" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\FAXMAKER.DLL" />
+                    </Component>
+                    <Component Id="prntinst.dll" Guid="{0C85A3EF-B8EE-4EF9-8D78-930734447309}">
+                        <File Id="prntinst.dll" Name="prntinst.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\prntinst.dll" />
+                    </Component>
+                    <Component Id="msvcrt.dll" Guid="{27CC45CA-DEC3-4BEB-88DE-B52D0E3BDE51}">
+                        <Condition><![CDATA[MAPI=0 AND (VersionNT<500 OR BIT=16)]]></Condition>
+                        <File Id="msvcrt.dll" Name="msvcrt.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\msvcrt.dll" />
+                    </Component>
+                    <Component Id="mfc42.dll" Guid="{E7FBA3CD-CF0B-45A5-9AA1-0212FE9A43AB}">
+                        <Condition><![CDATA[MAPI=0 AND (VersionNT<500 OR BIT=16)]]></Condition>
+                        <File Id="mfc42.dll" Name="mfc42.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\mfc42.dll" />
+                    </Component>
+                    <Component Id="trouble.exe" Guid="{F5241462-9D95-41AC-A60A-022932ACC6C6}">
+                        <File Id="trouble.exe" Name="trouble.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\trouble.exe" />
+                    </Component>
+                    <Component Id="trb_ext.dll" Guid="{E2B25F57-D303-4651-918E-19EE430C7D64}">
+                        <File Id="trb_ext.dll" Name="trb_ext.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\trb_ext.dll" />
+                    </Component>
+                    <Component Id="sendfxpb.exe" Guid="{89666688-2D88-4E88-BFE7-FB25257454F9}">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpb.exe" Name="sendfxpb.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpb.exe" />
+                    </Component>
+                    <Component Id="gfi_ver.exe" Guid="{145167A1-1AC0-40A7-9EA2-0C9D7AB6263A}">
+                        <File Id="gfi_ver.exe" Name="gfi_ver.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\gfi_ver.exe" />
+                    </Component>
+                    <Component Id="fmfaxapi.exe" Guid="{62C52B7D-AF7E-4B9D-8BD3-1E8F0D01C09C}">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="fmfaxapi.exe" Name="fmfaxapi.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmfaxapi.exe" />
+                    </Component>
+                    <Component Id="fmaddrbk.dll" Guid="{88AFFA55-1E69-459F-A671-7CF3C9511FCA}">
+                        <File Id="fmaddrbk.dll" Name="fmaddrbk.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmaddrbk.dll" />
+                    </Component>
+                    <Component Id="Tiff32.dll" Guid="{EA2C9416-04DE-4603-8326-FBD2B9924276}">
+                        <File Id="Tiff32.dll" Name="Tiff32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\Tiff32.dll" />
+                    </Component>
+                    <Component Id="gfi_log.dll" Guid="{A825A4F6-1BDB-4BB2-AF52-2422D74F4602}">
+                        <File Id="gfi_log.dll" Name="gfi_log.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\gfi_log.dll" />
+                    </Component>
+                    <Component Id="fmcmn_rc.dll" Guid="{DB18DF4E-9ABD-4413-BC54-12559919844D}">
+                        <File Id="fmcmn_rc.dll" Name="fmcmn_rc.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmcmn_rc.dll" />
+                        <File Id="uninst.ico" Name="uninst.ico" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\uninst.ico" />
+                        <File Id="fmfaxapi.doc" Name="fmfaxapi.doc" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmfaxapi.doc" />
+                        <File Id="approved.bmp" Name="approved.bmp" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\approved.bmp" />
+                        <File Id="blank.fax" Name="blank.fax" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\blank.fax" />
+                        <File Id="draft.bmp" Name="draft.bmp" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\draft.bmp" />
+                        <File Id="received.bmp" Name="received.bmp" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\received.bmp" />
+                        <File Id="rejected.bmp" Name="rejected.bmp" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\rejected.bmp" />
+                        <File Id="stplib.dat" Name="stplib.dat" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\stplib.dat" />
+                        <File Id="urgent.bmp" Name="urgent.bmp" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\urgent.bmp" />
+                    </Component>
+                    <Component Id="shortcuts_english_oulook" Guid="{E31DCA6D-14AC-4213-852B-ACC812237D65}" KeyPath="yes">
+                        <Shortcut Id="FAXMaker_Help" Directory="GFI_FAXmaker_Client" Name="GFI FaxMaker Help" ShortName="FAXMAK~1" Description="GFI FaxMaker Help" Hotkey="0" IconIndex="0" Show="normal" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+                        <Shortcut Id="FAXMaker_Viewer" Directory="GFI_FAXmaker_Client" Name="GFI FaxMaker Viewer" ShortName="FAXMAK~1" Description="GFI FaxMaker Viewer" Hotkey="0" IconIndex="0" Show="normal" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+                    </Component>
+                    <Component Id="registrykey.ini" Guid="{7A6B98C6-09BD-488F-9BA3-1EA9D9D79488}" KeyPath="yes">
+                        <IniFile Id="UseKey" Action="addLine" Directory="INSTALLDIR" Key="UseKey" Name="registrykey.ini" Section="RegistryKey" ShortName="regist~1.ini" Value="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client" />
+                    </Component>
+                    <Component Id="faxmaker.inf" Guid="{6717DF8A-D39F-4E90-BF30-A19670BAB815}">
+                        <Condition><![CDATA[VersionNT>=500]]></Condition>
+                        <File Id="faxmaker.inf" Name="faxmaker.inf" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxmaker.inf" />
+                        <File Id="FAXmaker.gpd" Name="FAXmaker.gpd" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\FAXmaker.gpd" />
+                        <File Id="faxmaker.cat" Name="faxmaker.cat" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxmaker.cat" />
+                    </Component>
+                    <Component Id="troubleres.dll_turkish" Guid="{EAAD2320-1C01-4035-BC39-B09EC46EBA46}">
+                        <Condition>LANGUAGE~="turkish"</Condition>
+                        <File Id="troubleres.dll37" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~A.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll37" />
+                    </Component>
+                    <Component Id="troubleres.dll_russian" Guid="{68485F35-37FA-48E5-8068-4610FC5C87C8}">
+                        <Condition>LANGUAGE~="russian"</Condition>
+                        <File Id="troubleres.dll35" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~8.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll35" />
+                    </Component>
+                    <Component Id="troubleres.dll_hungarian" Guid="{B13D2CCC-2529-4E2A-A08B-07EE0462FAF6}">
+                        <Condition>LANGUAGE~="hungarian"</Condition>
+                        <File Id="troubleres.dll32" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~5.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll32" />
+                    </Component>
+                    <Component Id="troubleres.dll_czech" Guid="{D9F215DD-FD6D-4318-9FD2-FA62D85C4012}">
+                        <Condition>LANGUAGE~="czech"</Condition>
+                        <File Id="troubleres.dll30" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~3.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll30" />
+                    </Component>
+                    <Component Id="troubleres.dll_polish" Guid="{29259CBD-BA51-45C9-9AF0-FDC2243BA9FB}">
+                        <Condition>LANGUAGE~="polish"</Condition>
+                        <File Id="troubleres.dll34" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~7.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll34" />
+                    </Component>
+                    <Component Id="ofs.cgw" Guid="{7F6BEA10-DB57-4C16-BD62-F8A76D46DA2A}">
+                        <File Id="OFS.cgw" Name="OFS.cgw" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\OFS.cgw" />
+                        <File Id="cacerts.pem" Name="cacerts.pem" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\cacerts.pem" />
+                    </Component>
+                    <Component Id="troubleres.dll_italian" Guid="{4FEDCFC5-9DF2-45C6-BB59-E43A02F86A8C}">
+                        <Condition>LANGUAGE~="italian"</Condition>
+                        <File Id="troubleres.dll33" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~6.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll33" />
+                    </Component>
+                    <Component Id="troubleres.dll_spanish" Guid="{F46EAEC0-9379-491C-B614-DA4854D4F088}">
+                        <Condition>LANGUAGE~="spanish"</Condition>
+                        <File Id="troubleres.dll36" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~9.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll36" />
+                    </Component>
+                    <Component Id="troubleres.dll_german" Guid="{F0B5677D-C247-4C72-B39C-87DED40379A9}">
+                        <Condition>LANGUAGE~="german"</Condition>
+                        <File Id="troubleres.dll31" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~4.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll31" />
+                    </Component>
+                    <Component Id="troubleres.dll_arabic" Guid="{1E5993AE-C4B1-4B81-A47B-630C918A7E9D}">
+                        <Condition>LANGUAGE~="arabic"</Condition>
+                        <File Id="troubleres.dll29" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~2.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll29" />
+                    </Component>
+                    <Component Id="SMTPRegDomains" Guid="{02CC1142-EA97-44A3-B2DF-9F12ABA2C050}">
+                        <RegistryValue Id="registry28" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="DomainFax" Value="[DOMAINFAX]" Type="string" KeyPath="yes" />
+                        <RegistryValue Id="registry29" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="DomainSMS" Value="[DOMAINSMS]" Type="string" />
+                    </Component>
+                    <Component Id="fmstart.exe" Guid="{4C20D3C5-C5A5-4EB0-B4E3-BFB45D878FD8}">
+                        <File Id="fmstart.exe" Name="fmstart.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmstart.exe" />
+                    </Component>
+                    <Component Id="viewerres.dll_czech" Guid="{A9F3C728-6BFB-4DDC-8A17-FE4CFD2E0FBE}">
+                        <Condition>LANGUAGE~="czech"</Condition>
+                        <File Id="viewerres.dll24" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~7.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll24" />
+                    </Component>
+                    <Component Id="inimapi" Guid="{5371501E-DF56-41B8-AF3C-367BAFA7FD31}" KeyPath="yes">
+                        <Condition>0=1</Condition>
+                        <IniFile Id="Clientgateway" Action="addLine" Directory="WindowsFolder" Key="Clientgateway" Name="FMCLIENT.INI" Section="OPTIONS" Value="&quot;[INSTALLDIR][CGW_FILE]&quot;" />
+                    </Component>
+                    <Component Id="inismtp" Guid="{AC6E7584-385A-42FE-9846-715927741667}" KeyPath="yes">
+                        <Condition>MAPI=0</Condition>
+                        <IniFile Id="Clientgateway3" Action="addLine" Directory="WindowsFolder" Key="Clientgateway" Name="FMCLIENT.INI" Section="OPTIONS" Value="&quot;[INSTALLDIR][CGW_FILE]&quot;" />
+                    </Component>
+                    <Component Id="viewerres.dll_hungarian" Guid="{0FB26D41-287C-4582-B65D-9838A5512EAE}">
+                        <Condition>LANGUAGE~="hungarian"</Condition>
+                        <File Id="viewerres.dll25" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~8.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll25" />
+                    </Component>
+                    <Component Id="viewerres.dll_russian" Guid="{0D94A300-3342-4853-AF74-0F66AE4B030E}">
+                        <Condition>LANGUAGE~="russian"</Condition>
+                        <File Id="viewerres.dll27" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~A.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll27" />
+                    </Component>
+                    <Component Id="viewerres.dll_polish" Guid="{F082B88C-4E90-49B2-B410-21967EE7CC72}">
+                        <Condition>LANGUAGE~="polish"</Condition>
+                        <File Id="viewerres.dll26" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~9.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll26" />
+                    </Component>
+                    <Component Id="viewerres.dll_turkish" Guid="{8E22BFB7-D7E5-40E6-BAE1-A7F333E8973F}">
+                        <Condition>LANGUAGE~="turkish"</Condition>
+                        <File Id="viewerres.dll28" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~B.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll28" />
+                    </Component>
+                    <Component Id="viewerres.dll_arabic" Guid="{B3FD3D32-11E2-4DC2-B0C5-0BBCC2185E85}">
+                        <Condition>LANGUAGE~="arabic"</Condition>
+                        <File Id="viewerres.dll23" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~6.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll23" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_czech" Guid="{F1C23F4E-31CF-455A-8170-742CCB9FB230}">
+                        <Condition><![CDATA[LANGUAGE~="czech" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll18" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~7.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll18" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_russian" Guid="{AC78D511-7E35-4F33-9C2C-5A2C59EB6533}">
+                        <Condition><![CDATA[LANGUAGE~="russian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll21" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~A.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll21" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_turkish" Guid="{C9D13DCA-2CF9-4DD0-AC33-0812577B7F9C}">
+                        <Condition><![CDATA[LANGUAGE~="turkish" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll22" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~B.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll22" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_hungarian" Guid="{68EE6FF0-9925-4B77-952A-D0B92280E4E3}">
+                        <Condition><![CDATA[LANGUAGE~="hungarian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll19" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~8.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll19" />
+                    </Component>
+                    <Component Id="RegOnline" Guid="{02B51B24-47E8-4E19-B958-CFC779205851}">
+                        <Condition><![CDATA[ONLINE="1"]]></Condition>
+                        <RegistryValue Id="registry50" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker Client\Config" Name="Online" Value="1" Type="integer" KeyPath="yes" />
+                    </Component>
+                    <Component Id="shortcuts_non_online" Guid="{D65A8392-10EE-45E5-BEA9-D4F4DA23E2C0}" KeyPath="yes">
+                        <Condition><![CDATA[NOT ONLINE OR ONLINE<>"1"]]></Condition>
+                        <Shortcut Id="FAXmaker_SMS_Message_Form" Directory="GFI_FAXmaker_Client" Name="GFI FaxMaker SMS Message Form" ShortName="FAXMAK~1" Description="GFI FaxMaker SMS Message Form" Arguments="-sms" Hotkey="0" IconIndex="0" Show="normal" WorkingDirectory="INSTALLDIR" Advertise="yes" />
+                    </Component>
+                    <Component Id="inimappings" Guid="{7540A85F-C381-400C-B67B-F1BD49609930}" Permanent="yes">
+                        <Condition>VersionNT</Condition>
+                        <RegistryValue Id="registry10" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\fmprog.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmprog.ini" Type="string" KeyPath="yes" />
+                        <RegistryValue Id="registry11" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\fmclient.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\fmclient.ini" Type="string" />
+                        <RegistryValue Id="registry9" Root="HKLM" Key="SOFTWARE\Microsoft\Windows NT\CurrentVersion\IniFileMapping\gfimntr.ini" Value="SYS:GFI FAX &amp; VOICE\FAXmaker\Configuration Mappings\gfimntr.ini" Type="string" />
+                    </Component>
+                    <Component Id="viewerres.dll_english" Guid="{1B6A8874-0250-401A-8872-21A721F80B91}">
+                        <Condition><![CDATA[LANGUAGE~="english"]]></Condition>
+                        <File Id="viewerres.dll12" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~5.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll12" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_english" Guid="{A4BEDEEA-B932-449E-85DD-A91E596C9205}">
+                        <Condition><![CDATA[LANGUAGE~="english" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll11" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~5.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll11" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_english" Guid="{6998776F-CA20-4BB2-B41C-B9D671834318}">
+                        <Condition><![CDATA[LANGUAGE~="english" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFaxRes.dll10" Name="SendFaxRes.dll" KeyPath="yes" ShortName="SENDFA~5.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFaxRes.dll10" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_italian" Guid="{D498302F-2357-49EF-9963-E67993167BB3}">
+                        <Condition><![CDATA[LANGUAGE~="italian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll9" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~4.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll9" />
+                    </Component>
+                    <Component Id="viewerres.dll_italian" Guid="{187E1D6D-F3B1-47C3-8973-F755E031C66F}">
+                        <Condition><![CDATA[LANGUAGE~="italian"]]></Condition>
+                        <File Id="viewerres.dll8" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~4.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll8" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_italian" Guid="{548EC305-A91A-4982-AC3D-D943EDDD3583}">
+                        <Condition><![CDATA[LANGUAGE~="italian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFaxRes.dll7" Name="SendFaxRes.dll" KeyPath="yes" ShortName="SENDFA~4.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFaxRes.dll7" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_french" Guid="{C15E7804-35CE-487C-84B8-C0541F8BA498}">
+                        <Condition><![CDATA[LANGUAGE~="french" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll6" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~3.DLL" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll6" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_polish" Guid="{0AFB49B0-2483-44B9-B606-0BED630D0F96}">
+                        <Condition><![CDATA[LANGUAGE~="polish" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll20" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~9.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll20" />
+                    </Component>
+                    <Component Id="viewerres.dll_french" Guid="{4B4B8AEF-006A-48FD-B944-4F0239ED1124}">
+                        <Condition><![CDATA[LANGUAGE~="french"]]></Condition>
+                        <File Id="viewerres.dll5" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~3.DLL" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll5" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_arabic" Guid="{EA88584B-5B99-4F6C-9279-78A74705D9D8}">
+                        <Condition><![CDATA[LANGUAGE~="arabic" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll17" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~6.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll17" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_french" Guid="{9297109C-1C54-4BCC-A8EC-05400D80F088}">
+                        <Condition><![CDATA[LANGUAGE~="french" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFaxRes.dll4" Name="SendFaxRes.dll" KeyPath="yes" ShortName="SENDFA~3.DLL" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFaxRes.dll4" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_spanish" Guid="{5267F1CD-1D67-4BDF-BADB-B3F61165D4C8}">
+                        <Condition><![CDATA[LANGUAGE~="spanish" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll3" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~2.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll3" />
+                    </Component>
+                    <Component Id="viewerres.dll_spanish" Guid="{D2BF4E5B-A2DD-4CF0-A46D-72B63CEBAFF4}">
+                        <Condition><![CDATA[LANGUAGE~="spanish"]]></Condition>
+                        <File Id="viewerres.dll2" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~2.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll2" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_spanish" Guid="{ABE0F587-E13D-49DD-B912-345CA81BA648}">
+                        <Condition><![CDATA[LANGUAGE~="spanish" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFaxRes.dll1" Name="SendFaxRes.dll" KeyPath="yes" ShortName="SENDFA~2.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFaxRes.dll1" />
+                    </Component>
+                    <Component Id="fmp_drv.ini" Guid="{A4F66715-F42A-4E49-A927-A6748EB538BA}">
+                        <File Id="fmp_drv.ini" Name="fmp_drv.ini" KeyPath="yes" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmp_drv.ini" />
+                    </Component>
+                    <Component Id="fmp_drv.dll" Guid="{ED54215F-20C9-47A3-8BC8-05F22DB38DDF}">
+                        <File Id="fmp_drv.dll" Name="fmp_drv.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmp_drv.dll" />
+                    </Component>
+                    <Component Id="insthlps_dll" Guid="{0E6311C5-4F23-408F-B461-9655A281A36D}">
+                        <File Id="insthlps2.dll" Name="insthlps2.dll" KeyPath="yes" ShortName="INSTHL~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\insthlps2.dll" />
+                    </Component>
+                    <Component Id="sendfxpbres.dll_german" Guid="{260738EB-76D1-4469-A744-6168D6D4B0E6}">
+                        <Condition><![CDATA[LANGUAGE~="german" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfxpbres.dll" Name="sendfxpbres.dll" KeyPath="yes" ShortName="SENDFX~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfxpbres.dll" />
+                    </Component>
+                    <Component Id="opnfrm32.exe" Guid="{2740FE93-FC19-4CA6-837A-9E564C56D647}">
+                        <Condition><![CDATA[USEOUTLOOKFORM<>0]]>
+                          </Condition>
+                        <File Id="opnfrm32.exe" Name="opnfrm32.exe" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\opnfrm32.exe" />
+                    </Component>
+                    <Component Id="utf8_slayer.dll" Guid="{C847F66C-3559-465D-A886-17B69D3FB40B}">
+                        <Condition><![CDATA[MAPI=0 AND VersionNT>=500]]></Condition>
+                        <File Id="utf8_slayer.dll" Name="utf8_slayer.dll" KeyPath="yes" ShortName="UTF8_S~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\utf8_slayer.dll" />
+                    </Component>
+                    <Component Id="cdosmtp.cgw" Guid="{FD5ABB04-1D98-44BF-A649-542639BA09D8}">
+                        <Condition><![CDATA[MAPI=0 AND VersionNT>=500]]></Condition>
+                        <File Id="cdosmtp.cgw" Name="cdosmtp.cgw" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\cdosmtp.cgw" />
+                    </Component>
+                    <Component Id="faxclient.chm_german" Guid="{D3D10757-F851-4D2F-97C7-CFB242E0235F}">
+                        <Condition><![CDATA[LANGUAGE~="german" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm3" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~4.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm3" />
+                    </Component>
+                    <Component Id="fmp_invertpixels" Guid="{FE7691FE-670E-480F-80C0-17DACA91E42E}">
+                        <Condition><![CDATA[VersionNT<501]]></Condition>
+                        <RegistryValue Id="registry48" Root="HKLM" Key="SOFTWARE\GFI FAX &amp; VOICE\FAXmaker\Config" Name="fmp_invertpixels" Value="1" Type="integer" KeyPath="yes" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_hungarian" Guid="{6DF1E1B2-3727-4EDA-8407-353BAE74605D}">
+                        <Condition><![CDATA[LANGUAGE~="hungarian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfaxres.dll13" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~8.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll13" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_russian" Guid="{4BCA5D5D-B99F-4036-88FB-F3F476CA132C}">
+                        <Condition><![CDATA[LANGUAGE~="russian" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfaxres.dll15" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~A.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll15" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_turkish" Guid="{53D3238E-2807-41E8-94C0-6FECACFFB558}">
+                        <Condition><![CDATA[LANGUAGE~="turkish" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfaxres.dll16" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~B.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll16" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_czech" Guid="{F1C39753-C9F8-4941-BF5F-D2D0C9695F37}">
+                        <Condition><![CDATA[LANGUAGE~="czech" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfaxres.dll12" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~7.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll12" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_polish" Guid="{FBF75D7F-BC73-455F-B381-21D43EECBC38}">
+                        <Condition><![CDATA[LANGUAGE~="polish" AND USEOUTLOOKFORM<>"1"]]>
+                          </Condition>
+                        <File Id="sendfaxres.dll14" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~9.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll14" />
+                    </Component>
+                    <Component Id="faxclient.chm_italian" Guid="{A8F4E4BC-4E0B-4035-A288-B803C01C4DC7}">
+                        <Condition><![CDATA[LANGUAGE~="italian" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm2" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~3.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm2" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_arabic" Guid="{351BC4AF-89A2-47C0-90C3-08C566FA42D0}">
+                        <Condition><![CDATA[LANGUAGE~="arabic" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="sendfaxres.dll11" Name="sendfaxres.dll" KeyPath="yes" ShortName="SENDFA~6.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\sendfaxres.dll11" />
+                    </Component>
+                    <Component Id="faxclient.chm_spanish" Guid="{F4A4090B-0D4D-4E6C-B670-96BF1D6E6265}">
+                        <Condition><![CDATA[LANGUAGE~="spanish" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm1" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~2.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm1" />
+                    </Component>
+                    <Component Id="libtiff.dll" Guid="{9D1E0F01-9549-4A20-BB24-2AECF57D284A}">
+                        <File Id="libtiff.dll" Name="libtiff.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\libtiff.dll" />
+                    </Component>
+                    <Component Id="faxclient.chm_french" Guid="{FD578740-CF06-4450-94D3-28EE85FB853B}">
+                        <Condition><![CDATA[LANGUAGE~="french" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~1.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm" />
+                    </Component>
+                    <Component Id="SendFaxRes.dll_german" Guid="{43616964-E66B-4298-BEAA-30F2A51566A0}">
+                        <Condition><![CDATA[LANGUAGE~="german" AND USEOUTLOOKFORM<>"1"]]></Condition>
+                        <File Id="SendFaxRes.dll" Name="SendFaxRes.dll" KeyPath="yes" ShortName="SENDFA~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\SendFaxRes.dll" />
+                    </Component>
+                    <Component Id="faxclient.chm_english" Guid="{8465A580-9067-4B29-97F2-66C8055E2D12}">
+                        <Condition><![CDATA[LANGUAGE~="english" AND ONLINE="0"]]></Condition>
+                        <File Id="ffnclient.chm" Name="faxclient.chm" KeyPath="yes" ShortName="FFNCLI~1.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\ffnclient.chm" />
+                    </Component>
+                    <Component Id="viewerres.dll_german" Guid="{635B8DFB-C81B-435B-9CC0-50DD6C5CF426}">
+                        <Condition><![CDATA[LANGUAGE~="german"]]></Condition>
+                        <File Id="viewerres.dll" Name="viewerres.dll" KeyPath="yes" ShortName="VIEWER~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\viewerres.dll" />
+                    </Component>
+                    <Component Id="fmprinter_uninstall_cmd" Guid="{9CF03ADD-4874-4839-BC1B-3D73FA089382}">
+                        <File Id="fmprinter_uninstall.cmd" Name="fmprinter_uninstall.cmd" KeyPath="yes" ShortName="FMPRIN~1.CMD" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmprinter_uninstall.cmd" />
+                    </Component>
+                    <Component Id="fmprinter_install_cmd" Guid="{CD582032-8B7B-41B7-8226-3E2AA6FE532F}">
+                        <File Id="fmprinter_install.cmd" Name="fmprinter_install.cmd" KeyPath="yes" ShortName="FMPRIN~2.CMD" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmprinter_install.cmd" />
+                    </Component>
+                    <Component Id="fmoclient.chm_english" Guid="{A1BBB4A9-556E-4C66-93F0-ECC297DFC76C}">
+                        <Condition><![CDATA[LANGUAGE~="english" AND ONLINE="1"]]></Condition>
+                        <File Id="fmoclient.chm" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~1.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\fmoclient.chm" />
+                    </Component>
+                    <Component Id="FMOAccountValidate.dll" Guid="{921A4C08-F7CA-43C2-A57A-D1388BA75FC5}">
+                        <File Id="FMOAccountValidate.dll" Name="FMOAccountValidate.dll" KeyPath="yes" ShortName="FMOACC~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\FMOAccountValidate.dll" />
+                    </Component>
+                    <Component Id="faxclient.chm_arabic" Guid="{E547A3A9-D08A-493A-869A-497C13A9A037}">
+                        <Condition><![CDATA[LANGUAGE~="arabic" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm4" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~5.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm4" />
+                    </Component>
+                    <Component Id="faxclient.chm_czech" Guid="{A93C9013-1435-4725-AD5F-6FE122F1D830}">
+                        <Condition><![CDATA[LANGUAGE~="czech" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm5" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~6.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm5" />
+                    </Component>
+                    <Component Id="faxclient.chm_russian" Guid="{2A085699-8C71-4B48-95DF-A10C701B52F5}">
+                        <Condition><![CDATA[LANGUAGE~="russian" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm8" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~9.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm8" />
+                    </Component>
+                    <Component Id="faxclient.chm_polish" Guid="{39605DC7-550C-4CE2-A062-8E5ACAC78610}">
+                        <Condition><![CDATA[LANGUAGE~="polish" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm7" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~8.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm7" />
+                    </Component>
+                    <Component Id="faxclient.chm_turkish" Guid="{EAFC55D3-7BCD-4D69-9C3C-EC62B3153434}">
+                        <Condition><![CDATA[LANGUAGE~="turkish" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm9" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~A.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm9" />
+                    </Component>
+                    <Component Id="faxclient.chm_hungarian" Guid="{1F1B44F1-6286-4285-AA81-41A95EC4D9AA}">
+                        <Condition><![CDATA[LANGUAGE~="hungarian" AND ONLINE="0"]]></Condition>
+                        <File Id="faxclient.chm6" Name="faxclient.chm" KeyPath="yes" ShortName="FAXCLI~7.CHM" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\faxclient.chm6" />
+                    </Component>
+                    <Component Id="troubleres.dll_english" Guid="{BE1D95CE-1B74-40FD-9323-6D2F25CFB411}">
+                        <Condition><![CDATA[LANGUAGE~="english"]]></Condition>
+                        <File Id="troubleres.dll" Name="troubleres.dll" KeyPath="yes" ShortName="TROUBL~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\troubleres.dll" />
+                    </Component>
+                    <Component Id="FMOnlineClient" Guid="{45F6D790-520B-4E0F-AF71-5CB513661ABE}">
+                        <File Id="FMOnlineClient.exe" Name="FMOnlineClient.exe" KeyPath="yes" ShortName="FMONLI~1.EXE" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\FMOnlineClient.exe" />
+                        <File Id="FMOnlineClient.exe.config" Name="FMOnlineClient.exe.config" ShortName="FMONLI~1.CON" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\FMOnlineClient.exe.config" />
+                    </Component>
+                    <Component Id="GFI.Common.Tracing" Guid="{12BEFC72-215E-4C09-9F4F-288F1DD08DB0}">
+                        <File Id="GFI.Common.Tracing.dll" Name="GFI.Common.Tracing.dll" KeyPath="yes" ShortName="GFICOM~1.DLL" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\GFI.Common.Tracing.dll" />
+                    </Component>
+                    <Component Id="ssleay32.dll" Guid="{F3FC0361-1E0B-4156-A764-C8F17CA4DF82}">
+                        <File Id="ssleay32.dll" Name="ssleay32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\ssleay32.dll" />
+                    </Component>
+                    <Component Id="libeay32.dll" Guid="{DEA43CC2-39C0-4F3D-A97B-326FB7FD4B8F}">
+                        <File Id="libeay32.dll" Name="libeay32.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\libeay32.dll" />
+                    </Component>
+                    <Component Id="msvcr90.dll" Guid="{10F5AD9B-0724-4967-B516-1EF1F5295D3C}">
+                        <File Id="msvcr90.dll" Name="msvcr90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\msvcr90.dll" />
+                        <File Id="Microsoft.VC90.CRT.manifest" Name="Microsoft.VC90.CRT.manifest" ShortName="MICROS~1.MAN" Vital="no" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\Microsoft.VC90.CRT.manifest" />
+                    </Component>
+                    <Component Id="msvcp90.dll" Guid="{01EE34FC-7A25-458C-89D0-E78669F11796}">
+                        <File Id="msvcp90.dll" Name="msvcp90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\msvcp90.dll" />
+                    </Component>
+                    <Component Id="msvcm90.dll" Guid="{BA38945E-85D1-4508-BF3C-536D6F1970DC}">
+                        <File Id="msvcm90.dll" Name="msvcm90.dll" KeyPath="yes" Vital="no" Checksum="yes" DiskId="1" Source="C:\Users\nfarrugia\Desktop\Fax Client\File\msvcm90.dll" />
+                    </Component>
+                    <Component Id="RegOFSCredentials" Guid="{CA2BB5E1-11D5-49E5-927E-11492987C810}">
+                        <Condition><![CDATA[ONLINE="1"]]></Condition>
+                        <RegistryValue Id="registry54" Root="HKCU" Key="Software\GFI FAX &amp; VOICE\OFS" Name="userid" Value="[ONLINEUSER]" Type="string" KeyPath="yes" />
+                        <RegistryValue Id="registry53" Root="HKCU" Key="Software\GFI FAX &amp; VOICE\OFS" Name="password" Value="[ONLINEPW]" Type="string" />
+                    </Component>
+                    <Directory Id="temp" Name="temp" />
+                    <Directory Id="logs" Name="logs" />
+                </Directory>
+            </Directory>
+            <Directory Id="CommonFilesFolder" ShortSourceName="CommonFi" SourceName="Common Files" />
+        </Directory>
+        <Directory Id="ProgramFiles64Folder" ShortSourceName="PROGRA~1" SourceName="Program Files">
+            <Directory Id="CommonFiles64Folder" ShortSourceName="COMMON~1" SourceName="Common Files" />
+        </Directory>
+        <Directory Id="LocalAppDataFolder" ShortSourceName="APPLIC~1" SourceName="Application Data" />
+        <Directory Id="INSTALLDIR2" Name="INSTALLDIR1" ShortName="INSTAL~1" />
+        <Directory Id="WWWROOT" SourceName="wwwroot" />
+        <Directory Id="INSTALLDIR3" Name="INSTALLDIR" ShortName="INSTAL~2" />
+    </Directory>
+    
+    <UI>
+        <ComboBox Property="LANGUAGE">
+            <ListItem Value="ENGLISH" Text="English" />
+            <ListItem Value="GERMAN" Text="German" />
+            <ListItem Value="FRENCH" Text="French" />
+            <ListItem Value="ITALIAN" Text="Italian" />
+            <ListItem Value="SPANISH" Text="Spanish" />
+        </ComboBox>
+        
+        <!--
+        Not used.
+        <RadioButtonGroup Property="Accept">
+            <RadioButton Height="13" Text="I &amp;do not accept the license agreement" Value="No" Width="200" X="0" Y="13" />
+            <RadioButton Height="13" Text="I &amp;accept the license agreement" Value="Yes" Width="200" X="0" Y="0" />
+        </RadioButtonGroup>
+        <RadioButtonGroup Property="ApplicationUsers">
+            <RadioButton Height="18" Text="&amp;Anyone who uses this computer" Value="AllUsers" Width="200" X="0" Y="0" />
+            <RadioButton Height="18" Text="Only for &amp;me ([USERNAME])" Value="OnlyCurrentUser" Width="200" X="0" Y="15" />
+        </RadioButtonGroup>
+        <RadioButtonGroup Property="InstallMode">
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]&amp;Typical" Value="Typical" Width="65" X="0" Y="5" />
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]&amp;Complete" Value="Complete" Width="65" X="0" Y="60" />
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]C&amp;ustom" Value="Custom" Width="65" X="0" Y="115" />
+        </RadioButtonGroup>
+        -->
+        <!--
+        Unresolved reference to property Advertise
+        <RadioButtonGroup Property="Advertise">
+            <RadioButton Height="18" Text="{\Tahoma10}&amp;Advertise" Value="Yes" Width="265" X="0" Y="40" />
+            <RadioButton Height="18" Text="{\Tahoma10}&amp;Do not advertise" Value="No" Width="265" X="0" Y="10" />
+        </RadioButtonGroup>
+        -->
+      
+        <RadioButtonGroup Property="MaintenanceMode">
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]&amp;Modify" Value="Modify" Width="80" X="0" Y="5" />
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]&amp;Repair" Value="Repair" Width="80" X="0" Y="60" />
+            <RadioButton Height="18" Text="[DIALOG_TITLE_FONT_DEFAULT]R&amp;emove" Value="Remove" Width="80" X="0" Y="115" />
+        </RadioButtonGroup>
+        <RadioButtonGroup Property="ONLINE">
+            <RadioButton Height="14" Text="[TYPEUSEONPREM]" Value="0" Width="309" X="0" Y="0" />
+            <RadioButton Height="14" Text="[TYPEUSEONLINE]" Value="1" Width="309" X="0" Y="25" />
+        </RadioButtonGroup>
+        <RadioButtonGroup Property="USEOUTLOOKFORM">
+            <RadioButton Height="20" Text="[USEFAXFORM]" Value="0" Width="325" X="0" Y="0" />
+            <RadioButton Height="20" Text="[USEOUTLOOK]" Value="1" Width="325" X="0" Y="22" />
+            <RadioButton Height="20" Text="[USEBOTH]" Value="2" Width="325" X="0" Y="44" />
+        </RadioButtonGroup>
+    </UI>
+    
+    <InstallUISequence>
+      <!--
+      <Custom Action="WiseStartup" Sequence="2" />
+      <Custom Action="WiseUpgradeCheck" Sequence="50" />
+      <Custom Action="WiseSetProfilesFolder" Sequence="110" />
+      <Custom Action="SetPatchMode" Sequence="120">PATCH</Custom>
+      -->
+      <Custom Action="SetPatchReinstallMode" Sequence="130">PATCH AND NOT REINSTALLMODE</Custom>
+      <Custom Action="ca_term_install_on64" Sequence="132">VersionNT64 AND ALLOW64BIT="0"</Custom>
+      <Custom Action="_16BIT" Sequence="135">Version9X</Custom>
+      <Custom Action="set_EXNAME" Sequence="170"><![CDATA[(FAXSERVER~="null" AND MAILSERVER~="null") OR (FAXSERVER~<>"null" AND MAILSERVER~<>"null")]]></Custom>
+      <Custom Action="SetEXNAME3" Sequence="173"><![CDATA[FAXSERVER~="null" AND MAILSERVER~<>"null"]]></Custom>
+      <Custom Action="SetEXNAME2" Sequence="175"><![CDATA[FAXSERVER~<>"null" AND MAILSERVER~="null"]]></Custom>
+      <Custom Action="SetInstallType3" Sequence="177"><![CDATA[FAXMAILBOX~<>"null" AND MAILSERVER~<>"null" AND FAXSERVER~="null" AND MAPI=0]]></Custom>
+      <Custom Action="SetInstallType2" Sequence="181"><![CDATA[((FAXSERVER~<>"null" AND FAXMAILBOX~="null" AND MAILSERVER~="null") OR (FAXSERVER~="null" AND FAXMAILBOX~="null" AND MAILSERVER~<>"null")) AND MAPI=0]]></Custom>
+      <Custom Action="SETMAILBOXEDIT" Sequence="182"><![CDATA[FAXMAILBOX~<>"null"]]></Custom>
+      <Custom Action="SetCGW2" Sequence="183"><![CDATA[(MAPI=0 AND VersionNT>=500) AND ONLINE<>"1"]]></Custom>
+      <Custom Action="SetCGWOnline" Sequence="184"><![CDATA[MAPI=0 AND VersionNT>=500 AND ONLINE="1"]]></Custom>
+      <Custom Action="SETUSESMTPAUTH" Sequence="185" />
+      <Custom Action="SETSECUREPASS" Sequence="186" />
+      <Custom Action="SETClientname1" Sequence="188"><![CDATA[USEOUTLOOKFORM<>"0"]]></Custom>
+      <Custom Action="SetEXNAME4" Sequence="189"><![CDATA[FAXSERVERNAME~<>"null"]]></Custom>
+      <Custom Action="SetEXNAMENAME" Sequence="190"><![CDATA[FAXSERVERNAME~<>"null"]]></Custom>
+      <Custom Action="set_ALLUSERS" Sequence="191" />
+      <!--<Custom Action="WiseUpgradeCheckEx" Sequence="197" />-->
+      <Custom Action="OLDCLIENT_found" Sequence="210"><![CDATA[((FEX7~<>"null") OR (FEX8~<>"null") OR (FEX9~<>"null") OR (FEX10~<>"null"))]]></Custom>
+      <!--<Custom Action="WiseCleanup" Sequence="1301">EXECUTEMODE = "None"</Custom>-->
+      <Show Dialog="Fatal_Error" OnExit="error" />
+      <Show Dialog="User_Exit" OnExit="cancel" />
+      <Show Dialog="Exit_Dialog" OnExit="success" />
+      <Show Dialog="Setup_Dialog" Sequence="147">1</Show>
+      <Show Dialog="CCPDialog" Sequence="200">NOT Installed AND CCP_TEST AND NOT CCP_Success</Show>
+      <Show Dialog="Welcome_Dialog" Sequence="1230">NOT Installed AND NOT PATCH</Show>
+      <Show Dialog="Resume_Install_Dialog" Sequence="1240">Installed AND (RESUME OR Preselected) AND NOT PATCH</Show>
+      <Show Dialog="Patch_Dialog" Sequence="1245">PATCH</Show>
+      <Show Dialog="Maintenance_Welcome_Dialog" Sequence="1250">Installed AND NOT RESUME AND NOT Preselected AND NOT PATCH</Show>
+      <Show Dialog="Progress_Dialog" Sequence="1280" />
+      <LaunchConditions Sequence="100" />
+      <FindRelatedProducts Sequence="196" />
+      <AppSearch Sequence="198" />
+      <CCPSearch Sequence="199">NOT Installed AND CCP_TEST</CCPSearch>
+      <RMCCPSearch Sequence="201">NOT Installed AND CCP_TEST</RMCCPSearch>
+      <ValidateProductID Sequence="202" />
+      <CostInitialize Sequence="203" />
+      <FileCost Sequence="204" />
+      <IsolateComponents Sequence="205" />
+      <CostFinalize Sequence="208"><![CDATA[BIT=32 OR Installed OR UPGRADE_1~<>""]]></CostFinalize>
+      <MigrateFeatureStates Sequence="209" />
+      <ExecuteAction Sequence="1300" />
+    </InstallUISequence>
+
+    <AdminUISequence>
+      <!--
+      <Custom Action="WiseStartup" Sequence="1" />
+      <Custom Action="WiseCleanup" Sequence="1350">EXECUTEMODE = "None"</Custom>
+      -->
+      <Show Dialog="Fatal_Error" OnExit="error" />
+      <Show Dialog="User_Exit" OnExit="cancel" />
+      <Show Dialog="Exit_Dialog" OnExit="success" />
+      <Show Dialog="Setup_Dialog" Sequence="140" />
+      <Show Dialog="Admin_Install_Point" Sequence="1230" />
+      <Show Dialog="Progress_Dialog" Sequence="1280" />
+      <CostInitialize Sequence="800" />
+      <FileCost Sequence="900" />
+      <CostFinalize Sequence="1000" />
+      <ExecuteAction Sequence="1300" />
+    </AdminUISequence>
+      
+    <InstallExecuteSequence>
+      <!--
+      <Custom Action="WiseStartup" Sequence="2" />
+      <Custom Action="WiseUpgradeCheck" Sequence="50" />
+      <Custom Action="WiseSetProfilesFolder" Sequence="137" />
+      <Custom Action="WiseAltStartup" Sequence="175" />
+      <Custom Action="SetPatchMode" Sequence="250">PATCH</Custom>
+      <Custom Action="WiseUpgradeCheckEx" Sequence="375" />
+      -->
+      <Custom Action="SetPatchReinstallMode" Sequence="325">PATCH AND NOT REINSTALLMODE</Custom>
+      <!--
+      <Custom Action="Action14" Sequence="681">0</Custom>
+      -->
+      <Custom Action="CA_EncryptOFSCredentials" Sequence="696"><![CDATA[ONLINEUSER AND ONLINEPW AND REMOVE~<>"ALL"]]></Custom>
+      <Custom Action="Stop_fmstart.exe" Sequence="1412">REMOVE~="ALL" AND VersionNT</Custom>
+      <!--
+      <Custom Action="uninstall_printer" Sequence="1426">0 AND (REMOVE="ALL")</Custom>
+      -->
+      <Custom Action="EncryptPasswordEx" Sequence="1427"><![CDATA[Not Installed AND USEOUTLOOKFORM<>"1"]]></Custom>
+      <Custom Action="SetRootRegPermission" Sequence="1466">NOT Installed</Custom>
+      <Custom Action="AutoConfigureClientFromServer" Sequence="1509"><![CDATA[Not Installed AND USEOUTLOOKFORM<>"1" AND (NOT ONLINE OR ONLINE="0")]]></Custom>
+      <!--<Custom Action="WiseCleanup" Sequence="1511" />-->
+      <Custom Action="SETClientname" Sequence="656"><![CDATA[USEOUTLOOKFORM<>"0"]]></Custom>
+      <Custom Action="SETUSESMTPAUTH19" Sequence="663"><![CDATA[UILevel=2]]></Custom>
+      <Custom Action="SETSECUREPASS20" Sequence="664"><![CDATA[UILevel=2]]></Custom>
+      <Custom Action="set_EXNAME" Sequence="665"><![CDATA[(UILevel=2) AND ((FAXSERVER~="null" AND MAILSERVER~="null") OR (FAXSERVER~<>"null" AND MAILSERVER~<>"null"))]]></Custom>
+      <Custom Action="SetEXNAME31" Sequence="666"><![CDATA[(UILevel=2) AND (FAXSERVER~="null" AND MAILSERVER~<>"null")]]></Custom>
+      <Custom Action="SetEXNAME22" Sequence="667"><![CDATA[(UILevel=2) AND (FAXSERVER~<>"null" AND MAILSERVER~="null")]]></Custom>
+      <Custom Action="SetInstallType33" Sequence="668"><![CDATA[(UILevel=2) AND (FAXMAILBOX~<>"null" AND MAILSERVER~<>"null" AND FAXSERVER~="null" AND MAPI=0)]]></Custom>
+      <Custom Action="SetInstallType24" Sequence="669"><![CDATA[(UILevel=2) AND (((FAXSERVER~<>"null" AND FAXMAILBOX~="null" AND MAILSERVER~="null") OR (FAXSERVER~="null" AND FAXMAILBOX~="null" AND MAILSERVER~<>"null")) AND MAPI=0)]]></Custom>
+      <Custom Action="SETMAILBOXEDIT5" Sequence="670"><![CDATA[(UILevel=2) AND (FAXMAILBOX~<>"null")]]></Custom>
+      <Custom Action="SetInstallType16" Sequence="671">0 AND (UILevel=2)</Custom>
+      <Custom Action="SetCGW16" Sequence="672">0 AND (UILevel=2)</Custom>
+      <Custom Action="SetEXNAME47" Sequence="673"><![CDATA[(UILevel=2) AND (FAXSERVERNAME~<>"null")]]></Custom>
+      <Custom Action="SetEXNAMENAME8" Sequence="674"><![CDATA[(UILevel=2) AND (FAXSERVERNAME~<>"null")]]></Custom>
+      <Custom Action="SetAuthProperties1" Sequence="675"><![CDATA[(BIT=32) AND (USESSL<>"1")]]></Custom>
+      <Custom Action="SetAuthProperties2" Sequence="676"><![CDATA[(BIT=32) AND (USESMTPAUTH<>"1")]]></Custom>
+      <Custom Action="SetAuthProperties3" Sequence="677"><![CDATA[(BIT=32) AND (SECUREPASS<>"1")]]></Custom>
+      <Custom Action="set_ALLUSERS1" Sequence="678">BIT=32</Custom>
+      <Custom Action="Action14SetCustomActionData" Sequence="679">0</Custom>
+      <Custom Action="set_EXNAME_FROM_SERVERNAME" Sequence="682"><![CDATA[FAXSERVERNAME~<>"null"]]></Custom>
+      <Custom Action="set_PRINTINST" Sequence="683">SILENTPRINTERDRIVER="1"</Custom>
+      <Custom Action="SetDomainFax4Online" Sequence="684">ONLINE="1"</Custom>
+      <Custom Action="SetDomainSMS4Online" Sequence="685">ONLINE="1"</Custom>
+      <Custom Action="SetCGWOnlineEI" Sequence="692">ONLINE="1"</Custom>
+      <Custom Action="ca_deferred_uninstall_printer" Sequence="1427"><![CDATA[(REMOVE="ALL") AND (VersionNT>="600" OR (VersionNT >="500" AND SILENTPRINTERDRIVER="0"))]]></Custom>
+      <Custom Action="ca_deferred_uninstall_printer_prew2k" Sequence="1428"><![CDATA[(REMOVE="ALL") AND (VersionNT<"500" OR (SILENTPRINTERDRIVER="1" AND VersionNT<"600"))]]></Custom>
+      <Custom Action="SetRootRegPermissionProperty" Sequence="1461">NOT Installed</Custom>
+      <Custom Action="SetPropAutoConfigureClientFromServer" Sequence="1493"><![CDATA[Not Installed AND USEOUTLOOKFORM<>"1"]]></Custom>
+      <Custom Action="ca_deferred_install_printer" Sequence="1499"><![CDATA[(REMOVE~<>"ALL") AND (VersionNT>="600" OR (VersionNT >="500" AND SILENTPRINTERDRIVER="0"))]]></Custom>
+      <Custom Action="ca_deferred_install_printer_prew2k" Sequence="1500"><![CDATA[(REMOVE~<>"ALL") AND (VersionNT<"500" OR (SILENTPRINTERDRIVER="1" AND VersionNT<"600"))]]></Custom>
+      <Custom Action="fmstart" Sequence="1520"><![CDATA[NOT Installed and UILevel<5]]></Custom>
+      <!--<ScheduleReboot Sequence="1496">Not Installed AND WISEDELAYEDREBOOT</ScheduleReboot>-->
+      <LaunchConditions Sequence="100" />
+      <FindRelatedProducts Sequence="362" />
+      <AppSearch Sequence="400" />
+      <CCPSearch Sequence="500">NOT Installed AND CCP_TEST</CCPSearch>
+      <RMCCPSearch Sequence="600">NOT Installed AND CCP_TEST</RMCCPSearch>
+      <ValidateProductID Sequence="700" />
+      <CostInitialize Sequence="800" />
+      <FileCost Sequence="900" />
+      <IsolateComponents Sequence="950" />
+      <CostFinalize Sequence="1000" />
+      <SetODBCFolders Sequence="1100" />
+      <MigrateFeatureStates Sequence="1200" />
+      <InstallValidate Sequence="1400" />
+      <InstallInitialize Sequence="1425" />
+      <AllocateRegistrySpace Sequence="1429">NOT Installed</AllocateRegistrySpace>
+      <ProcessComponents Sequence="1431" />
+      <UnpublishComponents Sequence="1432" />
+      <UnpublishFeatures Sequence="1434" />
+      <StopServices Sequence="1435">VersionNT</StopServices>
+      <DeleteServices Sequence="1436">VersionNT</DeleteServices>
+      <UnregisterComPlus Sequence="1437" />
+      <SelfUnregModules Sequence="1438" />
+      <UnregisterTypeLibraries Sequence="1439" />
+      <RemoveODBC Sequence="1440" />
+      <UnregisterFonts Sequence="1441" />
+      <RemoveRegistryValues Sequence="1442" />
+      <UnregisterClassInfo Sequence="1443" />
+      <UnregisterExtensionInfo Sequence="1444" />
+      <UnregisterProgIdInfo Sequence="1445" />
+      <UnregisterMIMEInfo Sequence="1446" />
+      <RemoveIniValues Sequence="1447" />
+      <RemoveShortcuts Sequence="1448" />
+      <RemoveEnvironmentStrings Sequence="1449" />
+      <RemoveDuplicateFiles Sequence="1450" />
+      <RemoveFiles Sequence="1451" />
+      <RemoveFolders Sequence="1452" />
+      <CreateFolders Sequence="1453" />
+      <MoveFiles Sequence="1454" />
+      <InstallFiles Sequence="1455" />
+      <DuplicateFiles Sequence="1457" />
+      <PatchFiles Sequence="1456" />
+      <BindImage Sequence="1459" />
+      <CreateShortcuts Sequence="1460" />
+      <RegisterClassInfo Sequence="1461" />
+      <RegisterExtensionInfo Sequence="1462" />
+      <RegisterProgIdInfo Sequence="1463" />
+      <RegisterMIMEInfo Sequence="1464" />
+      <WriteRegistryValues Sequence="1465" />
+      <WriteIniValues Sequence="1467" />
+      <WriteEnvironmentStrings Sequence="1468" />
+      <RegisterFonts Sequence="1481" />
+      <InstallODBC Sequence="1483" />
+      <RegisterTypeLibraries Sequence="1484" />
+      <SelfRegModules Sequence="1485" />
+      <RegisterComPlus Sequence="1486" />
+      <InstallServices Sequence="1487">VersionNT</InstallServices>
+      <StartServices Sequence="1488">VersionNT</StartServices>
+      <RegisterUser Sequence="1489" />
+      <RegisterProduct Sequence="1490" />
+      <PublishComponents Sequence="1491" />
+      <PublishFeatures Sequence="1493" />
+      <PublishProduct Sequence="1494" />
+      <InstallFinalize Sequence="1519" />
+      <RemoveExistingProducts Sequence="1415" />
+      <MsiPublishAssemblies Sequence="1492" />
+      <MsiUnpublishAssemblies Sequence="1433" />
+    </InstallExecuteSequence>
+    
+    <AdminExecuteSequence>
+      <!--
+      <Custom Action="WiseStartup" Sequence="1" />
+      <Custom Action="WiseAltStartup" Sequence="1450" />
+      <Custom Action="WiseCleanup" Sequence="6650" />
+      -->
+      <CostInitialize Sequence="800" />
+      <FileCost Sequence="900" />
+      <CostFinalize Sequence="1000" />
+      <InstallValidate Sequence="1400" />
+      <InstallInitialize Sequence="1500" />
+      <InstallAdminPackage Sequence="3900" />
+      <InstallFiles Sequence="5250" />
+      <InstallFinalize Sequence="6600" />
+    </AdminExecuteSequence>
+  </Product>
+</Wix>

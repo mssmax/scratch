@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="CCPFail_UI">
+      <Dialog Id="CCPFail" X="50" Y="50" Width="430" Height="226" Title="Product Compliance Check">
+        <Control Id="OK" Type="PushButton" X="336" Y="198" Width="70" Height="18" Text="E&amp;xit" TabSkip="no" Default="yes">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="128" Y="12" Width="283" Height="79" Text="Setup has failed to locate a qualifying product. This installation requires a valid qualifying product to continue." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

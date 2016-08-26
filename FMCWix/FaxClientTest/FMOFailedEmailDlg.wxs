@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+		<UI Id="FMOFailedEmailDlg_UI">
+      <Dialog Id="FMOFailedEmailDlg" X="50" Y="50" Width="257" Height="123" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Cancel" Type="PushButton" X="100" Y="94" Width="56" Height="17" Text="OK" TabSkip="no" Cancel="yes">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="11" Y="19" Width="236" Height="51" Text="Password reset instructions not sent. &#xD;&#xA;[ONLINEEMAIL] is not registered as a GFI FaxMaker Online user.&#xD;&#xA;Check with your administrator to verify account details&#xD;&#xA;" TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

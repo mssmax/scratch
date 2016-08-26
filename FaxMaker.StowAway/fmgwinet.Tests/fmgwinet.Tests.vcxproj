@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{82C5376E-7FBF-43C2-A371-815C182E29B8}</ProjectGuid>
+    <RootNamespace>fmgwinetTests</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v80</PlatformToolset>
+    <CharacterSet>NotSet</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>14.0.23107.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\..\..\..\bin\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <AdditionalIncludeDirectories>..;$(OutDir);$(OutDir)shared;..\..\..\Common\Include;..\..\..\Common\Include\Shared;..\..\..\Common\Source\tests;..\..\..\Common\Include\tests;..\..\fmgwinetres;..\..\..\thirdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;__UTESTS__;USES_GFILOG;USES_FAXFRMT;USES_HLPS;USES_SYSTEMCALLS;USES_TEXTWRITER;USES_TEXTREADER;USES_HTMLSLAYER;USES_COM;USES_FMGFIDB_C;USES_FMSTORE;FNGENAPI;FMARCHIVER_STATIC_LINKING;CALLHOME_EMBEDDED_LIB;DLECFG_EXPORTS;_CRT_SECURE_NO_WARNINGS;NO_SHLWAPI_STRFCNS;__TNEF2MIME_STATIC_LINKING__;__FAXFRMTMODULE_STATIC_LINKING__;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>false</TreatWChar_tAsBuiltInType>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OutDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Common\Include\StringEncryption.h" />
+    <ClInclude Include="..\..\..\Common\Include\tests\mfg.h" />
+    <ClInclude Include="..\..\..\Common\Include\tests\mfg_afx.h" />
+    <ClInclude Include="..\..\..\Common\Include\tests\mfg_gfikey_decoder.h" />
+    <ClInclude Include="..\..\..\Common\Include\tests\mfg_htmlslayer.h" />
+    <ClInclude Include="..\..\..\Common\Include\tests\TelStore.mock.h" />
+    <ClInclude Include="..\..\fmgwinetres\resource.h" />
+    <ClInclude Include="..\DownloadThread.h" />
+    <ClInclude Include="..\LicenseThread.h" />
+    <ClInclude Include="..\MainThread.h" />
+    <ClInclude Include="..\MtaConfig.h" />
+    <ClInclude Include="..\ProcessMessage.h" />
+    <ClInclude Include="..\Reports.h" />
+    <ClInclude Include="..\StatusInterface.h" />
+    <ClInclude Include="..\StatusListCtrl.h" />
+    <ClInclude Include="..\Templates.h" />
+    <ClInclude Include="..\UserInfo.h" />
+    <ClInclude Include="..\Utilities.h" />
+    <ClInclude Include="..\WinServiceApp.h" />
+    <ClInclude Include="..\XMLAPI.h" />
+    <ClInclude Include="CUtilities_mock.h" />
+    <ClInclude Include="DownloadThread.Tests.h" />
+    <ClInclude Include="LicenseThread.tests.h" />
+    <ClInclude Include="MainThread.tests.h" />
+    <ClInclude Include="mocks.h" />
+    <ClInclude Include="Reports.tests.h" />
+    <ClInclude Include="RSxMessage.Tests.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="UnitTesting.h" />
+    <ClInclude Include="UploadThread.Tests.h" />
+    <ClInclude Include="Utilities.Tests.h" />
+    <ClInclude Include="XMLAPI.Tests.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Common\Source\EmailMessage.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\mfg.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\mfg_afx.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\mfg_callhome.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\mfg_gfikey_decoder.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\mfg_htmlslayer.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\StringEncryption.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\TextReader.cpp" />
+    <ClCompile Include="..\..\..\Common\Source\TextWriter.cpp" />
+    <ClCompile Include="..\DownloadThread.cpp" />
+    <ClCompile Include="..\EmailMessageEx.cpp" />
+    <ClCompile Include="..\LicenseThread.cpp" />
+    <ClCompile Include="..\localmfg.cpp" />
+    <ClCompile Include="..\MainThread.cpp" />
+    <ClCompile Include="..\MtaConfig.cpp" />
+    <ClCompile Include="..\Reports.cpp" />
+    <ClCompile Include="..\RSxMessage.cpp" />
+    <ClCompile Include="..\StatusInterface.cpp" />
+    <ClCompile Include="..\StatusListCtrl.cpp" />
+    <ClCompile Include="..\StreamOnFile.cpp" />
+    <ClCompile Include="..\Templates.cpp" />
+    <ClCompile Include="..\thinthrd.cpp" />
+    <ClCompile Include="..\UploadThread.cpp" />
+    <ClCompile Include="..\UserInfo.cpp" />
+    <ClCompile Include="..\Utilities.cpp" />
+    <ClCompile Include="..\WinServiceApp.cpp" />
+    <ClCompile Include="..\XMLAPI.cpp" />
+    <ClCompile Include="CUtilities_mock.cpp" />
+    <ClCompile Include="DownloadThread.Tests.cpp" />
+    <ClCompile Include="fmgwinet.Tests.cpp" />
+    <ClCompile Include="GSMThread.Tests.cpp" />
+    <ClCompile Include="LicenseThread.tests.cpp" />
+    <ClCompile Include="MainThread.tests.cpp" />
+    <ClCompile Include="mocks.cpp" />
+    <ClCompile Include="Reports.tests.cpp" />
+    <ClCompile Include="RSxMessage.Tests.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="stubs.cpp" />
+    <ClCompile Include="UploadThread.Tests.cpp" />
+    <ClCompile Include="Utilities.Tests.cpp" />
+    <ClCompile Include="XMLAPI.Tests.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\..\..\packages\boost.1.58.0.0\build\native\boost.targets" Condition="Exists('..\..\..\packages\boost.1.58.0.0\build\native\boost.targets')" />
+    <Import Project="..\..\..\packages\boost_regex-vc80.1.58.0\build\native\boost_regex-vc80.targets" Condition="Exists('..\..\..\packages\boost_regex-vc80.1.58.0\build\native\boost_regex-vc80.targets')" />
+    <Import Project="..\..\..\packages\ipworks-ssl.8.0\build\native\ipworks-ssl.targets" Condition="Exists('..\..\..\packages\ipworks-ssl.8.0\build\native\ipworks-ssl.targets')" />
+    <Import Project="..\..\..\packages\gtest.1.6.0.1\build\native\gtest.targets" Condition="Exists('..\..\..\packages\gtest.1.6.0.1\build\native\gtest.targets')" />
+    <Import Project="..\..\..\packages\gmock.1.6.0.1\build\native\gmock.targets" Condition="Exists('..\..\..\packages\gmock.1.6.0.1\build\native\gmock.targets')" />
+    <Import Project="..\..\..\packages\GFIMIME.1.0.35\build\GFIMIME.targets" Condition="Exists('..\..\..\packages\GFIMIME.1.0.35\build\GFIMIME.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\..\packages\boost.1.58.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\boost.1.58.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\boost_regex-vc80.1.58.0\build\native\boost_regex-vc80.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\boost_regex-vc80.1.58.0\build\native\boost_regex-vc80.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\ipworks-ssl.8.0\build\native\ipworks-ssl.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\ipworks-ssl.8.0\build\native\ipworks-ssl.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\gtest.1.6.0.1\build\native\gtest.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gtest.1.6.0.1\build\native\gtest.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\gmock.1.6.0.1\build\native\gmock.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\gmock.1.6.0.1\build\native\gmock.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\GFIMIME.1.0.35\build\GFIMIME.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\GFIMIME.1.0.35\build\GFIMIME.targets'))" />
+  </Target>
+</Project>

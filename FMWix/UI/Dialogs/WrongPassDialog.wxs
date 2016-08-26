@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="wrongpass" X="50" Y="50" Width="242" Height="134" Title="!(loc.IDS_DIALOGTITLE)" CustomPalette="yes">
+        <Control Id="CustomText" Type="Text" X="13" Y="15" Width="217" Height="88" Text="[DefDialogFont][WRONPASSDIALOG]" TabSkip="no" />
+        <Control Id="PushButton" Type="PushButton" X="176" Y="110" Width="56" Height="17" Text="[DefDialogFont]OK" TabSkip="yes">
+          <Publish Property="EMPTYPASSDISPLAYED" Value="1">(PASSWORD="") and (PASSWORD1="")</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

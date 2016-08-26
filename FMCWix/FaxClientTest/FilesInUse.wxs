@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="FilesInUse_UI">
+      <Dialog Id="FilesInUse" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" KeepModeless="yes">
+        <Control Id="Retry" Type="PushButton" X="291" Y="243" Width="75" Height="17" Text="&amp;Retry" TabSkip="no" Default="yes">
+          <Publish Event="EndDialog" Value="Retry">1</Publish>
+        </Control>
+        <Control Id="Ignore" Type="PushButton" X="208" Y="243" Width="75" Height="17" Text="&amp;Ignore" TabSkip="no">
+          <Publish Event="EndDialog" Value="Ignore">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="20" Y="22" Width="290" Height="24" Text="Files that need to be updated are in use." TabSkip="no" Transparent="yes" />
+        <Control Id="List" Type="ListBox" X="19" Y="114" Width="336" Height="113" Property="FileInUseProcess" TabSkip="no" />
+        <Control Id="Exit" Type="PushButton" X="125" Y="243" Width="75" Height="17" Text="&amp;Exit" TabSkip="no" Cancel="yes">
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="Text54" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+        <Control Id="Line59" Type="Line" X="94" Y="234" Width="281" Height="0" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap62" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Line45" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text58" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[DIALOG_TITLE_FONT_DEFAULT]Files In Use" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text60" Type="Text" X="20" Y="55" Width="330" Height="54" Text="Listed below are busy files followed by the application that's using the file. Close the application and click Retry, or click Ignore to replace the files after a reboot. Clicking Exit quits the installation." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

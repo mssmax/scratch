@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="FMUI">
+      <UIRef Id="ErrorText"/>
+      <UIRef Id="ProgressText"/>
+      <UIRef Id="UIText"/>
+
+
+      <DialogRef Id="FilesInUse"/>
+      <DialogRef Id="License_Dialog"/>
+      <DialogRef Id="components"/>
+      <DialogRef Id="Start_Installation_Dialog"/>
+      <DialogRef Id="fmserver"/>
+      <DialogRef Id="userpass"/>
+      <DialogRef Id="iisrestart"/>
+      <DialogRef Id="Single_Feature_Destination"/>
+      <DialogRef Id="Welcome_Dialog"/>
+      <DialogRef Id="Check_Later_Build"/>
+      <DialogRef Id="User_Information_Dialog"/>
+      <DialogRef Id="Progress_Dialog"/>
+      <DialogRef Id="Browse"/>
+      <DialogRef Id="Exit_Dialog"/>
+      <DialogRef Id="ErrorDialog"/>
+      <DialogRef Id="Cancel"/>
+      <DialogRef Id="Setup_Dialog"/>
+      <DialogRef Id="oldserver"/>
+      <DialogRef Id="DiskCost"/>
+      <DialogRef Id="OutOfDisk"/>
+      <DialogRef Id="userlookup"/>
+      <DialogRef Id="User_Exit"/>
+      <DialogRef Id="WaitForCosting"/>
+      <DialogRef Id="wrongpass"/>
+      <DialogRef Id="noserver"/>
+      <DialogRef Id="Fatal_Error"/>
+      <DialogRef Id="wrongkey"/>
+
+
+      <RadioButtonGroup Property="InstallMode">
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]&amp;Typical" Value="Typical" Width="65" X="0" Y="5" />
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]&amp;Complete" Value="Complete" Width="65" X="0" Y="60" />
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]C&amp;ustom" Value="Custom" Width="65" X="0" Y="115" />
+      </RadioButtonGroup>
+      <RadioButtonGroup Property="MaintenanceMode">
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]&amp;Modify" Value="Modify" Width="80" X="0" Y="5" />
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]&amp;Repair" Value="Repair" Width="80" X="0" Y="60" />
+        <RadioButton Height="18" Text="[_WiseDialogTitleFontDefault]R&amp;emove" Value="Remove" Width="80" X="0" Y="115" />
+      </RadioButtonGroup>
+      <RadioButtonGroup Property="NOCHECK">
+        <RadioButton Height="27" Text="[DefDialogFont][NEWBUILDSTRING1]" Value="0" Width="331" X="0" Y="0" />
+        <RadioButton Height="14" Text="[DefDialogFont][NEWBUILDSTRING2]" Value="1" Width="331" X="0" Y="27" />
+      </RadioButtonGroup>
+      
+      <TextStyle Id="Tahoma_81" FaceName="Tahoma" Size="8" Bold="yes" />
+      <TextStyle Id="MS_Sans_Serif_80" FaceName="MS Sans Serif" Size="8" Red="0" Green="0" Blue="0" />
+      <TextStyle Id="Tahoma15" FaceName="Tahoma" Size="15" />
+      <TextStyle Id="Arial8" FaceName="Arial" Size="8" Bold="yes" />
+      <TextStyle Id="ArialBlueStrike10" FaceName="Arial" Size="10" Red="0" Green="0" Blue="255" Strike="yes" />
+      <TextStyle Id="Arial10" FaceName="Arial" Size="10" />
+      <TextStyle Id="MSSansSerif10" FaceName="MS Sans Serif" Size="10" />
+      <TextStyle Id="Arial13" FaceName="Arial" Size="13" Bold="yes" />
+      <TextStyle Id="MS_Sans_Serif_81" FaceName="MS Sans Serif" Size="8" Red="0" Green="0" Blue="0" Bold="yes" />
+      <TextStyle Id="Arial9" FaceName="Arial" Size="9" Bold="yes" />
+      <TextStyle Id="CourierBoldGreen12" FaceName="Courier New" Size="12" Red="0" Green="255" Blue="0" Bold="yes" />
+      <TextStyle Id="Arial12" FaceName="Arial" Size="12" Bold="yes" />
+      <TextStyle Id="Arial14" FaceName="Arial" Size="14" Bold="yes" />
+      <TextStyle Id="Times9" FaceName="Times New Roman" Size="9" />
+      <TextStyle Id="TimesItalic12" FaceName="Times New Roman" Size="12" Italic="yes" />
+      <TextStyle Id="TimesRed16" FaceName="Times New Roman" Size="16" Red="255" Green="0" Blue="0" />
+      <TextStyle Id="MSSansSerif8" FaceName="MS Sans Serif" Size="8" />
+      <TextStyle Id="TimesItalicBlue10" FaceName="TimesNew Roman" Size="10" Red="0" Green="0" Blue="255" Italic="yes" />
+      <TextStyle Id="MS_Sans_Serif8" FaceName="MS Sans Serif" Size="8" Bold="yes" />
+      <TextStyle Id="Arial141" FaceName="Arial" Size="14" />
+      <TextStyle Id="Tahoma10" FaceName="Tahoma" Size="10" />
+      <TextStyle Id="Tahoma_80" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="Microsoft_Sans_Serif8" FaceName="Microsoft Sans Serif" Size="8" />
+    </UI>
+  </Fragment>
+</Wix>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Welcome_Dialog_UI">
+      <Dialog Id="Welcome_Dialog" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="NewDialog" Value="IntegrationType">1</Publish>
+          <Publish Event="SpawnDialog" Value="oldfmclientfound">OLDCLIENT=1</Publish>
+          <Publish Event="SpawnDialog" Value="upgrading9x">UPGRADING9X=1</Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no" Disabled="yes" />
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="136" Y="6" Width="227" Height="69" Property="ProductName" Text="{&amp;Arial14}Welcome to the [ProductName] Installation Wizard" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text2" Type="Text" X="136" Y="143" Width="228" Height="30" Text="WARNING: This program is protected by copyright law and international treaties." TabSkip="yes" Transparent="yes" />
+        <Control Id="Line" Type="Line" X="0" Y="234" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text1" Type="Text" X="136" Y="80" Width="228" Height="30" Text="It is strongly recommended that you exit all Windows programs before running this setup program." TabSkip="yes" Transparent="yes" />
+        <Control Id="Text2516" Type="Text" X="136" Y="110" Width="228" Height="30" Text="Click Cancel to quit the setup program, then close any programs you have running.  Click Next to continue the installation." TabSkip="yes" Transparent="yes" />
+        <Control Id="Bitmap35" Type="Bitmap" X="0" Y="0" Width="375" Height="234" Text="side16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text2517" Type="Text" X="136" Y="173" Width="228" Height="52" Text="Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under law." TabSkip="yes" Transparent="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="UIText">
+      <UIText Id="TimeRemaining">!(loc.IDS_UITEXT_TIMEREMAINING)</UIText>
+      <UIText Id="bytes">bytes</UIText>
+      <UIText Id="GB">GB</UIText>
+      <UIText Id="KB">KB</UIText>
+      <UIText Id="MB">MB</UIText>
+      <UIText Id="ScriptInProgress">!(loc.IDS_UITEXT_SCRIPTINPROGRESS)</UIText>
+    </UI>
+	</Fragment>
+</Wix>

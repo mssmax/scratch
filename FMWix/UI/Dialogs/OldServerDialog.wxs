@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI>
+      <Dialog Id="oldserver" X="50" Y="50" Width="224" Height="90" Title="!(loc.IDS_DIALOGTITLE)" CustomPalette="yes">
+        <Control Id="Previous" Type="PushButton" X="81" Y="66" Width="56" Height="17" Text="[DefDialogFont]NO" TabSkip="no">
+          <Publish Event="DoAction" Value="WiseCleanup">1</Publish>
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="148" Y="66" Width="56" Height="17" Text="[DefDialogFont]YES" TabSkip="no" Default="yes">
+          <Publish Property="OLDINSTALL" Value="0">1</Publish>
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="CustomText" Type="Text" X="11" Y="18" Width="203" Height="42" Text="[DefDialogFont]A previous build of FaxMaker for Exchange has been detected which cannot be upgraded. Please un-install the present build before installing this version. Do you want to continue installation of [ProductName] ?" TabSkip="no" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

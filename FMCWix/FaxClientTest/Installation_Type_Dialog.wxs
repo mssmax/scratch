@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Installation_Type_Dialog_UI">
+      <Dialog Id="Installation_Type_Dialog" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="SomethingElse" Type="RadioButtonGroup" X="25" Y="51" Width="65" Height="144" Property="InstallMode" TabSkip="no" />
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="NewDialog" Value="Select_Feature_Dialog">InstallMode = "Custom"</Publish>
+          <Publish Event="SetInstallLevel" Value="1000">InstallMode = "Complete"</Publish>
+          <Publish Event="SetInstallLevel" Value="3">InstallMode = "Typical"</Publish>
+          <Publish Event="NewDialog" Value="Start_Installation_Dialog"><![CDATA[InstallMode<>"Custom"]]></Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="Single_Feature_Destination">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Icon" Type="Icon" X="41" Y="75" Width="36" Height="36" Text="Typical" TabSkip="yes" Disabled="yes" />
+        <Control Id="CustomText" Type="Text" X="90" Y="126" Width="240" Height="24" Text="All application features will be installed. This option is recommended for the best performance." TabSkip="yes" />
+        <Control Id="Line7" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="TypicalText" Type="Text" X="90" Y="182" Width="240" Height="33" Text="Use this option to choose which application features you want installed and where they will be installed. Recommended for advanced users." TabSkip="yes" />
+        <Control Id="Line42" Type="Line" X="91" Y="174" Width="240" Height="3" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text19" Type="Text" X="20" Y="22" Width="290" Height="24" Text="Select the desired installation type." TabSkip="yes" Transparent="yes" />
+        <Control Id="Icon1" Type="Icon" X="41" Y="128" Width="36" Height="36" Text="Complete" TabSkip="yes" Disabled="yes" />
+        <Control Id="CompleteText" Type="Text" X="90" Y="72" Width="240" Height="24" Text="The most common application features will be installed. This option is recommended for most users." TabSkip="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Line41" Type="Line" X="91" Y="119" Width="240" Height="3" TabSkip="yes" Disabled="yes" />
+        <Control Id="Icon2" Type="Icon" X="41" Y="185" Width="36" Height="36" Text="Custom" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text48" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+        <Control Id="Line40" Type="Line" X="91" Y="64" Width="240" Height="3" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[DIALOG_TITLE_FONT_DEFAULT]Select Installation Type" TabSkip="yes" Transparent="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

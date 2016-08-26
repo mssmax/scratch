@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Admin_Install_Point_UI">
+      <Dialog Id="Admin_Install_Point" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="EditQ" Type="Text" X="19" Y="81" Width="270" Height="18" Text="Network &amp;installation point:" TabSkip="no" />
+        <Control Id="Edit" Type="PathEdit" X="19" Y="101" Width="266" Height="17" Property="TARGETDIR" TabSkip="no" />
+        <Control Id="Browse" Type="PushButton" X="294" Y="101" Width="56" Height="17" Text="B&amp;rowse" TabSkip="no">
+          <Publish Event="SpawnDialog" Value="AdminInstallBrowse">1</Publish>
+        </Control>
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="SetTargetPath" Value="TARGETDIR">1</Publish>
+          <Publish Event="NewDialog" Value="Admin_Verify_Ready">1</Publish>
+        </Control>
+        <Control Id="Back" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no" Disabled="yes" />
+        <Control Id="Cancel" Type="PushButton" X="309" Y="245" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="20" Y="22" Width="290" Height="24" Text="Where would you like to create your installation?" TabSkip="yes" Transparent="yes" />
+        <Control Id="Line35" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Line34" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text36" Type="Text" X="10" Y="8" Width="310" Height="12" Text="[DIALOG_TITLE_FONT_DEFAULT]Admin Installation" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text54" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM]" TabSkip="yes" />
+        <Control Id="Bitmap21" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

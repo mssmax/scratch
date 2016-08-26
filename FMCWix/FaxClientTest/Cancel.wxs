@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="Cancel_UI">
+      <Dialog Id="Cancel" X="50" Y="50" Width="233" Height="127" Title="[ProductName] Setup" NoMinimize="yes">
+        <Control Id="No" Type="PushButton" X="10" Y="101" Width="93" Height="17" Text="&amp;Resume" TabSkip="no" Default="yes">
+          <Publish Event="EndDialog" Value="Return">1</Publish>
+        </Control>
+        <Control Id="Yes" Type="PushButton" X="127" Y="101" Width="93" Height="17" Text="&amp;Exit Setup" TabSkip="no" Cancel="yes">
+          <!--<Publish Event="DoAction" Value="WiseCleanup">1</Publish>-->
+          <Publish Event="EndDialog" Value="Exit">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="10" Y="9" Width="210" Height="59" Text="Installation is not complete.  If you quit the setup program now, the application will not be installed.&#xD;&#xA;&#xD;&#xA;You can run the setup program at a later time to complete the installation." TabSkip="yes" />
+        <Control Id="Text2515" Type="Text" X="10" Y="68" Width="210" Height="30" Text="To continue installing, click Resume.  To quit the setup program, click Exit Setup." TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>

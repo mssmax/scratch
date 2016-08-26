@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Fragment>
+    <UI Id="FMOUserDetails_UI">
+      <Dialog Id="FMOUserDetails" X="50" Y="50" Width="375" Height="270" Title="[ProductName] Setup" CustomPalette="yes">
+        <Control Id="Next" Type="PushButton" X="244" Y="244" Width="56" Height="17" Text="&amp;Next &gt;" TabSkip="no" Default="yes">
+          <Publish Event="SpawnDialog" Value="FMONoEmailDlg">NOT ONLINEEMAAIL</Publish>
+          <Publish Event="NewDialog" Value="Single_Feature_Destination">ONLINEEMAIL</Publish>
+        </Control>
+        <Control Id="Previous" Type="PushButton" X="189" Y="244" Width="56" Height="17" Text="&lt; &amp;Back" TabSkip="no">
+          <Publish Event="NewDialog" Value="IntegrationType">1</Publish>
+        </Control>
+        <Control Id="Cancel" Type="PushButton" X="309" Y="244" Width="56" Height="17" Text="Cancel" TabSkip="no" Cancel="yes">
+          <Publish Event="SpawnDialog" Value="Cancel">1</Publish>
+        </Control>
+        <Control Id="Text" Type="Text" X="19" Y="61" Width="158" Height="11" Text="Email address (required)" TabSkip="yes" />
+        <Control Id="Edit" Type="Edit" X="28" Y="74" Width="200" Height="16" Property="ONLINEEMAIL" TabSkip="yes" />
+        <Control Id="PushButton" Type="PushButton" X="28" Y="190" Width="117" Height="17" Text="Forgot credentials&#xD;&#xA;" TabSkip="yes">
+          <Publish Event="SpawnDialog" Value="FMONoEmailDlg">NOT ONLINEEMAIL</Publish>
+          <Publish Event="DoAction" Value="CA_FMOResetPassword">ONLINEEMAIL</Publish>
+          <Publish Event="SpawnDialog" Value="FMOResetPassword">ONLINEEMAIL AND RESETPWERR=0</Publish>
+          <Publish Event="SpawnDialog" Value="FMOFailedEmailDlg"><![CDATA[ONLINEEMAIL AND RESETPWERR<>0]]></Publish>
+        </Control>
+        <Control Id="Line7" Type="Line" X="94" Y="234" Width="281" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text19" Type="Text" X="23" Y="23" Width="221" Height="14" Text="Specify GFI FaxMaker Online credentials&#xD;&#xA;" TabSkip="yes" Transparent="yes" />
+        <Control Id="Line17" Type="Line" X="0" Y="50" Width="375" Height="1" TabSkip="yes" Disabled="yes" />
+        <Control Id="Bitmap23" Type="Bitmap" X="0" Y="0" Width="375" Height="50" Text="top16" TabSkip="yes" Disabled="yes" />
+        <Control Id="Text18" Type="Text" X="8" Y="8" Width="150" Height="13" Text="[DIALOG_TITLE_FONT_DEFAULT]User details[CRLF]" TabSkip="yes" Transparent="yes" />
+        <Control Id="Text20" Type="Text" X="2" Y="230" Width="92" Height="12" Text="[GFITM][CRLF][CRLF]" TabSkip="yes" />
+        <Control Id="Text2522" Type="Text" X="28" Y="142
+                 " Width="91" Height="12" Text="Username" TabSkip="yes" />
+        <Control Id="Edit2523" Type="Edit" X="28" Y="156" Width="139" Height="16" Property="ONLINEUSER" TabSkip="yes" />
+        <Control Id="Text2524" Type="Text" X="196" Y="141" Width="112" Height="12" Text="Password" TabSkip="yes" />
+        <Control Id="Edit2525" Type="Edit" X="196" Y="156" Width="139" Height="16" Property="ONLINEPW" TabSkip="yes" Password="yes" />
+        <Control Id="Text25252526" Type="Text" X="19" Y="117" Width="296" Height="14" Text="GFI FaxMaker Online user credentials (optional)[CRLF][CRLF]" TabSkip="yes" />
+      </Dialog>
+    </UI>
+	</Fragment>
+</Wix>
