@@ -279,9 +279,9 @@ void CSimDlg::RecordCredentials()
 	UpdateData(FALSE);
 
 	m_bVisible = TRUE;
-	ShowWindow(SW_SHOW);
+	SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 	SetForegroundWindow();
-	GetDlgItem(IDC_APPTITLE)->SetFocus();	
+	GetDlgItem(IDC_APPTITLE)->SetFocus();
 }
 
 void CSimDlg::OnOK()
