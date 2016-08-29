@@ -259,7 +259,7 @@ void CDBEngViewDlg::PopulateData(CString &sTable, std::vector<COLUMN_INFO> &vecC
 	for (; e >= 0; )
 	{
 		m_lstData.InsertItem(iItem, _T(""));
-		for (int iSubItem = 0; iSubItem < vecColumns.size(); iSubItem++)
+		for (size_t iSubItem = 0; iSubItem < vecColumns.size(); iSubItem++)
 		{
 			std::wstring sItemText;
 			char szStrValue[1024] = { 0 };
