@@ -88,6 +88,14 @@ BEGIN
     LTEXT           "K&ey name:",IDC_STATIC,7,54,306,8
 END
 
+IDD_MYKEYS DIALOGEX 0, 0, 500, 294
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "My keys"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    CONTROL         "",IDC_LST_KEYS,"SysListView32",LVS_REPORT | LVS_SINGLESEL | LVS_SHOWSELALWAYS | LVS_EDITLABELS | LVS_ALIGNLEFT | WS_BORDER | WS_TABSTOP,7,7,486,280
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -143,6 +151,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 178
     END
+
+    IDD_MYKEYS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 493
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 287
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -153,6 +169,11 @@ END
 //
 
 IDD_SIM_DIALOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_MYKEYS AFX_DIALOG_LAYOUT
 BEGIN
     0
 END
@@ -177,6 +198,8 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "1"
     BEGIN
+        MENUITEM "My keys...",                  IDC_MYKEYS
+        MENUITEM SEPARATOR
         MENUITEM "Exit",                        IDC_EXIT
     END
 END
@@ -200,6 +223,9 @@ END
 LANGUAGE 9, 1
 #include "res\sim.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"      // Standard components
+#if !defined(_AFXDLL)
+#include "afxribbon.rc"   // MFC ribbon and control bar resources
+#endif
 #endif
 
 /////////////////////////////////////////////////////////////////////////////

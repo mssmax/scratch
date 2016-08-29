@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "sim.h"
 #include "simDlg.h"
+#include "MyKeysDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -52,6 +53,7 @@ BEGIN_MESSAGE_MAP(CSimDlg, CDialog)
 	ON_BN_CLICKED(IDC_EXIT, OnExitClick)
 	ON_MESSAGE(WM_CALLBACK, OnCallback)
 	ON_COMMAND(IDC_EXIT, OnExit)
+	ON_COMMAND(IDC_MYKEYS, OnMyKeys)
 END_MESSAGE_MAP()
 
 
@@ -453,4 +455,11 @@ HRESULT CSimDlg::DecryptPassword(IStream *pStrm, LPTSTR lpszPassword)
 	}
 
 	return hr;
+}
+
+void CSimDlg::OnMyKeys()
+{
+	CMyKeysDlg dlg;
+
+	int iRes = dlg.DoModal();
 }

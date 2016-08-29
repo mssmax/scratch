@@ -1,7 +1,3 @@
-
-// sim.cpp : Defines the class behaviors for the application.
-//
-
 #include "stdafx.h"
 #include "sim.h"
 #include "simDlg.h"
@@ -10,15 +6,9 @@
 #define new DEBUG_NEW
 #endif
 
-
-// CSimApp
-
 BEGIN_MESSAGE_MAP(CSimApp, CWinApp)
 	ON_COMMAND(ID_HELP, &CWinApp::OnHelp)
 END_MESSAGE_MAP()
-
-
-// CSimApp construction
 
 CSimApp::CSimApp()
 {
