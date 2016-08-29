@@ -118,6 +118,11 @@ JET_ERR CJetTable::MovePrev()
 	return JetMove(m_pDBEngine->GetSessionID(), m_tblID, JET_MovePrevious, 0);
 }
 
+JET_ERR CJetTable::Move(long lRow)
+{
+	return JetMove(m_pDBEngine->GetSessionID(), m_tblID, lRow, 0);
+}
+
 JET_ERR CJetTable::NextRow()
 {
 	if (m_lstBookmarks.tableid != 0)

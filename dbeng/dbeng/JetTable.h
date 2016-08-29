@@ -61,6 +61,7 @@ public:
 	JET_ERR MoveFirst();
 	JET_ERR MoveNext();
 	JET_ERR MovePrev();
+	JET_ERR Move(long lRow);
 
 	// TODO: temporary solution, this should probably be refactored into a separate class
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value);
