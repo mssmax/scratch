@@ -42,14 +42,16 @@ void CMyKeysDlg::ReloadData()
 
 	USES_CONVERSION;
 	CJetTable tbl;
-	JET_ERR e = g_DB.GetTable("tb_keys", tbl);
+	JET_ERR e = 0;
+	CALL_JET(g_DB.GetTable("tb_keys", tbl));
 	e = tbl.BeginTransaction();
+	CALL_JET(e);
 	for (int iItem = 0; e >= 0; iItem++)
 	{
 		char szStr[1024] = { 0 };
 		for (int i = 0; i < _countof(s_Columns); i++)
 		{
-			e = tbl.GetColumn(s_Columns[i], szStr, sizeof(szStr));
+			CALL_JET(tbl.GetColumn(s_Columns[i], szStr, sizeof(szStr)));
 			if (i == 0)
 			{
 				m_lstKeys.InsertItem(iItem, ConvA2W(szStr).c_str());
@@ -62,7 +64,10 @@ void CMyKeysDlg::ReloadData()
 		e = tbl.NextRow();
 	}
 
-	e = tbl.CommitTransaction();
+	CALL_JET(tbl.CommitTransaction());
+
+EXIT:
+	;
 }
 
 BOOL CMyKeysDlg::OnInitDialog()
@@ -98,16 +103,19 @@ void CMyKeysDlg::OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 			if (nRes == IDYES)
 			{
 				CJetTable tbl;
-				JET_ERR e = g_DB.GetTable("tb_keys", tbl);
-				tbl.BeginTransaction();
-				e = tbl.Move(nSel);
-				e = tbl.DeleteRow();
-				e = tbl.CommitTransaction();
+				CALL_JET(g_DB.GetTable("tb_keys", tbl));
+				CALL_JET(tbl.BeginTransaction());
+				CALL_JET(tbl.Move(nSel));
+				CALL_JET(tbl.DeleteRow());
+				CALL_JET(tbl.CommitTransaction());
 
 				ReloadData();
 			}
 		}
 	}
+
+EXIT:
+	;
 
 	*pResult = 0;
 }
@@ -167,13 +175,13 @@ void CMyKeysDlg::OnOK()
 		m_lstKeys.SetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem, sText);
 
 		CJetTable tbl;
-		JET_ERR e = g_DB.GetTable("tb_keys", tbl);
-		tbl.BeginTransaction();
-		e = tbl.Move(m_hitInfo.iItem);
-		e = tbl.UpdateRow()
+		CALL_JET(g_DB.GetTable("tb_keys", tbl));
+		CALL_JET(tbl.BeginTransaction());
+		CALL_JET(tbl.Move(m_hitInfo.iItem));
+		CALL_JET(tbl.UpdateRow()
 			.SetColumn(s_Columns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
-			.Done();
-		e = tbl.CommitTransaction();
+			.Done());
+		CALL_JET(tbl.CommitTransaction());
 
 		OnEditKillFocus();
 	}
@@ -181,4 +189,7 @@ void CMyKeysDlg::OnOK()
 	{
 		CDialog::OnOK();
 	}
+
+EXIT:
+	;
 }

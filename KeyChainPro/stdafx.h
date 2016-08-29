@@ -40,5 +40,16 @@ std::wstring ConvA2W(LPCSTR lpsz);
 std::string ConvW2A(LPCWSTR lpsz);
 
 HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm);
-
 HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword);
+
+#define CALL_JET(err) \
+	if(err < 0) \
+    { \
+		CHAR szErrorMsg[1024] = {0}; \
+		g_DB.GetErrorString(err, szErrorMsg, sizeof(szErrorMsg)); \
+		CString s; \
+		s.Format(_T("Keys database returned an error [%S]"), szErrorMsg); \
+		::MessageBox(::GetForegroundWindow(), s, _T("Error"), MB_OK); \
+		goto EXIT; \
+    }
+

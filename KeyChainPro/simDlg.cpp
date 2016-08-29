@@ -13,17 +13,6 @@
 #define HK_RECORD_CREDENTIALS 667
 #define HK_CHOOSE_KEY 668
 
-#define CALL_JET(err) \
-	if(err < 0) \
-    { \
-		CHAR szErrorMsg[1024] = {0}; \
-		g_DB.GetErrorString(err, szErrorMsg, sizeof(szErrorMsg)); \
-		CString s; \
-		s.Format(_T("Keys database returned an error [%S]"), szErrorMsg); \
-		::MessageBox(::GetForegroundWindow(), s, _T("Error"), MB_OK); \
-		goto EXIT; \
-    }
-
 CSimDlg::CSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SIM_DIALOG, pParent)
 	, m_sAppTitle(_T(""))
@@ -98,10 +87,6 @@ BOOL CSimDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-// If you add a minimize button to your dialog, you will need the code below
-//  to draw the icon.  For MFC applications using the document/view model,
-//  this is automatically done for you by the framework.
-
 void CSimDlg::OnPaint()
 {
 	if (IsIconic())
@@ -127,8 +112,6 @@ void CSimDlg::OnPaint()
 	}
 }
 
-// The system calls this function to obtain the cursor to display while the user drags
-//  the minimized window.
 HCURSOR CSimDlg::OnQueryDragIcon()
 {
 	return static_cast<HCURSOR>(m_hIcon);
@@ -191,9 +174,9 @@ void CSimDlg::PasteCredentials()
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	SendString(A2T(szUserName));
-	Sleep(70);
+	Sleep(80);
 	SendCode(9);
-	Sleep(70);
+	Sleep(80);
 	SendString(szPassword);
 
 EXIT:
