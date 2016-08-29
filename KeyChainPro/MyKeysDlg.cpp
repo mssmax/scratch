@@ -94,14 +94,18 @@ void CMyKeysDlg::OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 		int nSel = m_lstKeys.GetNextItem(-1, LVNI_SELECTED);
 		if (nSel != -1)
 		{
-			CJetTable tbl;
-			JET_ERR e = g_DB.GetTable("tb_keys", tbl);
-			tbl.BeginTransaction();
-			e = tbl.Move(nSel);
-			e = tbl.DeleteRow();
-			e = tbl.CommitTransaction();
+			int nRes = AfxMessageBox(_T("Are you sure you want to delete this record ?"), MB_ICONQUESTION | MB_YESNO);
+			if (nRes == IDYES)
+			{
+				CJetTable tbl;
+				JET_ERR e = g_DB.GetTable("tb_keys", tbl);
+				tbl.BeginTransaction();
+				e = tbl.Move(nSel);
+				e = tbl.DeleteRow();
+				e = tbl.CommitTransaction();
 
-			ReloadData();
+				ReloadData();
+			}
 		}
 	}
 

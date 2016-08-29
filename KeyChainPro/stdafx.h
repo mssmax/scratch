@@ -38,3 +38,7 @@ extern CDBEngine g_DB;
 
 std::wstring ConvA2W(LPCSTR lpsz);
 std::string ConvW2A(LPCWSTR lpsz);
+
+HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm);
+
+HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword);

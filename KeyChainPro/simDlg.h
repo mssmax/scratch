@@ -29,9 +29,6 @@ protected:
 	void RecordCredentials();
 	void FindKeyAndPaste();
 
-	HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm);
-	HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword);
-
 	void SendString(LPCTSTR lpszString);
 	void SendCode(WORD wCode);
 	DECLARE_MESSAGE_MAP()

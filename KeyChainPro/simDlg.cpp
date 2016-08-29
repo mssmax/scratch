@@ -191,9 +191,9 @@ void CSimDlg::PasteCredentials()
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	SendString(A2T(szUserName));
-	Sleep(50);
+	Sleep(70);
 	SendCode(9);
-	Sleep(50);
+	Sleep(70);
 	SendString(szPassword);
 
 EXIT:
@@ -379,83 +379,6 @@ void CSimDlg::OnExit()
 	OnExitClick();
 }
 
-HRESULT CSimDlg::EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm)
-{
-	HRESULT hr = S_OK;
-	DATA_BLOB blbIn = { 0 };
-	DATA_BLOB blbOut = { 0 };
-
-	blbIn.cbData = lstrlen(lpszPassword) * sizeof(TCHAR);
-	blbIn.pbData = (BYTE*)lpszPassword;
-
-	BOOL b = CryptProtectData(
-		&blbIn,
-		0,
-		0,
-		0,
-		0,
-		0,
-		&blbOut
-	);
-
-	if (!b)
-	{
-		return HRESULT_FROM_WIN32(GetLastError());
-	}
-
-	ULONG cbWri = 0;
-	hr = pStrm->Write(blbOut.pbData, blbOut.cbData, &cbWri);
-	if (FAILED(hr))
-	{
-		LocalFree(blbOut.pbData);
-		return hr;
-	}
-
-	LocalFree(blbOut.pbData);
-
-	LARGE_INTEGER liZero = { 0 };
-	ULARGE_INTEGER liNewPos = { 0 };
-	return pStrm->Seek(liZero, STREAM_SEEK_SET, &liNewPos);
-}
-
-HRESULT CSimDlg::DecryptPassword(IStream *pStrm, LPTSTR lpszPassword)
-{
-	HGLOBAL hGlb = 0;
-	HRESULT hr = GetHGlobalFromStream(pStrm, &hGlb);
-	if (FAILED(hr))
-	{
-		return hr;
-	}
-	DATA_BLOB blbIn = { 0 };
-	DATA_BLOB blbOut = { 0 };
-	STATSTG stat = { 0 };
-	pStrm->Stat(&stat, STATFLAG_NONAME);
-	blbIn.cbData = stat.cbSize.LowPart;
-	blbIn.pbData = reinterpret_cast<BYTE*>(GlobalLock(hGlb));
-
-	BOOL b = CryptUnprotectData(
-		&blbIn,
-		0,
-		0,
-		0,
-		0,
-		0,
-		&blbOut
-	);
-
-	if (!b)
-	{
-		hr = HRESULT_FROM_WIN32(GetLastError());
-		GlobalUnlock(hGlb);
-	}
-	else
-	{
-		memcpy(lpszPassword, blbOut.pbData, blbOut.cbData);
-		LocalFree(blbOut.pbData);
-	}
-
-	return hr;
-}
 
 void CSimDlg::OnMyKeys()
 {
