@@ -459,6 +459,7 @@ HRESULT CSimDlg::DecryptPassword(IStream *pStrm, LPTSTR lpszPassword)
 
 void CSimDlg::OnMyKeys()
 {
+	SetForegroundWindow();
 	CMyKeysDlg dlg;
 
 	int iRes = dlg.DoModal();

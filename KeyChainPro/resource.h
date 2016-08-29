@@ -10,6 +10,7 @@
 #define IDD_MYKEYS                      133
 #define IDC_EDIT1                       1000
 #define IDC_APPTITLE                    1000
+#define IDC_EDIT                        1000
 #define IDC_USERNAME                    1001
 #define IDC_USERNAME2                   1002
 #define IDC_PASSWORD                    1002
@@ -17,7 +18,6 @@
 #define IDC_KEYNAME                     1003
 #define IDC_BUTTON1                     1004
 #define IDC_EXIT                        1004
-#define IDC_LIST1                       1005
 #define IDC_LST_KEYS                    1005
 #define ID_EXIT                         32771
 #define ID_EXIT32772                    32772

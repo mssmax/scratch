@@ -1,5 +1,6 @@
 #pragma once
 #include "afxcmn.h"
+#include "afxwin.h"
 
 class CMyKeysDlg : public CDialog
 {
@@ -15,10 +16,19 @@ public:
 #endif
 
 protected:
+
+	void ReloadData();
+
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
 	CListCtrl m_lstKeys;
+	afx_msg void OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnEditKillFocus();
+	CEdit m_ctrlEdit;
+	virtual void OnCancel();
+	virtual void OnOK();
 };
