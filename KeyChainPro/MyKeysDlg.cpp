@@ -112,20 +112,20 @@ void CMyKeysDlg::OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 
 void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	LVHITTESTINFO hitInfo = { 0 };
-	GetCursorPos(&hitInfo.pt);
+	ZeroMemory(&m_hitInfo, sizeof(m_hitInfo));
+	GetCursorPos(&m_hitInfo.pt);
 		
-	m_lstKeys.ScreenToClient(&hitInfo.pt);
-	if (m_lstKeys.SubItemHitTest(&hitInfo) != -1)
+	m_lstKeys.ScreenToClient(&m_hitInfo.pt);
+	if (m_lstKeys.SubItemHitTest(&m_hitInfo) != -1)
 	{
 		CRect itemRect;
-		if(hitInfo.iSubItem > 0)
-			m_lstKeys.GetSubItemRect(hitInfo.iItem, hitInfo.iSubItem, LVIR_BOUNDS, itemRect);
+		if(m_hitInfo.iSubItem > 0)
+			m_lstKeys.GetSubItemRect(m_hitInfo.iItem, m_hitInfo.iSubItem, LVIR_BOUNDS, itemRect);
 		else
-			m_lstKeys.GetItemRect(hitInfo.iItem, &itemRect, LVIR_LABEL);
+			m_lstKeys.GetItemRect(m_hitInfo.iItem, &itemRect, LVIR_LABEL);
 
-		m_ctrlEdit.SetWindowText(m_lstKeys.GetItemText(hitInfo.iItem, hitInfo.iSubItem));
-		itemRect.InflateRect(4, 4);
+		m_ctrlEdit.SetWindowText(m_lstKeys.GetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem));
+		itemRect.InflateRect(3, 3);
 
 		m_ctrlEdit.MoveWindow(&itemRect);
 		m_ctrlEdit.ShowWindow(SW_SHOW);
@@ -160,6 +160,9 @@ void CMyKeysDlg::OnOK()
 {
 	if (m_ctrlEdit.IsWindowVisible())
 	{
+		CString sText;
+		m_ctrlEdit.GetWindowText(sText);
+		m_lstKeys.SetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem, sText);
 		OnEditKillFocus();
 	}
 	else

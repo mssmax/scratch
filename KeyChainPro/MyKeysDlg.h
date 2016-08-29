@@ -17,6 +17,8 @@ public:
 
 protected:
 
+	LVHITTESTINFO m_hitInfo;
+
 	void ReloadData();
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
