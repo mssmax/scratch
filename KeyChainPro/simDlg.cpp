@@ -186,6 +186,8 @@ void CSimDlg::PasteCredentials()
 		return;
 	}
 
+	// Sleeps aren't the best way to control timing, but it appears
+	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	SendString(A2T(szUserName));
 	Sleep(50);
 	SendCode(9);
@@ -281,7 +283,9 @@ void CSimDlg::RecordCredentials()
 	m_bVisible = TRUE;
 	SetWindowPos(&wndTopMost, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
 	SetForegroundWindow();
-	GetDlgItem(IDC_APPTITLE)->SetFocus();
+	CEdit *keyName = reinterpret_cast<CEdit*>(GetDlgItem(IDC_KEYNAME));
+	keyName->SetFocus();
+	keyName->SetSel(MAKELONG (0, -1), FALSE);
 }
 
 void CSimDlg::OnOK()
