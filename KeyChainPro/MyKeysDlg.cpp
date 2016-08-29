@@ -2,6 +2,14 @@
 #include "resource.h"
 #include "MyKeysDlg.h"
 
+static char* s_Columns[] = {
+	"tb_keys_app",
+	"tb_keys_keyname",
+	"tb_keys_user",
+	"tb_keys_password"
+};
+
+
 IMPLEMENT_DYNAMIC(CMyKeysDlg, CDialog)
 
 CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/)
@@ -30,13 +38,6 @@ END_MESSAGE_MAP()
 
 void CMyKeysDlg::ReloadData()
 {
-	static char* s_Columns[] = {
-		"tb_keys_app",
-		"tb_keys_keyname",
-		"tb_keys_user",
-		"tb_keys_password"
-	};
-
 	m_lstKeys.DeleteAllItems();
 
 	USES_CONVERSION;
@@ -98,16 +99,13 @@ void CMyKeysDlg::OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 			tbl.BeginTransaction();
 			e = tbl.Move(nSel);
 			e = tbl.DeleteRow();
-			tbl.CommitTransaction();
+			e = tbl.CommitTransaction();
 
 			ReloadData();
 		}
 	}
 
 	*pResult = 0;
-
-
-
 }
 
 void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
@@ -163,6 +161,16 @@ void CMyKeysDlg::OnOK()
 		CString sText;
 		m_ctrlEdit.GetWindowText(sText);
 		m_lstKeys.SetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem, sText);
+
+		CJetTable tbl;
+		JET_ERR e = g_DB.GetTable("tb_keys", tbl);
+		tbl.BeginTransaction();
+		e = tbl.Move(m_hitInfo.iItem);
+		e = tbl.UpdateRow()
+			.SetColumn(s_Columns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
+			.Done();
+		e = tbl.CommitTransaction();
+
 		OnEditKillFocus();
 	}
 	else

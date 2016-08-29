@@ -200,7 +200,7 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value)
 		column.columnid,
 		value,
 		lstrlenA(value),
-		0,
+		JET_bitSetOverwriteLV,
 		0);
 
 	return *this;
