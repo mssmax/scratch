@@ -141,6 +141,7 @@ JET_ERR CDBEngine::GetTable(LPCSTR lpszTableName, CJetTable &table)
 JET_ERR CDBEngine::GetTable(JET_TABLEID tableID, CJetTable &table)
 {
 	table.m_tblID = tableID;
+	table.m_pDBEngine = this;
 	return 0;
 }
 

@@ -2,20 +2,12 @@
 #include "resource.h"
 #include "MyKeysDlg.h"
 
-static char* s_Columns[] = {
-	"tb_keys_app",
-	"tb_keys_keyname",
-	"tb_keys_user",
-	"tb_keys_password"
-};
-
-
 IMPLEMENT_DYNAMIC(CMyKeysDlg, CDialog)
 
 CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_MYKEYS, pParent)
 {
-
+	m_tblID = 0;
 }
 
 CMyKeysDlg::~CMyKeysDlg()
@@ -43,7 +35,14 @@ void CMyKeysDlg::ReloadData()
 	USES_CONVERSION;
 	CJetTable tbl;
 	JET_ERR e = 0;
+	if (m_tblID != 0)
+	{
+		CALL_JET(g_DB.GetTable(m_tblID, tbl));
+	}
+	else
+	{
 		CALL_JET(g_DB.GetTable("tb_keys", tbl));
+	}
 	e = tbl.BeginTransaction();
 	CALL_JET(e);
 	for (int iItem = 0; e >= 0; iItem++)

@@ -17,7 +17,6 @@ public:
 
 protected:
 
-	JET_TABLEID m_tblID;
 	CString m_sKeyName;
 	LVHITTESTINFO m_hitInfo;
 
@@ -27,8 +26,12 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
+
 	virtual BOOL OnInitDialog();
+
 	CListCtrl m_lstKeys;
+	JET_TABLEID m_tblID;
+
 	afx_msg void OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnEditKillFocus();

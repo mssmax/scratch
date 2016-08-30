@@ -157,8 +157,15 @@ void CSimDlg::PasteCredentials()
 			if (ulRecCount > 1)
 			{
 				SetForegroundWindow();
-				CMyKeysDlg dlg;// (this, keysTable);
-
+				CMyKeysDlg dlg;
+				dlg.m_tblID = keysTable;
+				JET_ERR e = 0;
+				char b[128] = { 0 };
+				for (; e >= 0;)
+				{
+					e = keysTable.GetColumn(s_Columns[1], b, 128);
+					e = keysTable.NextRow();
+				}
 				int iRes = dlg.DoModal();
 			}
 		}
@@ -381,6 +388,8 @@ void CSimDlg::OnMyKeys()
 {
 	SetForegroundWindow();
 	CMyKeysDlg dlg;
-
+	CJetTable tbl;
+//	g_DB.GetTable("tb_keys", tbl);
+	//dlg.m_tblID = tbl;
 	dlg.DoModal();
 }

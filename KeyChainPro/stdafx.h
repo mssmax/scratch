@@ -53,3 +53,10 @@ HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword);
 		goto EXIT; \
     }
 
+static char* s_Columns[] = {
+	"tb_keys_app",
+	"tb_keys_keyname",
+	"tb_keys_user",
+	"tb_keys_password"
+};
+
