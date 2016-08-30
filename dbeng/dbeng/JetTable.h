@@ -36,8 +36,6 @@ private:
 
 	CDBEngine *m_pDBEngine;
 
-	CJetTable(JET_TABLEID tbl, CDBEngine *pEngine);
-
 	JET_ERR Open(CDBEngine *pEngine, LPCSTR lpszTableName);
 	void Close();
 
@@ -50,7 +48,19 @@ private:
 	JET_ERR CleanIndexRanges();
 public:
 	CJetTable();
+	CJetTable(JET_TABLEID tbl, CDBEngine *pEngine);
 	virtual ~CJetTable();
+
+	operator JET_TABLEID()
+	{
+		return m_tblID;
+	}
+
+	CJetTable& operator=(const JET_TABLEID tblid)
+	{
+		m_tblID = tblid;
+		return *this;
+	}
 
 	JET_ERR BeginTransaction();
 	JET_ERR CommitTransaction();

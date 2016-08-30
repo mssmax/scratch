@@ -148,6 +148,22 @@ void CSimDlg::PasteCredentials()
 
 		return; 
 	}
+	else
+	{
+		ULONG ulRecCount = 0;
+		err = JetIndexRecordCount(g_DB.GetSessionID(), keysTable, &ulRecCount, 0);
+		if (err >= 0)
+		{
+			if (ulRecCount > 1)
+			{
+				SetForegroundWindow();
+				CMyKeysDlg dlg;// (this, keysTable);
+
+				int iRes = dlg.DoModal();
+			}
+		}
+	}
+
 	hr = CreateStreamOnHGlobal(0, TRUE, &spPassStrm);
 	if (FAILED(hr))
 	{
@@ -174,9 +190,9 @@ void CSimDlg::PasteCredentials()
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	SendString(A2T(szUserName));
-	Sleep(80);
+	Sleep(100);
 	SendCode(9);
-	Sleep(80);
+	Sleep(100);
 	SendString(szPassword);
 
 EXIT:
@@ -319,7 +335,6 @@ EXIT:
 	;
 }
 
-
 void CSimDlg::OnCancel()
 {
 	m_bVisible = FALSE;
@@ -362,11 +377,10 @@ void CSimDlg::OnExit()
 	OnExitClick();
 }
 
-
 void CSimDlg::OnMyKeys()
 {
 	SetForegroundWindow();
 	CMyKeysDlg dlg;
 
-	int iRes = dlg.DoModal();
+	dlg.DoModal();
 }

@@ -43,7 +43,7 @@ void CMyKeysDlg::ReloadData()
 	USES_CONVERSION;
 	CJetTable tbl;
 	JET_ERR e = 0;
-	CALL_JET(g_DB.GetTable("tb_keys", tbl));
+		CALL_JET(g_DB.GetTable("tb_keys", tbl));
 	e = tbl.BeginTransaction();
 	CALL_JET(e);
 	for (int iItem = 0; e >= 0; iItem++)
@@ -85,8 +85,9 @@ BOOL CMyKeysDlg::OnInitDialog()
 
 	ReloadData();
 
-	return TRUE;  // return TRUE unless you set the focus to a control
-				  // EXCEPTION: OCX Property Pages should return FALSE
+	m_lstKeys.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
+
+	return TRUE;  
 }
 
 
@@ -187,6 +188,11 @@ void CMyKeysDlg::OnOK()
 	}
 	else
 	{
+		int nSel = m_lstKeys.GetNextItem(-1, LVNI_FOCUSED | LVNI_SELECTED);
+		if (nSel != -1)
+		{
+			m_sKeyName = m_lstKeys.GetItemText(nSel, 1);
+		}
 		CDialog::OnOK();
 	}
 

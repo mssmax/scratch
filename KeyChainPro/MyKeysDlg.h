@@ -17,6 +17,8 @@ public:
 
 protected:
 
+	JET_TABLEID m_tblID;
+	CString m_sKeyName;
 	LVHITTESTINFO m_hitInfo;
 
 	void ReloadData();
