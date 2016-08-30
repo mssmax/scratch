@@ -199,7 +199,7 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value)
 		m_tblID,
 		column.columnid,
 		value,
-		lstrlenA(value),
+		lstrlenA(value) + sizeof(CHAR),
 		JET_bitSetOverwriteLV,
 		0);
 
