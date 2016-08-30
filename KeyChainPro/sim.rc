@@ -199,7 +199,7 @@ IDR_MAINFRAME MENU
 BEGIN
     POPUP "1"
     BEGIN
-        MENUITEM "My keys...",                  IDC_MYKEYS
+        MENUITEM "Keys...",                     IDC_MYKEYS
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        IDC_EXIT
     END
