@@ -121,11 +121,11 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "GFI Software Ltd"
+            VALUE "CompanyName", "Olimp Ltd."
             VALUE "FileDescription", "KeyChain Pro"
             VALUE "FileVersion", "1.0.0.1"
             VALUE "InternalName", "sim.exe"
-            VALUE "LegalCopyright", "(c) GFI Software Ltd.  All rights reserved."
+            VALUE "LegalCopyright", "Olimp Ltd."
             VALUE "OriginalFilename", "sim.exe"
             VALUE "ProductName", "KeyChain Pro"
             VALUE "ProductVersion", "1.0.0.1"

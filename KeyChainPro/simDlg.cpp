@@ -156,8 +156,7 @@ void CSimDlg::PasteCredentials()
 		{
 			if (ulRecCount > 1)
 			{
-				SetForegroundWindow();
-				CMyKeysDlg dlg(this, keysTable);
+				CMyKeysDlg dlg(wnd, keysTable);
 				int iRes = dlg.DoModal();
 				if (iRes == IDOK)
 				{
@@ -199,7 +198,6 @@ void CSimDlg::PasteCredentials()
 
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
-	wnd->SetForegroundWindow();
 	SendString(A2T(szUserName));
 	Sleep(100);
 	SendCode(9);
