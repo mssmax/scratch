@@ -199,6 +199,7 @@ void CSimDlg::PasteCredentials()
 
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
+	wnd->SetForegroundWindow();
 	SendString(A2T(szUserName));
 	Sleep(100);
 	SendCode(9);
@@ -391,8 +392,5 @@ void CSimDlg::OnMyKeys()
 {
 	SetForegroundWindow();
 	CMyKeysDlg dlg;
-	CJetTable tbl;
-//	g_DB.GetTable("tb_keys", tbl);
-	//dlg.m_tblID = tbl;
 	dlg.DoModal();
 }

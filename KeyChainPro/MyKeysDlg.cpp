@@ -7,6 +7,7 @@ IMPLEMENT_DYNAMIC(CMyKeysDlg, CDialog)
 CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/, JET_TABLEID tblID /*=NULL*/)
 	: CDialog(IDD_MYKEYS, pParent)
 {
+	m_bReadOnly = FALSE;
 	m_tblID = tblID;
 	if (m_tblID != 0)
 	{
@@ -136,6 +137,7 @@ void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	if (m_bReadOnly)
 	{
+		OnOK();
 		goto EXIT;
 	}
 
