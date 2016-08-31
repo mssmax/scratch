@@ -169,31 +169,14 @@ JET_ERR CJetTable::NextRow()
 
 JET_ERR CJetTable::GetColInfo(LPCSTR pszColName, JET_COLUMNDEF* pColDef)
 {
-	JET_ERR e = 0;
-	if (lstrlenA(m_szTableName) == 0)
-	{
-		e = JetGetTableColumnInfo(
-			m_pDBEngine->GetSessionID(),
-			m_tblID,
-			pszColName,
-			pColDef,
-			sizeof(JET_COLUMNDEF),
-			JET_ColInfo
-		);
-	}
-	else
-	{
-		e = JetGetColumnInfo(
-			m_pDBEngine->GetSessionID(),
-			m_pDBEngine->m_dbID,
-			m_szTableName,
-			pszColName,
-			pColDef,
-			sizeof(JET_COLUMNDEF),
-			JET_ColInfo
-		);
-	}
-	return e;
+	return JetGetTableColumnInfo(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		pszColName,
+		pColDef,
+		sizeof(JET_COLUMNDEF),
+		JET_ColInfo
+	);
 }
 
 JET_TABLEID CJetTable::GetCursor()
