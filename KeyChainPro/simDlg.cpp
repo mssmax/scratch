@@ -171,6 +171,10 @@ void CSimDlg::PasteCredentials()
 				}
 			}
 		}
+		else
+		{
+			CALL_JET(err);
+		}
 	}
 
 	hr = CreateStreamOnHGlobal(0, TRUE, &spPassStrm);
@@ -213,7 +217,7 @@ void CSimDlg::FindKeyAndPaste()
 
 }
 
-void CSimDlg::SendString(LPCTSTR lpszString)
+void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 {
 	int iSize = lstrlen(lpszString);
 	for (int i = 0; i < iSize; i++)
@@ -228,11 +232,14 @@ void CSimDlg::SendString(LPCTSTR lpszString)
 		inp[1].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
 
 		UINT res = SendInput(2, inp, sizeof(INPUT));
-		Sleep(40);
+		if (bDoPause)
+		{
+			Sleep(40);
+		}
 	}
 }
 
-void CSimDlg::SendCode(WORD wCode)
+void CSimDlg::SendCode(WORD wCode, BOOL bDoPause)
 {
 	INPUT inp[2] = { 0 };
 	ZeroMemory(inp, sizeof(inp));
@@ -244,7 +251,10 @@ void CSimDlg::SendCode(WORD wCode)
 	inp[1].ki.wScan = MapVirtualKey(wCode, 0);
 	inp[1].ki.dwFlags = KEYEVENTF_KEYUP;
 	UINT res = SendInput(_countof(inp), inp, sizeof(INPUT));
-	Sleep(40);
+	if (bDoPause)
+	{
+		Sleep(40);
+	}
 }
 
 void CSimDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)

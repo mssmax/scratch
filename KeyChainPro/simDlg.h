@@ -29,8 +29,8 @@ protected:
 	void RecordCredentials();
 	void FindKeyAndPaste();
 
-	void SendString(LPCTSTR lpszString);
-	void SendCode(WORD wCode);
+	void SendString(LPCTSTR lpszString, BOOL bDoPause = TRUE);
+	void SendCode(WORD wCode, BOOL bDoPause = TRUE);
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
