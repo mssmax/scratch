@@ -160,12 +160,6 @@ void CSimDlg::PasteCredentials()
 				CMyKeysDlg dlg;
 				dlg.m_tblID = keysTable;
 				JET_ERR e = 0;
-				char b[128] = { 0 };
-				for (; e >= 0;)
-				{
-					e = keysTable.GetColumn(s_Columns[1], b, 128);
-					e = keysTable.NextRow();
-				}
 				int iRes = dlg.DoModal();
 			}
 		}
