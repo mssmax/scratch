@@ -157,10 +157,19 @@ void CSimDlg::PasteCredentials()
 			if (ulRecCount > 1)
 			{
 				SetForegroundWindow();
-				CMyKeysDlg dlg;
-				dlg.m_tblID = keysTable;
-				JET_ERR e = 0;
+				CMyKeysDlg dlg(this, keysTable);
 				int iRes = dlg.DoModal();
+				if (iRes == IDOK)
+				{
+					CALL_JET(keysTable.Select(
+						"tb_keys_keyname", 
+						OP_EQ, 
+						ConvW2A(dlg.GetSelectedKeyName()).c_str()));
+				}
+				else
+				{
+					goto EXIT;
+				}
 			}
 		}
 	}

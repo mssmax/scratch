@@ -62,6 +62,8 @@ public:
 		return *this;
 	}
 
+	void Detach();
+
 	JET_ERR BeginTransaction();
 	JET_ERR CommitTransaction();
 	JET_ERR RollbackTransaction();

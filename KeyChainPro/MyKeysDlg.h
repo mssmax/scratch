@@ -7,7 +7,7 @@ class CMyKeysDlg : public CDialog
 	DECLARE_DYNAMIC(CMyKeysDlg)
 
 public:
-	CMyKeysDlg(CWnd* pParent = NULL);   // standard constructor
+	CMyKeysDlg(CWnd* pParent = NULL, JET_TABLEID tblID = NULL);   // standard constructor
 	virtual ~CMyKeysDlg();
 
 // Dialog Data
@@ -17,8 +17,12 @@ public:
 
 protected:
 
+	JET_TABLEID m_tblID;
 	CString m_sKeyName;
 	LVHITTESTINFO m_hitInfo;
+	BOOL m_bReadOnly;
+	CEdit m_ctrlEdit;
+	CListCtrl m_lstKeys;
 
 	void ReloadData();
 
@@ -29,13 +33,11 @@ public:
 
 	virtual BOOL OnInitDialog();
 
-	CListCtrl m_lstKeys;
-	JET_TABLEID m_tblID;
-
 	afx_msg void OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnEditKillFocus();
-	CEdit m_ctrlEdit;
 	virtual void OnCancel();
 	virtual void OnOK();
+
+	CString GetSelectedKeyName();
 };

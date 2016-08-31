@@ -4,10 +4,14 @@
 
 IMPLEMENT_DYNAMIC(CMyKeysDlg, CDialog)
 
-CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/)
+CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/, JET_TABLEID tblID /*=NULL*/)
 	: CDialog(IDD_MYKEYS, pParent)
 {
-	m_tblID = 0;
+	m_tblID = tblID;
+	if (m_tblID != 0)
+	{
+		m_bReadOnly = TRUE;
+	}
 }
 
 CMyKeysDlg::~CMyKeysDlg()
@@ -66,7 +70,10 @@ void CMyKeysDlg::ReloadData()
 	CALL_JET(tbl.CommitTransaction());
 
 EXIT:
-	;
+	if(m_bReadOnly)
+	{
+		tbl.Detach();
+	}
 }
 
 BOOL CMyKeysDlg::OnInitDialog()
@@ -84,7 +91,7 @@ BOOL CMyKeysDlg::OnInitDialog()
 
 	ReloadData();
 
-	m_lstKeys.SetItemState(0, LVIS_SELECTED, LVIS_SELECTED);
+	m_lstKeys.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
 
 	return TRUE;  
 }
@@ -93,6 +100,11 @@ BOOL CMyKeysDlg::OnInitDialog()
 void CMyKeysDlg::OnLvnKeydownLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMLVKEYDOWN pLVKeyDown = reinterpret_cast<LPNMLVKEYDOWN>(pNMHDR);
+
+	if (m_bReadOnly)
+	{
+		goto EXIT;
+	}
 
 	if (pLVKeyDown->wVKey == VK_DELETE)
 	{
@@ -122,6 +134,11 @@ EXIT:
 
 void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 {
+	if (m_bReadOnly)
+	{
+		goto EXIT;
+	}
+
 	ZeroMemory(&m_hitInfo, sizeof(m_hitInfo));
 	GetCursorPos(&m_hitInfo.pt);
 		
@@ -143,7 +160,10 @@ void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 		m_ctrlEdit.SetSel(MAKELONG(0, -1));
 		m_ctrlEdit.ShowCaret();
 	}
-	
+
+EXIT:
+	;
+
 	*pResult = 0;
 }
 
@@ -197,4 +217,9 @@ void CMyKeysDlg::OnOK()
 
 EXIT:
 	;
+}
+
+CString CMyKeysDlg::GetSelectedKeyName()
+{
+	return m_sKeyName;
 }

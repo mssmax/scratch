@@ -53,6 +53,11 @@ JET_ERR CJetTable::Open(CDBEngine *pEngine, LPCSTR lpszTableName)
 	return e;
 }
 
+void CJetTable::Detach()
+{
+	m_tblID = 0;
+}
+
 void CJetTable::Close()
 {
 	CleanIndexRanges();
@@ -60,8 +65,9 @@ void CJetTable::Close()
 	{
 		JetCloseTable(m_pDBEngine->GetSessionID(), m_tblID);
 		m_tblID = 0;
-		ZeroMemory(m_szTableName, sizeof(m_szTableName));
 	}
+
+	ZeroMemory(m_szTableName, sizeof(m_szTableName));
 
 	if (m_tblBookmarks != 0)
 	{
