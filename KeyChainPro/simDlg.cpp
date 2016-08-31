@@ -12,6 +12,7 @@
 #define HK_PASTE_CREDENTIALS 666
 #define HK_RECORD_CREDENTIALS 667
 #define HK_CHOOSE_KEY 668
+#define HK_COPYPASTER 669
 
 CSimDlg::CSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SIM_DIALOG, pParent)
@@ -73,6 +74,12 @@ BOOL CSimDlg::OnInitDialog()
 	if (!b)
 	{
 		OutputDebugString(_T("Sim: Registering the hotkey for key navigation failed"));
+	}
+
+	b = RegisterHotKey(GetSafeHwnd(), HK_COPYPASTER, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'C');
+	if (!b)
+	{
+		OutputDebugString(_T("Sim: Registering the hotkey for copy/paster failed"));
 	}
 
 	NOTIFYICONDATA nimData = { 0 };
@@ -214,7 +221,6 @@ EXIT:
 
 void CSimDlg::FindKeyAndPaste()
 {
-
 }
 
 void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
@@ -234,7 +240,7 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		UINT res = SendInput(2, inp, sizeof(INPUT));
 		if (bDoPause)
 		{
-			Sleep(40);
+			Sleep(50);
 		}
 	}
 }
@@ -253,7 +259,7 @@ void CSimDlg::SendCode(WORD wCode, BOOL bDoPause)
 	UINT res = SendInput(_countof(inp), inp, sizeof(INPUT));
 	if (bDoPause)
 	{
-		Sleep(40);
+		Sleep(50);
 	}
 }
 
@@ -287,6 +293,12 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 	{
 		FindKeyAndPaste();
 	}
+	else if (wParam == HK_COPYPASTER)
+	{
+		CopyPaster();
+	}
+
+
 	return 0;
 }
 
@@ -400,4 +412,13 @@ void CSimDlg::OnMyKeys()
 {
 	CMyKeysDlg dlg;
 	dlg.DoModal();
+}
+
+void CSimDlg::CopyPaster()
+{
+	TCHAR sz[256] = { 0 };
+	GUID guid = { 0 };
+	CoCreateGuid(&guid);
+	StringFromGUID2(guid, sz, _countof(sz));
+	SendString(sz, FALSE);
 }
