@@ -7,6 +7,7 @@ IMPLEMENT_DYNAMIC(CMyKeysDlg, CDialog)
 CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/, JET_TABLEID tblID /*=NULL*/)
 	: CDialog(IDD_MYKEYS, pParent)
 {
+	m_bShowPlainPwds = FALSE;
 	m_bReadOnly = FALSE;
 	m_tblID = tblID;
 	if (m_tblID != 0)
@@ -30,12 +31,14 @@ BEGIN_MESSAGE_MAP(CMyKeysDlg, CDialog)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_LST_KEYS, &CMyKeysDlg::OnLvnKeydownLstKeys)
 	ON_NOTIFY(NM_DBLCLK, IDC_LST_KEYS, &CMyKeysDlg::OnNMDblclkLstKeys)
 	ON_EN_KILLFOCUS(IDC_EDIT, OnEditKillFocus)
+	ON_NOTIFY(HDN_ITEMCLICK, 0, &CMyKeysDlg::OnHdnItemclickLstKeys)
 END_MESSAGE_MAP()
 
 
 void CMyKeysDlg::ReloadData()
 {
 	m_lstKeys.DeleteAllItems();
+	m_vecPasswords.clear();
 
 	USES_CONVERSION;
 	CJetTable tbl;
@@ -53,16 +56,25 @@ void CMyKeysDlg::ReloadData()
 	for (int iItem = 0; e >= 0; iItem++)
 	{
 		char szStr[1024] = { 0 };
+		m_lstKeys.InsertItem(iItem, _T(""));
 		for (int i = 0; i < _countof(s_Columns); i++)
 		{
-			CALL_JET(tbl.GetColumn(s_Columns[i], szStr, sizeof(szStr)));
-			if (i == 0)
+			// a bit hacky since we assume the fourth column is password
+			// we'll deal with it at some point
+			if (i < 3)
 			{
-				m_lstKeys.InsertItem(iItem, ConvA2W(szStr).c_str());
+				CALL_JET(tbl.GetColumn(s_Columns[i], szStr, sizeof(szStr)));
+				m_lstKeys.SetItemText(iItem, i, ConvA2W(szStr).c_str());
 			}
 			else
 			{
-				m_lstKeys.SetItemText(iItem, i, ConvA2W(szStr).c_str());
+				IStreamPtr spStrm;
+				CreateStreamOnHGlobal(0, TRUE, &spStrm);
+				CALL_JET(tbl.GetColumn(s_Columns[i], spStrm));
+				m_lstKeys.SetItemText(iItem, i, _T("********"));
+				TCHAR szPassword[512] = { 0 };
+				DecryptPassword(spStrm, szPassword);
+				m_vecPasswords.push_back(szPassword);
 			}
 		}
 		e = tbl.NextRow();
@@ -156,7 +168,17 @@ void CMyKeysDlg::OnNMDblclkLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 		m_ctrlEdit.SetWindowText(m_lstKeys.GetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem));
 		itemRect.InflateRect(3, 3);
 
+		if (m_hitInfo.iSubItem == 3 && !m_bShowPlainPwds)
+		{
+			m_ctrlEdit.SetPasswordChar(_T('*'));
+		}
+		else
+		{
+			m_ctrlEdit.SetPasswordChar(0);
+		}
+
 		m_ctrlEdit.MoveWindow(&itemRect);
+
 		m_ctrlEdit.ShowWindow(SW_SHOW);
 		m_ctrlEdit.SetFocus();
 		m_ctrlEdit.SetSel(MAKELONG(0, -1));
@@ -194,21 +216,49 @@ void CMyKeysDlg::OnOK()
 	{
 		CString sText;
 		m_ctrlEdit.GetWindowText(sText);
-		m_lstKeys.SetItemText(m_hitInfo.iItem, m_hitInfo.iSubItem, sText);
+		if (m_hitInfo.iSubItem < 3)
+		{
+			m_lstKeys.SetItemText(
+				m_hitInfo.iItem,
+				m_hitInfo.iSubItem,
+				sText);
+		}
+		else
+		{
+			m_lstKeys.SetItemText(
+				m_hitInfo.iItem,
+				m_hitInfo.iSubItem,
+				(m_bShowPlainPwds) ? sText : _T("********"));
+		}
 
 		CJetTable tbl;
 		CALL_JET(g_DB.GetTable("tb_keys", tbl));
 		CALL_JET(tbl.BeginTransaction());
 		CALL_JET(tbl.Move(m_hitInfo.iItem));
-		CALL_JET(tbl.UpdateRow()
-			.SetColumn(s_Columns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
-			.Done());
+		if (m_hitInfo.iSubItem < 3)
+		{
+			CALL_JET(tbl.UpdateRow()
+				.SetColumn(s_Columns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
+				.Done());
+		}
+		else
+		{
+			IStreamPtr spStrm;
+			CreateStreamOnHGlobal(0, TRUE, &spStrm);
+			EncryptPassword(sText, spStrm);
+			CALL_JET(tbl.UpdateRow()
+				.SetColumn(s_Columns[m_hitInfo.iSubItem], spStrm)
+				.Done());
+			m_vecPasswords[m_hitInfo.iItem] = sText;
+		}
 		CALL_JET(tbl.CommitTransaction());
 
 		OnEditKillFocus();
 	}
 	else
 	{
+		// this code path is used when multiple entries are found
+		// for a given app and we need to ask the user which password exactly is to be used
 		int nSel = m_lstKeys.GetNextItem(-1, LVNI_FOCUSED | LVNI_SELECTED);
 		if (nSel != -1)
 		{
@@ -224,4 +274,24 @@ EXIT:
 CString CMyKeysDlg::GetSelectedKeyName()
 {
 	return m_sKeyName;
+}
+
+void CMyKeysDlg::OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMHEADER phdr = reinterpret_cast<LPNMHEADER>(pNMHDR);
+
+	// hacky to rely on password column being the last one, fix pending
+	if (phdr->iItem == 3)
+	{
+		m_lstKeys.SetRedraw(FALSE);
+		m_bShowPlainPwds = !m_bShowPlainPwds;
+		for (size_t i = 0; i < m_vecPasswords.size(); i++)
+		{
+			m_lstKeys.SetItemText(i, 3, 
+				(m_bShowPlainPwds) ? m_vecPasswords[i].c_str() : _T("********"));
+		}
+		m_lstKeys.SetRedraw(TRUE);
+	}
+
+	*pResult = 0;
 }

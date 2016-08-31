@@ -388,7 +388,6 @@ void CSimDlg::OnExit()
 
 void CSimDlg::OnMyKeys()
 {
-	SetForegroundWindow();
 	CMyKeysDlg dlg;
 	dlg.DoModal();
 }

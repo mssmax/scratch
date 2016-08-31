@@ -23,6 +23,8 @@ protected:
 	BOOL m_bReadOnly;
 	CEdit m_ctrlEdit;
 	CListCtrl m_lstKeys;
+	std::vector<std::wstring> m_vecPasswords;
+	BOOL m_bShowPlainPwds;
 
 	void ReloadData();
 
@@ -40,4 +42,5 @@ public:
 	virtual void OnOK();
 
 	CString GetSelectedKeyName();
+	afx_msg void OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 };
