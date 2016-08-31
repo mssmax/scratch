@@ -29,8 +29,6 @@ private:
 	JET_TABLEID m_tblBookmarks;
 	JET_RECORDLIST m_lstBookmarks;
 
-	char m_szTableName[256];
-
 	JET_INDEXRANGE m_arrIndexRanges[64];
 	int m_iIndexRangeSize;
 

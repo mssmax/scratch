@@ -12,7 +12,6 @@ CJetTable::CJetTable()
 
 	m_iIndexRangeSize = 0;
 	ZeroMemory(m_arrIndexRanges, sizeof(m_arrIndexRanges));
-	ZeroMemory(m_szTableName, sizeof(m_szTableName));
 	ZeroMemory(&m_lstBookmarks, sizeof(m_lstBookmarks));
 }
 
@@ -26,7 +25,6 @@ CJetTable::CJetTable(JET_TABLEID tbl, CDBEngine *pEngine)
 
 	m_iIndexRangeSize = 0;
 	ZeroMemory(m_arrIndexRanges, sizeof(m_arrIndexRanges));
-	ZeroMemory(m_szTableName, sizeof(m_szTableName));
 	ZeroMemory(&m_lstBookmarks, sizeof(m_lstBookmarks));
 }
 
@@ -39,7 +37,6 @@ CJetTable::~CJetTable()
 JET_ERR CJetTable::Open(CDBEngine *pEngine, LPCSTR lpszTableName)
 {
 	m_pDBEngine = pEngine;
-	StringCbCopyA(m_szTableName, sizeof(m_szTableName), lpszTableName);
 	JET_ERR e = JetOpenTable(
 		m_pDBEngine->GetSessionID(),
 		m_pDBEngine->m_dbID,
@@ -66,8 +63,6 @@ void CJetTable::Close()
 		JetCloseTable(m_pDBEngine->GetSessionID(), m_tblID);
 		m_tblID = 0;
 	}
-
-	ZeroMemory(m_szTableName, sizeof(m_szTableName));
 
 	if (m_tblBookmarks != 0)
 	{
@@ -103,7 +98,6 @@ JET_ERR CJetTable::RollbackTransaction()
 	JET_ERR e = JetRollback(m_pDBEngine->GetSessionID(), JET_bitRollbackAll);
 	// we nullify table id because during rollback the table is automatically closed by ESE
 	m_tblID = 0;
-	ZeroMemory(m_szTableName, sizeof(m_szTableName));
 
 	return e;
 }
