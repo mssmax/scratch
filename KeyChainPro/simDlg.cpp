@@ -2,6 +2,7 @@
 #include "sim.h"
 #include "simDlg.h"
 #include "MyKeysDlg.h"
+#include "MyCopyPaste.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -415,9 +416,10 @@ void CSimDlg::OnMyKeys()
 
 void CSimDlg::CopyPaster()
 {
-	TCHAR sz[1024] = { 0 };
-	GUID guid = { 0 };
-	CoCreateGuid(&guid);
-	StringFromGUID2(guid, sz, _countof(sz));
-	SendString(sz, FALSE);
+	CMyCopyPaste dlg;
+	int iRes = dlg.DoModal();
+	if (iRes == IDOK)
+	{
+		SendString(dlg.GetPasteableText(), FALSE);
+	}
 }

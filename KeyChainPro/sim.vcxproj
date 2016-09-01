@@ -195,6 +195,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MyCopyPaste.h" />
     <ClInclude Include="MyKeysDlg.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sim.h" />
@@ -203,6 +204,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="MyCopyPaste.cpp" />
     <ClCompile Include="MyKeysDlg.cpp">
       <DebugInformationFormat Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">ProgramDatabase</DebugInformationFormat>
     </ClCompile>

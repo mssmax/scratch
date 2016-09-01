@@ -57,20 +57,20 @@ void CMyKeysDlg::ReloadData()
 	{
 		char szStr[1024] = { 0 };
 		m_lstKeys.InsertItem(iItem, _T(""));
-		for (int i = 0; i < _countof(s_Columns); i++)
+		for (int i = 0; i < _countof(s_KeysColumns); i++)
 		{
 			// a bit hacky since we assume the fourth column is password
 			// we'll deal with it at some point
 			if (i < 3)
 			{
-				CALL_JET(tbl.GetColumn(s_Columns[i], szStr, sizeof(szStr)));
+				CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, sizeof(szStr)));
 				m_lstKeys.SetItemText(iItem, i, ConvA2W(szStr).c_str());
 			}
 			else
 			{
 				IStreamPtr spStrm;
 				CreateStreamOnHGlobal(0, TRUE, &spStrm);
-				CALL_JET(tbl.GetColumn(s_Columns[i], spStrm));
+				CALL_JET(tbl.GetColumn(s_KeysColumns[i], spStrm));
 				m_lstKeys.SetItemText(iItem, i, _T("********"));
 				TCHAR szPassword[512] = { 0 };
 				DecryptPassword(spStrm, szPassword);
@@ -238,7 +238,7 @@ void CMyKeysDlg::OnOK()
 		if (m_hitInfo.iSubItem < 3)
 		{
 			CALL_JET(tbl.UpdateRow()
-				.SetColumn(s_Columns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
+				.SetColumn(s_KeysColumns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
 				.Done());
 		}
 		else
@@ -247,7 +247,7 @@ void CMyKeysDlg::OnOK()
 			CreateStreamOnHGlobal(0, TRUE, &spStrm);
 			EncryptPassword(sText, spStrm);
 			CALL_JET(tbl.UpdateRow()
-				.SetColumn(s_Columns[m_hitInfo.iSubItem], spStrm)
+				.SetColumn(s_KeysColumns[m_hitInfo.iSubItem], spStrm)
 				.Done());
 			m_vecPasswords[m_hitInfo.iItem] = sText;
 		}
