@@ -298,7 +298,6 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 		CopyPaster();
 	}
 
-
 	return 0;
 }
 
@@ -416,7 +415,7 @@ void CSimDlg::OnMyKeys()
 
 void CSimDlg::CopyPaster()
 {
-	TCHAR sz[256] = { 0 };
+	TCHAR sz[1024] = { 0 };
 	GUID guid = { 0 };
 	CoCreateGuid(&guid);
 	StringFromGUID2(guid, sz, _countof(sz));
