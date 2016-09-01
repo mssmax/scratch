@@ -296,7 +296,7 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 	}
 	else if (wParam == HK_COPYPASTER)
 	{
-		CopyPaster();
+		OnCopyPaster();
 	}
 
 	return 0;
@@ -414,12 +414,16 @@ void CSimDlg::OnMyKeys()
 	dlg.DoModal();
 }
 
-void CSimDlg::CopyPaster()
+void CSimDlg::OnCopyPaster()
 {
 	CMyCopyPaste dlg;
 	int iRes = dlg.DoModal();
 	if (iRes == IDOK)
 	{
-		SendString(dlg.GetPasteableText(), FALSE);
+		CString s = dlg.GetPasteableText();
+		if (s.GetLength() > 0)
+		{
+			SendString(s, FALSE);
+		}
 	}
 }

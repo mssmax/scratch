@@ -114,6 +114,7 @@ void CDBEngViewDlg::OnClickedOpen()
 	int res = fd.DoModal();
 	if (res == IDOK)
 	{
+		CWaitCursor wait;
 		CString sDBPath = fd.GetPathName();
 		CString sDBFile = fd.GetFileName();
 		sDBPath = sDBPath.Left(sDBPath.GetLength() - sDBFile.GetLength());
@@ -185,6 +186,7 @@ void CDBEngViewDlg::OnSelchangeComboTables()
 	int idx = m_cmbTables.GetCurSel();
 	if (idx != -1)
 	{
+		CWaitCursor wait;
 		m_lstData.DeleteAllItems();
 		for(; m_lstData.DeleteColumn(0);)
 		{

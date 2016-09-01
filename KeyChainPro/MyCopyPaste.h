@@ -22,14 +22,22 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	std::vector<std::string> m_vecText;
 	CWnd *m_pPrevForegroundWnd;
+	LVHITTESTINFO m_hitInfo;
+	CString m_sPasteable;
 
 	DECLARE_MESSAGE_MAP()
 public:
+
+	afx_msg void OnEditKillFocus();
+
 	CString GetPasteableText();
 	virtual BOOL OnInitDialog();
 	virtual void OnOK();
 	virtual void OnCancel();
-	CEdit m__editContent;
+	CEdit m_editContent;
 	CListCtrl m_lstCPs;
 	CEdit m_editInplace;
+	afx_msg void OnLvnItemchangedCpList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnLvnKeydownCpList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnNMDblclkCpList(NMHDR *pNMHDR, LRESULT *pResult);
 };
