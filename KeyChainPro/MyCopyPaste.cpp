@@ -91,7 +91,33 @@ void CMyCopyPaste::OnOK()
 		int nSel = m_lstCPs.GetNextItem(-1, LVNI_FOCUSED | LVNI_SELECTED);
 		if (nSel >= 0)
 		{
-			m_sPasteable = ConvA2W(m_vecText[nSel].c_str()).c_str();
+			CString s;
+			m_editContent.GetWindowText(s);
+			m_sPasteable = s;
+			if (lstrcmpA(m_vecText[nSel].c_str(), ConvW2A(s).c_str()) != 0)
+			{
+				std::string temp = ConvW2A(s);
+				m_sPasteable = s;
+/**
+				std::string::iterator newEnd = std::remove(
+					temp.begin(),
+					temp.end(),
+					'\x0D'
+					);
+				temp.erase(newEnd, temp.end());
+/**/
+				m_vecText[nSel] = temp;
+
+				CJetTable tbl;
+				CALL_JET(g_DB.GetTable("tb_copypaste", tbl));
+				CALL_JET(tbl.BeginTransaction());
+				CALL_JET(tbl.Move(nSel));
+				CALL_JET(tbl.UpdateRow()
+					.SetColumn("tb_cp_text", m_vecText[nSel].c_str())
+					.Done()
+				);
+				CALL_JET(tbl.CommitTransaction());
+			}
 		}
 		else
 		{

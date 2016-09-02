@@ -32,6 +32,7 @@
 #include <comdef.h>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <ESEEngine.h>
 
 extern CDBEngine g_DB;

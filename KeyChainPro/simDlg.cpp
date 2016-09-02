@@ -226,17 +226,27 @@ void CSimDlg::FindKeyAndPaste()
 
 void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 {
+//	BlockInput(TRUE);
 	int iSize = lstrlen(lpszString);
 	for (int i = 0; i < iSize; i++)
 	{
+		SHORT w = VkKeyScan(lpszString[i]);
+		// skipping line feed character because it gets translated into CRLF on its own
+		// causing extra new line to be spilled in the in process
+		// this is mainly required by copy-paster funcionality
+		if (lpszString[i] == 0x0a)
+		{
+			continue;
+		}
 		INPUT inp[2] = { 0 };
 		inp[0].type = INPUT_KEYBOARD;
-		inp[0].ki.wScan = lpszString[i];
+		inp[0].ki.wVk = w & 0x00FF;
 		inp[0].ki.dwFlags = KEYEVENTF_UNICODE;
 
 		inp[1].type = INPUT_KEYBOARD;
-		inp[1].ki.wScan = lpszString[i];
+		inp[1].ki.wVk = w & 0x00FF;
 		inp[1].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
+
 
 		UINT res = SendInput(2, inp, sizeof(INPUT));
 		if (bDoPause)
@@ -244,6 +254,7 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 			Sleep(50);
 		}
 	}
+//	BlockInput(FALSE);
 }
 
 void CSimDlg::SendCode(WORD wCode, BOOL bDoPause)
