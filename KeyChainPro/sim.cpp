@@ -78,7 +78,7 @@ LPCSTR lpszSchema = "xml://<schema version=\"1\">" \
 "</table>" \
 "<table name=\"tb_copypaste\">" \
 	"<column name=\"tb_cp_app\" type=\"text\" indexed=\"yes\"/>" \
-	"<column name=\"tb_cp_keyname\" type=\"text\" size=\"128\" indexed=\"yes\">" \
+	"<column name=\"tb_cp_keyname\" type=\"text\" size=\"128\" indexed=\"yes\"/>" \
 	"<column name=\"tb_cp_text\" type=\"longtext\"/>" \
 "</table>" \
 "</schema>";
