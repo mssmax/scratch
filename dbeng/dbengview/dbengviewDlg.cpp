@@ -264,7 +264,7 @@ void CDBEngViewDlg::PopulateData(CString &sTable, std::vector<COLUMN_INFO> &vecC
 		for (size_t iSubItem = 0; iSubItem < vecColumns.size(); iSubItem++)
 		{
 			std::wstring sItemText;
-			char szStrValue[1024] = { 0 };
+			WCHAR szStrValue[1024] = { 0 };
 			int lValue = 0;
 			SYSTEMTIME timeValue = { 0 };
 			switch (vecColumns[iSubItem].lType)
@@ -272,7 +272,7 @@ void CDBEngViewDlg::PopulateData(CString &sTable, std::vector<COLUMN_INFO> &vecC
 			case JET_coltypText:
 			case JET_coltypLongText:
 				e = tbl.GetColumn(vecColumns[iSubItem].sName.c_str(), szStrValue, _countof(szStrValue));
-				sItemText = ConvA2W(szStrValue);
+				sItemText = szStrValue;
 				break;
 			case JET_coltypLong:
 				e = tbl.GetColumn(vecColumns[iSubItem].sName.c_str(), &lValue);

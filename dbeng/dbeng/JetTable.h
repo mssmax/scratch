@@ -74,6 +74,7 @@ public:
 	JET_ERR Move(long lRow);
 
 	// TODO: temporary solution, this should probably be refactored into a separate class
+	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCWSTR value);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, int value);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value);
@@ -81,6 +82,7 @@ public:
 	CJetTable& SetColumn(LPCSTR lpszColumnName, IStream *value);
 
 	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size);
 	JET_ERR GetColumn(LPCSTR lpszColumnName, int *pValue);
 	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value);
 	// intended for columns of type "binary"

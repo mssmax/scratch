@@ -205,6 +205,24 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value)
 	return *this;
 }
 
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCWSTR value)
+{
+	JET_COLUMNDEF column = { 0 };
+	GetColInfo(lpszColumnName, &column);
+	std::string s(ConvW2A(value, CP_UTF8));
+	JET_ERR e = JetSetColumn(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		s.c_str(),
+		s.length() + 1,
+		JET_bitSetOverwriteLV,
+		0);
+
+	return *this;
+}
+
+
 CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, int value)
 {
 	JET_COLUMNDEF column = { 0 };
@@ -325,6 +343,51 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size)
 		0,
 		0
 	);
+
+	return e;
+}
+
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
+{
+	JET_COLUMNDEF column = { 0 };
+	JET_ERR e = GetColInfo(lpszColumnName, &column);
+	if (e < 0)
+	{
+		return e;
+	}
+
+	ULONG ulActual = 0;
+	e = JetRetrieveColumn(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		nullptr,
+		0,
+		&ulActual,
+		0,
+		0
+		);
+
+	if (e < 0)
+	{
+		return e;
+	}
+	else
+	{
+		std::string s;
+		s.resize(ulActual);
+		e = JetRetrieveColumn(
+			m_pDBEngine->GetSessionID(),
+			m_tblID,
+			column.columnid,
+			&s[0],
+			ulActual,
+			0,
+			0,
+			0
+			);
+		StringCchCopy(pszBuffer, size, ConvA2W(s.c_str(), CP_UTF8).c_str());
+	}
 
 	return e;
 }
