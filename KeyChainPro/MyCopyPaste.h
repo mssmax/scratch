@@ -20,7 +20,7 @@ protected:
 	void ReloadData();
 
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-	std::vector<std::string> m_vecText;
+	std::vector<std::wstring> m_vecText;
 	CWnd *m_pPrevForegroundWnd;
 	LVHITTESTINFO m_hitInfo;
 	CString m_sPasteable;

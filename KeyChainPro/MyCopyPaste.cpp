@@ -78,7 +78,7 @@ void CMyCopyPaste::OnOK()
 		CALL_JET(g_DB.GetTable("tb_copypaste", tbl));
 		CALL_JET(tbl.BeginTransaction());
 		CALL_JET(tbl.UpdateRow()
-			.SetColumn(s_CPColumns[m_hitInfo.iSubItem], ConvW2A(s).c_str())
+			.SetColumn(s_CPColumns[m_hitInfo.iSubItem], s)
 			.Done()
 		);
 		CALL_JET(tbl.CommitTransaction());
@@ -94,19 +94,10 @@ void CMyCopyPaste::OnOK()
 			CString s;
 			m_editContent.GetWindowText(s);
 			m_sPasteable = s;
-			if (lstrcmpA(m_vecText[nSel].c_str(), ConvW2A(s).c_str()) != 0)
+			if (lstrcmp(m_vecText[nSel].c_str(), s) != 0)
 			{
-				std::string temp = ConvW2A(s);
 				m_sPasteable = s;
-/**
-				std::string::iterator newEnd = std::remove(
-					temp.begin(),
-					temp.end(),
-					'\x0D'
-					);
-				temp.erase(newEnd, temp.end());
-/**/
-				m_vecText[nSel] = temp;
+				m_vecText[nSel] = s;
 
 				CJetTable tbl;
 				CALL_JET(g_DB.GetTable("tb_copypaste", tbl));
@@ -161,11 +152,11 @@ void CMyCopyPaste::ReloadData()
 		m_lstCPs.InsertItem(iItem, _T(""));
 		for (int iSubItem = 0; iSubItem < _countof(s_CPColumns); iSubItem++)
 		{
-			char szStr[1024] = { 0 };
-			CALL_JET(tbl.GetColumn(s_CPColumns[iSubItem], szStr, sizeof(szStr)));
+			WCHAR szStr[1024] = { 0 };
+			CALL_JET(tbl.GetColumn(s_CPColumns[iSubItem], szStr, _countof(szStr)));
 			if (iSubItem < _countof(s_CPColumns) - 1)
 			{
-				m_lstCPs.SetItemText(iItem, iSubItem, ConvA2W(szStr).c_str());
+				m_lstCPs.SetItemText(iItem, iSubItem, szStr);
 			}
 			else
 			{
@@ -186,7 +177,7 @@ void CMyCopyPaste::OnLvnItemchangedCpList(NMHDR *pNMHDR, LRESULT *pResult)
 
 	if (pNMLV->iItem >= 0 && pNMLV->iItem < m_vecText.size())
 	{
-		m_editContent.SetWindowText(ConvA2W(m_vecText[pNMLV->iItem].c_str()).c_str());
+		m_editContent.SetWindowText(m_vecText[pNMLV->iItem].c_str());
 	}
 
 	*pResult = 0;
@@ -225,7 +216,7 @@ void CMyCopyPaste::OnLvnKeydownCpList(NMHDR *pNMHDR, LRESULT *pResult)
 		g_DB.GetTable("tb_copypaste", tbl);
 		CALL_JET(tbl.BeginTransaction());
 		CALL_JET(tbl.InsertRow()
-			.SetColumn("tb_cp_app", ConvW2A(s).c_str())
+			.SetColumn("tb_cp_app", s)
 			.Done());
 		CALL_JET(tbl.CommitTransaction());
 		ReloadData();
