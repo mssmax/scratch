@@ -55,7 +55,7 @@ void CMyKeysDlg::ReloadData()
 	CALL_JET(e);
 	for (int iItem = 0; e >= 0; iItem++)
 	{
-		char szStr[1024] = { 0 };
+		WCHAR szStr[1024] = { 0 };
 		m_lstKeys.InsertItem(iItem, _T(""));
 		for (int i = 0; i < _countof(s_KeysColumns); i++)
 		{
@@ -63,8 +63,8 @@ void CMyKeysDlg::ReloadData()
 			// we'll deal with it at some point
 			if (i < 3)
 			{
-				CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, sizeof(szStr)));
-				m_lstKeys.SetItemText(iItem, i, ConvA2W(szStr).c_str());
+				CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr)));
+				m_lstKeys.SetItemText(iItem, i, szStr);
 			}
 			else
 			{
@@ -238,7 +238,7 @@ void CMyKeysDlg::OnOK()
 		if (m_hitInfo.iSubItem < 3)
 		{
 			CALL_JET(tbl.UpdateRow()
-				.SetColumn(s_KeysColumns[m_hitInfo.iSubItem], ConvW2A(sText).c_str())
+				.SetColumn(s_KeysColumns[m_hitInfo.iSubItem], sText)
 				.Done());
 		}
 		else

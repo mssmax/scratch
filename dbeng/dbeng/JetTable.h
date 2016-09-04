@@ -99,6 +99,7 @@ public:
 
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value);
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR value);
+	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value);
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value);
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -107,10 +108,12 @@ public:
 
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value);
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR value);
+	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value);
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value);
 
 	CJetTable& ByRange(LPCSTR lpszColumnName, int lowValue, int upValue);
 	CJetTable& ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue);
+	CJetTable& ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue);
 	CJetTable& ByRange(LPCSTR lpszColumnName, LPSYSTEMTIME lowValue, LPSYSTEMTIME upValue);
 	///////////////////////////////////////////////////////////////////////////////
 	JET_ERR Join();

@@ -632,6 +632,12 @@ JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR va
 	return Select(m_tblID, lpszColumnName, operand, value, lstrlenA(value));
 }
 
+JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value)
+{
+	std::string s = ConvW2A(value);
+	return Select(m_tblID, lpszColumnName, operand, s.c_str(), s.size());
+}
+
 JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value)
 {
 	double dblTime = 0;
@@ -668,6 +674,14 @@ CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR 
 	return *this;
 }
 
+CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value)
+{
+	JET_ERR e = 0;
+
+	e = Select(GetCursor(), lpszColumnName, operand, value, lstrlen(value));
+
+	return *this;
+}
 
 CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value)
 {
@@ -708,7 +722,7 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, int lowValue, int upValue)
 	return *this;
 }
 
-CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue)
+CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue)
 {
 	JET_ERR e = 0;
 	JET_TABLEID tblid = GetCursor();
@@ -725,7 +739,7 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upV
 		sessID,
 		tblid,
 		lowValue,
-		lstrlenA(lowValue),
+		lstrlen(lowValue),
 		JET_bitNewKey | JET_bitPartialColumnStartLimit
 	);
 
@@ -744,7 +758,7 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upV
 		m_pDBEngine->GetSessionID(),
 		tblid,
 		upValue,
-		lstrlenA(upValue),
+		lstrlen(upValue),
 		JET_bitNewKey | JET_bitPartialColumnEndLimit
 	);
 

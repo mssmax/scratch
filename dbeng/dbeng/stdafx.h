@@ -15,6 +15,6 @@
 #include <vector>
 #include "DBSchema.h"
 
-std::wstring ConvA2W(LPCSTR lpsz, UINT cp = CP_ACP);
+std::wstring ConvA2W(LPCSTR lpsz, UINT cp = CP_UTF8);
 
-std::string ConvW2A(LPCWSTR lpsz, UINT cp = CP_ACP);
+std::string ConvW2A(LPCWSTR lpsz, UINT cp = CP_UTF8);
