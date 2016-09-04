@@ -722,12 +722,21 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, int lowValue, int upValue)
 	return *this;
 }
 
+CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue)
+{
+	return ByRange(
+		lpszColumnName,
+		ConvA2W(lowValue).c_str(),
+		ConvA2W(upValue).c_str()
+		);
+}
+
 CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue)
 {
 	JET_ERR e = 0;
 	JET_TABLEID tblid = GetCursor();
 	JET_SESID sessID = m_pDBEngine->GetSessionID();
-
+	std::string sLow = ConvW2A(lowValue);
 	e = SetColIndex(lpszColumnName, tblid);
 	
 	if (e < 0)
@@ -738,8 +747,8 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR u
 	e = JetMakeKey(
 		sessID,
 		tblid,
-		lowValue,
-		lstrlen(lowValue),
+		sLow.c_str(),
+		sLow.size(),
 		JET_bitNewKey | JET_bitPartialColumnStartLimit
 	);
 
