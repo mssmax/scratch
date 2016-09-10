@@ -82,6 +82,8 @@ void CMyKeysDlg::ReloadData()
 
 	CALL_JET(tbl.CommitTransaction());
 
+	m_lstKeys.SetItemState(0, LVNI_FOCUSED | LVNI_SELECTED, LVNI_FOCUSED | LVNI_SELECTED);
+
 EXIT:
 	if(m_bReadOnly)
 	{
