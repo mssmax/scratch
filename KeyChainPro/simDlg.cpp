@@ -214,7 +214,7 @@ void CSimDlg::PasteCredentials()
 	Sleep(100);
 	SendCode(9);
 	Sleep(100);
-	SendString(szPassword);
+	SendString(szPassword, FALSE);
 
 EXIT:
 	;
