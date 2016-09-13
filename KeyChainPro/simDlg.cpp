@@ -242,16 +242,17 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		inp[0].ki.wScan = lpszString[i];
 		inp[0].ki.dwFlags = KEYEVENTF_UNICODE;
 
-		inp[1].type = INPUT_KEYBOARD;
-		inp[1].ki.wScan = lpszString[i];
-		inp[1].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
-
-
-		UINT res = SendInput(2, inp, sizeof(INPUT));
+		UINT res = SendInput(1, inp, sizeof(INPUT));
 		if (bDoPause)
 		{
 			Sleep(50);
 		}
+
+		inp[0].type = INPUT_KEYBOARD;
+		inp[0].ki.wScan = lpszString[i];
+		inp[0].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
+
+		res = SendInput(1, inp, sizeof(INPUT));
 	}
 //	BlockInput(FALSE);
 }
