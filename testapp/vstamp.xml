@@ -1,0 +1,26 @@
+<Project DefaultTargets="VStamp" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\MSBuildCommunityTasks\MSBuild.Community.Tasks.Targets"/>
+
+  <Target Name="VStamp" BeforeTargets="PrepareForBuild">
+
+    <Time Format="MMdd">
+      <Output TaskParameter="FormattedTime" PropertyName="MonthDay" />
+      <Output TaskParameter="Year" PropertyName="Year" />
+    </Time>
+
+    <ItemGroup>
+      <MyTextFile Include="Items.txt"/>
+      <MyItems Include="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;"/>
+      <MyItems Include="&lt;Include&gt;"/>
+      <MyItems Include="&lt;?define Build=&quot;$(Year)$(MonthDay)&quot;?&gt;"/>
+      <MyItems Include="&lt;/Include&gt;"/>
+    </ItemGroup>
+
+      <WriteLinesToFile Condition="!Exists('.\verinfo.wxi')"
+          File="verinfo.wxi"
+          Lines="@(MyItems)"
+          Overwrite="true"/>
+
+  </Target>
+
+</Project>
