@@ -12,6 +12,7 @@ END_MESSAGE_MAP()
 
 CSimApp::CSimApp()
 {
+	m_hCryptProv = 0;
 }
 
 CSimApp theApp;
@@ -23,6 +24,25 @@ BOOL CSimApp::InitInstance()
 	SetRegistryKey(_T("KeyChainPro"));
 
 	RegisterAutoRun();
+
+	// TODO: Consider refactoring this part of code into InitKey
+	if (!CryptAcquireContext(&m_hCryptProv, 0, 0, PROV_RSA_AES, 0))
+	{
+		if (GetLastError() == NTE_BAD_KEYSET)
+		{
+			if (!CryptAcquireContext(&m_hCryptProv, 0, 0, PROV_RSA_AES, CRYPT_NEWKEYSET))
+			{
+				return FALSE;
+
+			}
+		}
+		else
+		{
+			return FALSE;
+		}
+	}
+
+	InitKey();
 
 	JET_ERR e = InitDatabase();
 	if (e < 0)
@@ -55,6 +75,17 @@ BOOL CSimApp::InitInstance()
 	return FALSE;
 }
 
+BOOL CSimApp::ExitInstance()
+{
+	if (m_hCryptProv)
+	{
+		CryptReleaseContext(m_hCryptProv, 0);
+		m_hCryptProv = 0;
+	}
+
+	return TRUE;
+}
+
 void CSimApp::RegisterAutoRun()
 {
 	HKEY hKey = 0;
@@ -66,6 +97,10 @@ void CSimApp::RegisterAutoRun()
 		lRes = RegSetValueEx(hKey, _T("KeyChainPro"), 0, REG_SZ, reinterpret_cast<LPBYTE>(szProcName), _countof(szProcName));
 		RegCloseKey(hKey);
 	}
+}
+
+void CSimApp::InitKey()
+{
 }
 
 

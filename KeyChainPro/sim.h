@@ -13,12 +13,14 @@ public:
 
 	JET_ERR InitDatabase();
 	void RegisterAutoRun();
+	void InitKey();
 
+	HCRYPTPROV m_hCryptProv;
 // Overrides
 public:
 	virtual BOOL InitInstance();
+	virtual BOOL ExitInstance();
 
-// Implementation
 
 	DECLARE_MESSAGE_MAP()
 };
