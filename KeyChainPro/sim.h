@@ -13,7 +13,7 @@ public:
 
 	JET_ERR InitDatabase();
 	void RegisterAutoRun();
-	void InitKey();
+	BOOL InitKey();
 
 	HCRYPTPROV m_hCryptProv;
 // Overrides

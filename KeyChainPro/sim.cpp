@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "sim.h"
 #include "simDlg.h"
+#include "InputDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,7 +43,10 @@ BOOL CSimApp::InitInstance()
 		}
 	}
 
-	InitKey();
+	if (!InitKey())
+	{
+		return FALSE;
+	}
 
 	JET_ERR e = InitDatabase();
 	if (e < 0)
@@ -99,8 +103,29 @@ void CSimApp::RegisterAutoRun()
 	}
 }
 
-void CSimApp::InitKey()
+BOOL CSimApp::InitKey()
 {
+	CInputDlg dlg(AfxGetMainWnd(), _T("Enter master password"), TRUE);
+	if (dlg.DoModal() == IDOK)
+	{
+		TCHAR s[512] = { 0 };
+		StringCbCopy(s, sizeof(s), dlg.m_sInput);
+		HCRYPTHASH hHash = 0;
+		if (CryptCreateHash(m_hCryptProv, CALG_SHA_256, 0, 0, &hHash))
+		{
+			if (CryptHashData(hHash, reinterpret_cast<BYTE*>(s), lstrlen(s) * sizeof(TCHAR), 0))
+			{
+				if (CryptDeriveKey(m_hCryptProv, CALG_AES_256, hHash, CRYPT_EXPORTABLE, &g_hKey))
+				{
+					CryptDestroyHash(hHash);
+					return TRUE;
+				}
+			}
+			CryptDestroyHash(hHash);
+		}
+	}
+
+	return FALSE;
 }
 
 

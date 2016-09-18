@@ -28,24 +28,24 @@ std::string ConvW2A(LPCWSTR lpsz)
 	return ret;
 }
 
+HCRYPTKEY g_hKey = 0;
+
 HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm)
 {
 	HRESULT hr = S_OK;
-	DATA_BLOB blbIn = { 0 };
-	DATA_BLOB blbOut = { 0 };
+	BYTE byData[1024] = { 0 };
+	DWORD dwDataLen = (lstrlen(lpszPassword) + 1) * sizeof(TCHAR);
+	CopyMemory(byData, lpszPassword, dwDataLen);
 
-	blbIn.cbData = lstrlen(lpszPassword) * sizeof(TCHAR);
-	blbIn.pbData = (BYTE*)lpszPassword;
-
-	BOOL b = CryptProtectData(
-		&blbIn,
+	BOOL b = CryptEncrypt(
+		g_hKey,
 		0,
+		TRUE,
 		0,
-		0,
-		0,
-		0,
-		&blbOut
-		);
+		(BYTE*)byData,
+		&dwDataLen,
+		sizeof(byData)
+	);
 
 	if (!b)
 	{
@@ -53,14 +53,7 @@ HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm)
 	}
 
 	ULONG cbWri = 0;
-	hr = pStrm->Write(blbOut.pbData, blbOut.cbData, &cbWri);
-	if (FAILED(hr))
-	{
-		LocalFree(blbOut.pbData);
-		return hr;
-	}
-
-	LocalFree(blbOut.pbData);
+	hr = pStrm->Write(byData, dwDataLen, &cbWri);
 
 	LARGE_INTEGER liZero = { 0 };
 	ULARGE_INTEGER liNewPos = { 0 };
@@ -69,38 +62,27 @@ HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm)
 
 HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword)
 {
-	HGLOBAL hGlb = 0;
-	HRESULT hr = GetHGlobalFromStream(pStrm, &hGlb);
-	if (FAILED(hr))
-	{
-		return hr;
-	}
-	DATA_BLOB blbIn = { 0 };
-	DATA_BLOB blbOut = { 0 };
-	STATSTG stat = { 0 };
-	pStrm->Stat(&stat, STATFLAG_NONAME);
-	blbIn.cbData = stat.cbSize.LowPart;
-	blbIn.pbData = reinterpret_cast<BYTE*>(GlobalLock(hGlb));
+	HRESULT hr = S_OK;
+	BYTE byData[1024] = { 0 };
+	ULONG ulRead = 0;
+	hr = pStrm->Read(byData, sizeof(byData), &ulRead);
 
-	BOOL b = CryptUnprotectData(
-		&blbIn,
+	BOOL b = CryptDecrypt(
+		g_hKey,
 		0,
+		TRUE,
 		0,
-		0,
-		0,
-		0,
-		&blbOut
+		byData,
+		&ulRead
 		);
 
 	if (!b)
 	{
 		hr = HRESULT_FROM_WIN32(GetLastError());
-		GlobalUnlock(hGlb);
 	}
 	else
 	{
-		memcpy(lpszPassword, blbOut.pbData, blbOut.cbData);
-		LocalFree(blbOut.pbData);
+		memcpy(lpszPassword, byData, ulRead);
 	}
 
 	return hr;

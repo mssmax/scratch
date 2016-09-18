@@ -9,10 +9,13 @@
 #define IDR_MENU1                       132
 #define IDD_MYKEYS                      133
 #define IDD_MYCOPYPASTE                 137
+#define IDD_DIALOG1                     141
+#define IDD_INPUTDLG                    141
 #define IDC_EDIT1                       1000
 #define IDC_APPTITLE                    1000
 #define IDC_EDIT                        1000
 #define IDC_CP_CONTENT                  1000
+#define IDC_INPUTTEXT                   1000
 #define IDC_USERNAME                    1001
 #define IDC_USERNAME2                   1002
 #define IDC_PASSWORD                    1002
@@ -32,7 +35,7 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        141
+#define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32775
 #define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           101
