@@ -250,10 +250,19 @@ BEGIN
     POPUP "1"
     BEGIN
         MENUITEM "Keys...",                     IDC_MYKEYS
+        MENUITEM "Help...",                     ID_1_HELP
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        IDC_EXIT
     END
 END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// HTML
+//
+
+IDR_HTML_HELP           HTML                    "help.htm"
 
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////

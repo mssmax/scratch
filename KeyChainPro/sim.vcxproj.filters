@@ -78,5 +78,6 @@
     <None Include="icon2.ico">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="help.htm" />
   </ItemGroup>
 </Project>

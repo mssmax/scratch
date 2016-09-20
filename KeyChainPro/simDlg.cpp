@@ -45,6 +45,7 @@ BEGIN_MESSAGE_MAP(CSimDlg, CDialog)
 	ON_MESSAGE(WM_CALLBACK, OnCallback)
 	ON_COMMAND(IDC_EXIT, OnExit)
 	ON_COMMAND(IDC_MYKEYS, OnMyKeys)
+	ON_COMMAND(ID_1_HELP, &CSimDlg::OnHelp)
 END_MESSAGE_MAP()
 
 
@@ -437,4 +438,10 @@ void CSimDlg::OnCopyPaster()
 			SendString(s, FALSE);
 		}
 	}
+}
+
+void CSimDlg::OnHelp()
+{
+	CString s;
+	s.LoadString(IDR_HTML_HELP);
 }

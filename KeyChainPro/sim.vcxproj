@@ -223,6 +223,9 @@
     <ResourceCompile Include="sim.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="help.htm">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
     <None Include="icon1.ico" />
     <None Include="icon2.ico" />
     <None Include="res\sim.rc2" />

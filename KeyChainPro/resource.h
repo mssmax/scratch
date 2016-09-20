@@ -11,6 +11,7 @@
 #define IDD_MYCOPYPASTE                 137
 #define IDD_DIALOG1                     141
 #define IDD_INPUTDLG                    141
+#define IDR_HTML_HELP                   143
 #define IDC_EDIT1                       1000
 #define IDC_APPTITLE                    1000
 #define IDC_EDIT                        1000
@@ -30,13 +31,14 @@
 #define ID_EXIT32772                    32772
 #define ID_1_MYKEYS                     32773
 #define IDC_MYKEYS                      32774
+#define ID_1_HELP                       32775
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        143
-#define _APS_NEXT_COMMAND_VALUE         32775
+#define _APS_NEXT_RESOURCE_VALUE        144
+#define _APS_NEXT_COMMAND_VALUE         32776
 #define _APS_NEXT_CONTROL_VALUE         1007
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

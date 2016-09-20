@@ -47,4 +47,5 @@ public:
 	CString m_sKeyName;
 	afx_msg void OnExit();
 	afx_msg void OnMyKeys();
+	afx_msg void OnHelp();
 };
