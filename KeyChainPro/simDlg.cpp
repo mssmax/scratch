@@ -442,6 +442,12 @@ void CSimDlg::OnCopyPaster()
 
 void CSimDlg::OnHelp()
 {
-	CString s;
-	s.LoadString(IDR_HTML_HELP);
+	ShellExecute(
+		AfxGetMainWnd()->GetSafeHwnd(),
+		_T("open"),
+		_T("https://docs.google.com/document/d/1dPYMkZFXFrDzdSuR9wjYT5v5nysswtNi6YzfI1gqt7U/edit?usp=sharing"),
+		0,
+		0,
+		SW_SHOW
+	);
 }
