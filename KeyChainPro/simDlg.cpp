@@ -191,7 +191,7 @@ void CSimDlg::PasteCredentials()
 	{
 		CString s;
 		s.Format(_T("Failed to create stream for password, err[0x%X]"), hr);
-		AfxMessageBox(s, MB_OK | MB_ICONERROR);
+		::MessageBox(wnd->GetSafeHwnd(), s, _T("Error"), MB_OK | MB_ICONERROR);
 		return;
 	}
 
@@ -204,8 +204,8 @@ void CSimDlg::PasteCredentials()
 	if (FAILED(hr))
 	{
 		CString s;
-		s.Format(_T("Failed to encrypt password, err[0x%X]"), hr);
-		AfxMessageBox(s, MB_OK | MB_ICONERROR);
+		s.Format(_T("Failed to decrypt password, err[0x%X]"), hr);
+		::MessageBox(wnd->GetSafeHwnd(), s, _T("Error"), MB_OK | MB_ICONERROR);
 		return;
 	}
 
