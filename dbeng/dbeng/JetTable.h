@@ -73,6 +73,8 @@ public:
 	JET_ERR MovePrev();
 	JET_ERR Move(long lRow);
 
+	BOOL IsEmpty();
+
 	// TODO: temporary solution, this should probably be refactored into a separate class
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCWSTR value);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value);

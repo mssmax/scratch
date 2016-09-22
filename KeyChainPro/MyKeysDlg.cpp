@@ -51,38 +51,41 @@ void CMyKeysDlg::ReloadData()
 	{
 		CALL_JET(g_DB.GetTable("tb_keys", tbl));
 	}
-	e = tbl.BeginTransaction();
-	CALL_JET(e);
-	for (int iItem = 0; e >= 0; iItem++)
+
+	if (!tbl.IsEmpty())
 	{
-		WCHAR szStr[1024] = { 0 };
-		m_lstKeys.InsertItem(iItem, _T(""));
-		for (int i = 0; i < _countof(s_KeysColumns); i++)
+		e = tbl.BeginTransaction();
+		CALL_JET(e);
+		for (int iItem = 0; e >= 0; iItem++)
 		{
-			// a bit hacky since we assume the fourth column is password
-			// we'll deal with it at some point
-			if (i < 3)
+			WCHAR szStr[1024] = { 0 };
+			m_lstKeys.InsertItem(iItem, _T(""));
+			for (int i = 0; i < _countof(s_KeysColumns); i++)
 			{
-				CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr)));
-				m_lstKeys.SetItemText(iItem, i, szStr);
+				// a bit hacky since we assume the fourth column is password
+				// we'll deal with it at some point
+				if (i < 3)
+				{
+					CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr)));
+					m_lstKeys.SetItemText(iItem, i, szStr);
+				}
+				else
+				{
+					IStreamPtr spStrm;
+					CreateStreamOnHGlobal(0, TRUE, &spStrm);
+					CALL_JET(tbl.GetColumn(s_KeysColumns[i], spStrm));
+					m_lstKeys.SetItemText(iItem, i, _T("********"));
+					TCHAR szPassword[512] = { 0 };
+					DecryptPassword(spStrm, szPassword);
+					m_vecPasswords.push_back(szPassword);
+				}
 			}
-			else
-			{
-				IStreamPtr spStrm;
-				CreateStreamOnHGlobal(0, TRUE, &spStrm);
-				CALL_JET(tbl.GetColumn(s_KeysColumns[i], spStrm));
-				m_lstKeys.SetItemText(iItem, i, _T("********"));
-				TCHAR szPassword[512] = { 0 };
-				DecryptPassword(spStrm, szPassword);
-				m_vecPasswords.push_back(szPassword);
-			}
+			e = tbl.NextRow();
 		}
-		e = tbl.NextRow();
+
+		CALL_JET(tbl.CommitTransaction());
+		m_lstKeys.SetItemState(0, LVNI_FOCUSED | LVNI_SELECTED, LVNI_FOCUSED | LVNI_SELECTED);
 	}
-
-	CALL_JET(tbl.CommitTransaction());
-
-	m_lstKeys.SetItemState(0, LVNI_FOCUSED | LVNI_SELECTED, LVNI_FOCUSED | LVNI_SELECTED);
 
 EXIT:
 	if(m_bReadOnly)

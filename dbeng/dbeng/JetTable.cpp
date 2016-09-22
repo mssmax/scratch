@@ -876,3 +876,17 @@ JET_ERR CJetTable::Join()
 		.Done();
 	return e;
 }
+
+BOOL CJetTable::IsEmpty()
+{
+	ULONG ulRecCount = 0;
+	JET_ERR e = JetIndexRecordCount(m_pDBEngine->GetSessionID(), m_tblID, &ulRecCount, 1);
+	if (e >= 0 && ulRecCount > 0)
+	{
+		return FALSE;
+	}
+	else
+	{
+		return TRUE;
+	}
+}
