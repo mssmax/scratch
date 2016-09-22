@@ -461,7 +461,6 @@ void CSimDlg::OnHelp()
 	ShellExecute(
 		AfxGetMainWnd()->GetSafeHwnd(),
 		_T("open"),
-//		_T("https://docs.google.com/document/d/1dPYMkZFXFrDzdSuR9wjYT5v5nysswtNi6YzfI1gqt7U/edit?usp=sharing"),
 		szFileName,
 		0,
 		0,

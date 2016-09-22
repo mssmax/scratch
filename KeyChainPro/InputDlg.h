@@ -24,4 +24,5 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 	CString m_sInput;
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };
