@@ -147,17 +147,8 @@ LPCSTR lpszSchema = "xml://<schema version=\"1\">" \
 JET_ERR CSimApp::InitDatabase()
 {
 	USES_CONVERSION;
-	CString sPath;
+	CString sPath(_T("keychain"));
 
-	HRESULT hr = SHGetFolderPath(0, CSIDL_APPDATA, 0, SHGFP_TYPE_CURRENT, sPath.GetBuffer(512));
-	sPath.ReleaseBuffer();
-	if (FAILED(hr))
-	{
-		return hr;
-	}
-	sPath.Append(_T("\\KeyChainPro\\"));
-	CreateDirectory(sPath, NULL);
-	sPath.Append(_T("keychain\\"));
 	CreateDirectory(sPath, NULL);
 	JET_ERR e = g_DB.Init(T2A(sPath), "kcp");
 	if (e < 0)
@@ -165,7 +156,7 @@ JET_ERR CSimApp::InitDatabase()
 		return e;
 	}
 
-	sPath.Append(_T("keys.edb"));
+	sPath.Append(_T("\\keys.edb"));
 
 	DWORD dwAttr = GetFileAttributes(sPath);
 	if (dwAttr == -1)
