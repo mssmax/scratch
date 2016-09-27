@@ -25,7 +25,7 @@ protected:
 	afx_msg void OnPaint();
 	afx_msg HCURSOR OnQueryDragIcon();
 
-	void PasteCredentials();
+	void PasteCredentials(BOOL bPasswordOnly);
 	void RecordCredentials();
 	void FindKeyAndPaste();
 	void OnCopyPaster();

@@ -14,6 +14,7 @@
 #define HK_RECORD_CREDENTIALS 667
 #define HK_CHOOSE_KEY 668
 #define HK_COPYPASTER 669
+#define HK_PASTEPWD 670
 
 CSimDlg::CSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SIM_DIALOG, pParent)
@@ -84,6 +85,12 @@ BOOL CSimDlg::OnInitDialog()
 		OutputDebugString(_T("Sim: Registering the hotkey for copy/paster failed"));
 	}
 
+	b = RegisterHotKey(GetSafeHwnd(), HK_PASTEPWD, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'P');
+	if (!b)
+	{
+		OutputDebugString(_T("Sim: Registering the hotkey for password only failed"));
+	}
+
 	NOTIFYICONDATA nimData = { 0 };
 	nimData.cbSize = sizeof(nimData);
 	nimData.hWnd = GetSafeHwnd();
@@ -126,7 +133,7 @@ HCURSOR CSimDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-void CSimDlg::PasteCredentials()
+void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 {
 	USES_CONVERSION;
 	HRESULT hr;
@@ -211,10 +218,13 @@ void CSimDlg::PasteCredentials()
 
 	// Sleeps aren't the best way to control timing, but it appears
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
-	SendString(A2T(szUserName));
-	Sleep(100);
-	SendCode(9);
-	Sleep(100);
+	if (!bPasswordOnly)
+	{
+		SendString(A2T(szUserName));
+		Sleep(100);
+		SendCode(9);
+		Sleep(100);
+	}
 	SendString(szPassword, FALSE);
 
 EXIT:
@@ -246,7 +256,7 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		UINT res = SendInput(1, inp, sizeof(INPUT));
 		if (bDoPause)
 		{
-			Sleep(50);
+			Sleep(80);
 		}
 
 		inp[0].type = INPUT_KEYBOARD;
@@ -272,7 +282,7 @@ void CSimDlg::SendCode(WORD wCode, BOOL bDoPause)
 	UINT res = SendInput(_countof(inp), inp, sizeof(INPUT));
 	if (bDoPause)
 	{
-		Sleep(50);
+		Sleep(80);
 	}
 }
 
@@ -296,7 +306,11 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 {
 	if (wParam == HK_PASTE_CREDENTIALS)
 	{
-		PasteCredentials();
+		PasteCredentials(FALSE);
+	}
+	else if (wParam == HK_PASTEPWD)
+	{
+		PasteCredentials(TRUE);
 	}
 	else if (wParam == HK_RECORD_CREDENTIALS)
 	{
