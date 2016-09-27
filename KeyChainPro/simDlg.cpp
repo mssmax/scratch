@@ -220,12 +220,12 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	if (!bPasswordOnly)
 	{
-		SendString(A2T(szUserName));
-		Sleep(100);
+		SendString(A2T(szUserName), TRUE);
+		Sleep(200);
 		SendCode(9);
-		Sleep(100);
+		Sleep(200);
 	}
-	SendString(szPassword, FALSE);
+	SendString(szPassword, TRUE);
 
 EXIT:
 	;
@@ -275,15 +275,16 @@ void CSimDlg::SendCode(WORD wCode, BOOL bDoPause)
 	inp[0].type = INPUT_KEYBOARD;
 	inp[0].ki.wVk = wCode;
 	inp[0].ki.wScan = MapVirtualKey(wCode, 0);
-	inp[1].type = INPUT_KEYBOARD;
-	inp[1].ki.wVk = wCode;
-	inp[1].ki.wScan = MapVirtualKey(wCode, 0);
-	inp[1].ki.dwFlags = KEYEVENTF_KEYUP;
-	UINT res = SendInput(_countof(inp), inp, sizeof(INPUT));
+	UINT res = SendInput(1, inp, sizeof(INPUT));
 	if (bDoPause)
 	{
 		Sleep(80);
 	}
+	inp[0].type = INPUT_KEYBOARD;
+	inp[0].ki.wVk = wCode;
+	inp[0].ki.wScan = MapVirtualKey(wCode, 0);
+	inp[0].ki.dwFlags = KEYEVENTF_KEYUP;
+	res = SendInput(1, inp, sizeof(INPUT));
 }
 
 void CSimDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
