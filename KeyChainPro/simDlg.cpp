@@ -225,7 +225,7 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 		SendCode(9);
 		Sleep(200);
 	}
-	SendString(szPassword, TRUE);
+	SendString(szPassword, FALSE);
 
 EXIT:
 	;
