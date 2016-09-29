@@ -15,6 +15,7 @@
 #define HK_CHOOSE_KEY 668
 #define HK_COPYPASTER 669
 #define HK_PASTEPWD 670
+#define HK_SHOWKEYS 671
 
 CSimDlg::CSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SIM_DIALOG, pParent)
@@ -89,6 +90,12 @@ BOOL CSimDlg::OnInitDialog()
 	if (!b)
 	{
 		OutputDebugString(_T("Sim: Registering the hotkey for password only failed"));
+	}
+
+	b = RegisterHotKey(GetSafeHwnd(), HK_SHOWKEYS, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'L');
+	if (!b)
+	{
+		OutputDebugString(_T("Sim: Registering the hotkey for show keys failed"));
 	}
 
 	NOTIFYICONDATA nimData = { 0 };
@@ -324,6 +331,12 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 	else if (wParam == HK_COPYPASTER)
 	{
 		OnCopyPaster();
+	}
+	else if (wParam == HK_SHOWKEYS)
+	{
+		CWnd *wnd = GetForegroundWindow();
+		CMyKeysDlg dlg(wnd);
+		dlg.DoModal();
 	}
 
 	return 0;

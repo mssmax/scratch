@@ -103,7 +103,7 @@ BOOL CMyKeysDlg::OnInitDialog()
 	m_lstKeys.InsertColumn(0, _T("Application"), 0, 180);
 	m_lstKeys.InsertColumn(1, _T("Key name"), 0, 180);
 	m_lstKeys.InsertColumn(2, _T("User"), 0, 180);
-	m_lstKeys.InsertColumn(3, _T("Password"), 0, 180);
+	m_lstKeys.InsertColumn(3, _T("Password"), 0, 320);
 
 	m_ctrlEdit.SetParent(&m_lstKeys);
 
