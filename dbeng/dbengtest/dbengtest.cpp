@@ -17,10 +17,17 @@ int main()
 	JET_ERR e = db.Init("DBS", "mes");
 
 	printf("Engine init[%d]\n", e);
-	//e = db.CreateDatabase("dbs\\testdatabase.jet", szDBSchema);
-	e = db.OpenDatabase("dbs\\testdatabase.jet", FALSE);
+	if (GetFileAttributes(_T("dbs\\testdatabase.jet")) == -1)
+	{
+		e = db.CreateDatabase("dbs\\testdatabase.jet", szDBSchema);
+	}
+	else
+	{
+		e = db.OpenDatabase("dbs\\testdatabase.jet", FALSE);
+	}
 	printf("DB opened[%d]\n", e);
 	{
+		e = db.BackupDatabase("c:\\temp\\backup");
 		CJetTable table;
 		e = db.GetTable("tb_system", table);
 		/**

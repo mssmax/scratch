@@ -29,6 +29,8 @@ public:
 
 	JET_ERR CloseDatabase();
 
+	JET_ERR BackupDatabase(LPCSTR lpszDestPath);
+
 	JET_ERR GetTable(LPCSTR lpszTableName, CJetTable &table);
 
 	// for internal use only, may become documented in the future
