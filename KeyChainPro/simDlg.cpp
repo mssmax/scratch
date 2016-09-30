@@ -373,7 +373,7 @@ void CSimDlg::OnOK()
 	{
 		CString s;
 		s.Format(_T("Failed to create stream for password, err[0x%X]"), hr);
-		AfxMessageBox(s, MB_OK | MB_ICONERROR);
+		MessageBox(s, _T("Error"), MB_OK | MB_ICONERROR);
 		return;
 	}
 
@@ -382,7 +382,7 @@ void CSimDlg::OnOK()
 	{
 		CString s;
 		s.Format(_T("Failed to encrypt password, err[0x%X]"), hr);
-		AfxMessageBox(s, MB_OK | MB_ICONERROR);
+		MessageBox(s, _T("Error"), MB_OK | MB_ICONERROR);
 		return;
 	}
 

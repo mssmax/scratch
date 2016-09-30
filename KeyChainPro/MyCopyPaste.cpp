@@ -193,7 +193,7 @@ void CMyCopyPaste::OnLvnKeydownCpList(NMHDR *pNMHDR, LRESULT *pResult)
 		int nSel = m_lstCPs.GetNextItem(-1, LVNI_SELECTED);
 		if (nSel != -1)
 		{
-			int nRes = AfxMessageBox(_T("Are you sure you want to delete this record ?"), MB_ICONQUESTION | MB_YESNO);
+			int nRes = MessageBox(_T("Are you sure you want to delete this record ?"), _T("Delete record"), MB_ICONQUESTION | MB_YESNO);
 			if (nRes == IDYES)
 			{
 				CJetTable tbl;
