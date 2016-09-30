@@ -25,8 +25,8 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix)
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFilePath, 0, lpszDatabasePath);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramSystemPath, 0, lpszDatabasePath);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramBaseName, 0, lpszFileNamePrefix);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCircularLog, 0, "True");
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCreatePathIfNotExist, 0, "True");
+	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCircularLog, 1, 0);
+	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCreatePathIfNotExist, 1, 0);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramMaxSessions, 1024, 0);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramTempPath, 0, sTempDBPath.c_str());
 	// TODO: this is experimental setting which might not be suitable 
