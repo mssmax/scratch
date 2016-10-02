@@ -25,8 +25,11 @@
 #define IDC_EDITINPLACE                 1003
 #define IDC_BUTTON1                     1004
 #define IDC_EXIT                        1004
+#define IDC_BTNBACKUP                   1004
 #define IDC_LST_KEYS                    1005
 #define IDC_CP_LIST                     1006
+#define IDC_BUTTON2                     1007
+#define IDC_BTNRESTORE                  1007
 #define ID_EXIT                         32771
 #define ID_EXIT32772                    32772
 #define ID_1_MYKEYS                     32773
@@ -39,7 +42,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        144
 #define _APS_NEXT_COMMAND_VALUE         32776
-#define _APS_NEXT_CONTROL_VALUE         1007
+#define _APS_NEXT_CONTROL_VALUE         1008
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

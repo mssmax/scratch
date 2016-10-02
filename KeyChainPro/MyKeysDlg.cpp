@@ -32,6 +32,8 @@ BEGIN_MESSAGE_MAP(CMyKeysDlg, CDialog)
 	ON_NOTIFY(NM_DBLCLK, IDC_LST_KEYS, &CMyKeysDlg::OnNMDblclkLstKeys)
 	ON_EN_KILLFOCUS(IDC_EDIT, OnEditKillFocus)
 	ON_NOTIFY(HDN_ITEMCLICK, 0, &CMyKeysDlg::OnHdnItemclickLstKeys)
+	ON_BN_CLICKED(IDC_BTNBACKUP, &CMyKeysDlg::OnClickedBtnbackup)
+	ON_BN_CLICKED(IDC_BTNRESTORE, &CMyKeysDlg::OnClickedBtnrestore)
 END_MESSAGE_MAP()
 
 
@@ -299,4 +301,44 @@ void CMyKeysDlg::OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	*pResult = 0;
+}
+
+
+void CMyKeysDlg::OnClickedBtnbackup()
+{
+	CString sBackupPath = AfxGetApp()->GetProfileString(_T("settings"), _T("BackupPath"));
+	if (sBackupPath.IsEmpty())
+	{
+		BROWSEINFO brw = { 0 };
+		brw.hwndOwner = GetSafeHwnd();
+		brw.lpszTitle = _T("Select backup location");
+		brw.ulFlags = BIF_RETURNONLYFSDIRS;
+		LPITEMIDLIST pidl = SHBrowseForFolder(&brw);
+
+		SHGetPathFromIDList(pidl, sBackupPath.GetBuffer(_MAX_PATH));
+		sBackupPath.ReleaseBuffer();
+
+		if (pidl)
+		{
+			CoTaskMemFree(pidl);
+		}
+
+		AfxGetApp()->WriteProfileString(_T("settings"), _T("BackupPath"), sBackupPath);
+	}
+
+	USES_CONVERSION;
+	
+	CALL_JET(g_DB.BackupDatabase(T2A(sBackupPath)));
+
+EXIT:
+	;
+}
+
+
+void CMyKeysDlg::OnClickedBtnrestore()
+{
+	CString sBackupPath = AfxGetApp()->GetProfileString(_T("settings"), _T("BackupPath"));
+	
+	USES_CONVERSION;
+	JET_ERR e = JetRestoreInstance(g_DB.GetInstanceID(), T2A(sBackupPath), 0, 0);
 }

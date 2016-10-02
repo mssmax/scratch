@@ -43,4 +43,6 @@ public:
 
 	CString GetSelectedKeyName();
 	afx_msg void OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg void OnClickedBtnbackup();
+	afx_msg void OnClickedBtnrestore();
 };
