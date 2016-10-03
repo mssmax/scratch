@@ -33,6 +33,7 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix)
 	// for applications heavily using a database due to reliablity and speed
 	// it might be best to leave it at default 5MB or let the app decide by introducing a parameter
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFileSize, 2048, 0);
+
 	e = JetInit(&m_dbInstance);
 
 	return e;
@@ -141,6 +142,12 @@ JET_ERR CDBEngine::BackupDatabase(LPCSTR lpszDestPath)
 {
 	return JetBackupInstance(m_dbInstance, lpszDestPath, JET_bitBackupAtomic, 0);
 }
+
+JET_ERR CDBEngine::RestoreDatabase(LPCSTR lpszBackupPath)
+{
+	return 0;
+}
+
 
 JET_ERR CDBEngine::GetTable(LPCSTR lpszTableName, CJetTable &table)
 {

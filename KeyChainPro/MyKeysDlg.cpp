@@ -326,8 +326,7 @@ void CMyKeysDlg::OnClickedBtnbackup()
 		AfxGetApp()->WriteProfileString(_T("settings"), _T("BackupPath"), sBackupPath);
 	}
 
-	USES_CONVERSION;
-	
+	USES_CONVERSION;	
 	CALL_JET(g_DB.BackupDatabase(T2A(sBackupPath)));
 
 EXIT:
@@ -340,5 +339,8 @@ void CMyKeysDlg::OnClickedBtnrestore()
 	CString sBackupPath = AfxGetApp()->GetProfileString(_T("settings"), _T("BackupPath"));
 	
 	USES_CONVERSION;
-	JET_ERR e = JetRestoreInstance(g_DB.GetInstanceID(), T2A(sBackupPath), 0, 0);
+	CALL_JET(g_DB.RestoreDatabase(T2A(sBackupPath)));
+
+EXIT:
+	;
 }

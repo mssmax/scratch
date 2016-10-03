@@ -30,6 +30,7 @@ public:
 	JET_ERR CloseDatabase();
 
 	JET_ERR BackupDatabase(LPCSTR lpszDestPath);
+	JET_ERR RestoreDatabase(LPCSTR lpszBackupPath);
 
 	JET_ERR GetTable(LPCSTR lpszTableName, CJetTable &table);
 
