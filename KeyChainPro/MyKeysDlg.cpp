@@ -337,9 +337,11 @@ EXIT:
 void CMyKeysDlg::OnClickedBtnrestore()
 {
 	CString sBackupPath = AfxGetApp()->GetProfileString(_T("settings"), _T("BackupPath"));
-	
-	USES_CONVERSION;
-	CALL_JET(g_DB.RestoreDatabase(T2A(sBackupPath)));
+	if (!sBackupPath.IsEmpty())
+	{
+		USES_CONVERSION;
+		CALL_JET(g_DB.RestoreDatabase(T2A(sBackupPath)));
+	}
 
 EXIT:
 	;
