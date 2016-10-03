@@ -16,7 +16,7 @@ CDBEngine::~CDBEngine()
 	Term();
 }
 
-JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix)
+JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix, LPCSTR lpszBackupPath)
 {
 	// TODO: add proper error handling
 	std::string sTempDBPath(lpszFileNamePrefix);
@@ -33,7 +33,10 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix)
 	// for applications heavily using a database due to reliablity and speed
 	// it might be best to leave it at default 5MB or let the app decide by introducing a parameter
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFileSize, 2048, 0);
-
+	if (lpszBackupPath)
+	{
+		e = JetRestoreInstance(m_dbInstance, lpszBackupPath, lpszDatabasePath, 0);
+	}
 	e = JetInit(&m_dbInstance);
 
 	return e;
@@ -145,6 +148,39 @@ JET_ERR CDBEngine::BackupDatabase(LPCSTR lpszDestPath)
 
 JET_ERR CDBEngine::RestoreDatabase(LPCSTR lpszBackupPath)
 {
+	char szDBPath[1024] = { 0 };
+	char szDBName[1024] = { 0 };
+	char szFileNamePrefix[128] = { 0 };
+
+	JET_ERR e = JetGetDatabaseInfo(
+		GetSessionID(),
+		GetDBID(),
+		szDBName,
+		sizeof(szDBName),
+		JET_DbInfoFilename);
+
+	e = JetGetSystemParameter(
+		m_dbInstance,
+		GetSessionID(),
+		JET_paramSystemPath,
+		0,
+		szDBPath,
+		sizeof(szDBPath));
+
+	e = JetGetSystemParameter(
+		m_dbInstance, 
+		GetSessionID(), 
+		JET_paramBaseName, 
+		0, 
+		szFileNamePrefix,
+		sizeof(szFileNamePrefix));
+
+	CloseDatabase();
+	Term();
+
+	Init(szDBPath, szFileNamePrefix, lpszBackupPath);
+	OpenDatabase(szDBName, FALSE);
+
 	return 0;
 }
 

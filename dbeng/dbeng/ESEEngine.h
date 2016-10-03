@@ -20,7 +20,7 @@ public:
 	JET_INSTANCE GetInstanceID();
 	JET_DBID GetDBID();
 
-	JET_ERR Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix);
+	JET_ERR Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix, LPCSTR lpszBackupPath = NULL);
 	JET_ERR Term();
 
 	JET_ERR CreateDatabase(LPCSTR lpszDB, LPCSTR lpszSchema);
