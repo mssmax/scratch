@@ -271,6 +271,10 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		inp[0].ki.dwFlags = KEYEVENTF_KEYUP | KEYEVENTF_UNICODE;
 
 		res = SendInput(1, inp, sizeof(INPUT));
+		if (bDoPause)
+		{
+			Sleep(80);
+		}
 	}
 //	BlockInput(FALSE);
 }
