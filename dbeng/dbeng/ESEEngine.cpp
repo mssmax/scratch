@@ -35,6 +35,9 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix, LPCS
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFileSize, 2048, 0);
 	if (lpszBackupPath)
 	{
+		// before restoring we need to delete any existing files
+		// otherwise restore will fail with badSignature error
+		DeleteAllFiles(lpszDatabasePath);
 		e = JetRestoreInstance(m_dbInstance, lpszBackupPath, lpszDatabasePath, 0);
 	}
 	e = JetInit(&m_dbInstance);

@@ -314,16 +314,19 @@ void CMyKeysDlg::OnClickedBtnbackup()
 		brw.lpszTitle = _T("Select backup location");
 		brw.ulFlags = BIF_RETURNONLYFSDIRS;
 		LPITEMIDLIST pidl = SHBrowseForFolder(&brw);
-
-		SHGetPathFromIDList(pidl, sBackupPath.GetBuffer(_MAX_PATH));
-		sBackupPath.ReleaseBuffer();
-
 		if (pidl)
 		{
+			SHGetPathFromIDList(pidl, sBackupPath.GetBuffer(_MAX_PATH));
+			sBackupPath.ReleaseBuffer();
+			
 			CoTaskMemFree(pidl);
-		}
 
-		AfxGetApp()->WriteProfileString(_T("settings"), _T("BackupPath"), sBackupPath);
+			AfxGetApp()->WriteProfileString(_T("settings"), _T("BackupPath"), sBackupPath);
+		}
+		else
+		{
+			return;
+		}
 	}
 
 	USES_CONVERSION;	
@@ -337,9 +340,37 @@ EXIT:
 void CMyKeysDlg::OnClickedBtnrestore()
 {
 	CString sBackupPath = AfxGetApp()->GetProfileString(_T("settings"), _T("BackupPath"));
+	if (sBackupPath.IsEmpty())
+	{
+		BROWSEINFO brw = { 0 };
+		brw.hwndOwner = GetSafeHwnd();
+		brw.lpszTitle = _T("Select backup location");
+		brw.ulFlags = BIF_RETURNONLYFSDIRS;
+		LPITEMIDLIST pidl = SHBrowseForFolder(&brw);
+		if (pidl)
+		{
+			SHGetPathFromIDList(pidl, sBackupPath.GetBuffer(_MAX_PATH));
+			sBackupPath.ReleaseBuffer();
+
+			CoTaskMemFree(pidl);
+
+			AfxGetApp()->WriteProfileString(_T("settings"), _T("BackupPath"), sBackupPath);
+		}
+		else
+		{
+			return;
+		}
+	}
 	
-	USES_CONVERSION;
-	CALL_JET(g_DB.RestoreDatabase(T2A(sBackupPath)));
+	CString s;
+	s.Format(_T("You are about to restore a keychain from this location '%s'\nThis operation will replace your current keychain\nAre you sure ?"), (LPCTSTR)sBackupPath);
+	if(MessageBox(s, _T("Restore"), MB_YESNO | MB_ICONWARNING) == IDYES)
+	{
+		CWaitCursor wait;
+		USES_CONVERSION;
+		CALL_JET(g_DB.RestoreDatabase(T2A(sBackupPath)));
+		ReloadData();
+	}
 
 EXIT:
 	;
