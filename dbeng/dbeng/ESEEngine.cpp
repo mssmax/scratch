@@ -29,10 +29,6 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix, LPCS
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCreatePathIfNotExist, 1, 0);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramMaxSessions, 1024, 0);
 	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramTempPath, 0, sTempDBPath.c_str());
-	// TODO: this is experimental setting which might not be suitable 
-	// for applications heavily using a database due to reliablity and speed
-	// it might be best to leave it at default 5MB or let the app decide by introducing a parameter
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFileSize, 2048, 0);
 	if (lpszBackupPath)
 	{
 		// before restoring we need to delete any existing files
