@@ -72,9 +72,6 @@
     <None Include="res\sim.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="icon1.ico">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="icon2.ico">
       <Filter>Resource Files</Filter>
     </None>

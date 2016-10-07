@@ -226,7 +226,6 @@
     <None Include="help.htm">
       <DeploymentContent>true</DeploymentContent>
     </None>
-    <None Include="icon1.ico" />
     <None Include="icon2.ico" />
     <None Include="res\sim.rc2" />
   </ItemGroup>
