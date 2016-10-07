@@ -263,7 +263,7 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		UINT res = SendInput(1, inp, sizeof(INPUT));
 		if (bDoPause)
 		{
-			Sleep(80);
+			Sleep(50);
 		}
 
 		inp[0].type = INPUT_KEYBOARD;
@@ -273,7 +273,7 @@ void CSimDlg::SendString(LPCTSTR lpszString, BOOL bDoPause)
 		res = SendInput(1, inp, sizeof(INPUT));
 		if (bDoPause)
 		{
-			Sleep(80);
+			Sleep(50);
 		}
 	}
 //	BlockInput(FALSE);
