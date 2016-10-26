@@ -48,6 +48,7 @@ BEGIN_MESSAGE_MAP(CSimDlg, CDialog)
 	ON_COMMAND(IDC_EXIT, OnExit)
 	ON_COMMAND(IDC_MYKEYS, OnMyKeys)
 	ON_COMMAND(ID_1_HELP, &CSimDlg::OnHelp)
+	ON_WM_ENDSESSION()
 END_MESSAGE_MAP()
 
 
@@ -499,4 +500,15 @@ void CSimDlg::OnHelp()
 		SW_SHOW
 	);
 /**/
+}
+
+
+void CSimDlg::OnEndSession(BOOL bEnding)
+{
+	if (bEnding)
+	{
+		// user logs of or the system is shutting down -> shut down the database cleanly
+		g_DB.CloseDatabase();
+	}
+	CDialog::OnEndSession(bEnding);
 }

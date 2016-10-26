@@ -48,4 +48,5 @@ public:
 	afx_msg void OnExit();
 	afx_msg void OnMyKeys();
 	afx_msg void OnHelp();
+	afx_msg void OnEndSession(BOOL bEnding);
 };
