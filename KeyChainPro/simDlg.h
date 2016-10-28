@@ -29,6 +29,7 @@ protected:
 	void RecordCredentials();
 	void FindKeyAndPaste();
 	void OnCopyPaster();
+	void Password2Clip();
 
 	void SendString(LPCTSTR lpszString, BOOL bDoPause = TRUE);
 	void SendCode(WORD wCode, BOOL bDoPause = TRUE);

@@ -271,6 +271,7 @@ void CMyKeysDlg::OnOK()
 		if (nSel != -1)
 		{
 			m_sKeyName = m_lstKeys.GetItemText(nSel, 1);
+			m_sPassword = m_vecPasswords[nSel].c_str();
 		}
 		CDialog::OnOK();
 	}
@@ -282,6 +283,11 @@ EXIT:
 CString CMyKeysDlg::GetSelectedKeyName()
 {
 	return m_sKeyName;
+}
+
+CString CMyKeysDlg::GetSelectedPassword()
+{
+	return m_sPassword;
 }
 
 void CMyKeysDlg::OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult)

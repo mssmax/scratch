@@ -16,6 +16,7 @@
 #define HK_COPYPASTER 669
 #define HK_PASTEPWD 670
 #define HK_SHOWKEYS 671
+#define HK_PASSWORD2CLIP 672
 
 CSimDlg::CSimDlg(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_SIM_DIALOG, pParent)
@@ -81,7 +82,7 @@ BOOL CSimDlg::OnInitDialog()
 		OutputDebugString(_T("Sim: Registering the hotkey for key navigation failed"));
 	}
 
-	b = RegisterHotKey(GetSafeHwnd(), HK_COPYPASTER, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'C');
+	b = RegisterHotKey(GetSafeHwnd(), HK_COPYPASTER, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'W');
 	if (!b)
 	{
 		OutputDebugString(_T("Sim: Registering the hotkey for copy/paster failed"));
@@ -97,6 +98,12 @@ BOOL CSimDlg::OnInitDialog()
 	if (!b)
 	{
 		OutputDebugString(_T("Sim: Registering the hotkey for show keys failed"));
+	}
+
+	b = RegisterHotKey(GetSafeHwnd(), HK_PASSWORD2CLIP, MOD_ALT | MOD_SHIFT | MOD_CONTROL, 'C');
+	if (!b)
+	{
+		OutputDebugString(_T("Sim: Registering the hotkey for password2clip failed"));
 	}
 
 	NOTIFYICONDATA nimData = { 0 };
@@ -343,6 +350,10 @@ LRESULT CSimDlg::OnHotKey(WPARAM wParam, LPARAM lParam)
 		CMyKeysDlg dlg(wnd);
 		dlg.DoModal();
 	}
+	else if (wParam == HK_PASSWORD2CLIP)
+	{
+		Password2Clip();
+	}
 
 	return 0;
 }
@@ -511,4 +522,24 @@ void CSimDlg::OnEndSession(BOOL bEnding)
 		g_DB.CloseDatabase();
 	}
 	CDialog::OnEndSession(bEnding);
+}
+
+void CSimDlg::Password2Clip()
+{
+	CWnd *wnd = GetForegroundWindow();
+	CMyKeysDlg dlg(wnd);
+	if (dlg.DoModal() == IDOK)
+	{
+		// TODO: error handling
+		USES_CONVERSION;
+		CString sPwd = dlg.GetSelectedPassword();
+		OpenClipboard();
+		EmptyClipboard();
+		size_t len = (sPwd.GetLength() + 1) * sizeof(TCHAR);
+		HGLOBAL hGlb = GlobalAlloc(GMEM_MOVEABLE, len);
+		StringCbCopy(reinterpret_cast<LPWSTR>(GlobalLock(hGlb)), len, sPwd);
+		GlobalUnlock(hGlb);
+		SetClipboardData(CF_UNICODETEXT, hGlb);
+		CloseClipboard();
+	}
 }

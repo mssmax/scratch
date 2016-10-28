@@ -19,6 +19,7 @@ protected:
 
 	JET_TABLEID m_tblID;
 	CString m_sKeyName;
+	CString m_sPassword;
 	LVHITTESTINFO m_hitInfo;
 	BOOL m_bReadOnly;
 	CEdit m_ctrlEdit;
@@ -42,6 +43,7 @@ public:
 	virtual void OnOK();
 
 	CString GetSelectedKeyName();
+	CString GetSelectedPassword();
 	afx_msg void OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnClickedBtnbackup();
 	afx_msg void OnClickedBtnrestore();
