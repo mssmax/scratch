@@ -80,7 +80,7 @@ public:
 		);
 		if (!bRet)
 		{
-			OutputDebugStringEx("CryptProtectData failed with %d", GetLastError());
+			OutputDebugStringEx("CryptProtectData failed, error %d", GetLastError());
 			return lpszPassword;
 		}
 
@@ -104,7 +104,7 @@ public:
 		}
 		else
 		{
-			OutputDebugStringEx("CryptBinaryToStringA failed with %d", GetLastError());
+			OutputDebugStringEx("CryptBinaryToStringA failed, error %d", GetLastError());
 			sOutput = lpszPassword;
 		}
 
