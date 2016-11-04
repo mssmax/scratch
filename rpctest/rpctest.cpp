@@ -1,6 +1,4 @@
-// rpctest.cpp : Defines the entry point for the console application.
-//
-
+// testing branch deletion and pull requests
 #include "stdafx.h"
 #include "rpctest.h"
 
