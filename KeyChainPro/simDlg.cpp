@@ -154,15 +154,25 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 	HRESULT hr;
 	IStreamPtr spPassStrm;
 	CString sAppTitle;
+	CString sAppTitle2;
 	CWnd *wnd = GetForegroundWindow();
 	wnd->GetWindowText(sAppTitle);
+	sAppTitle2 = sAppTitle;
+	sAppTitle2 += _T("============================================");
 	CHAR szUserName[256] = { 0 };
 	TCHAR szPassword[256] = { 0 };
 	CJetTable keysTable;
 	CALL_JET(g_DB.GetTable("tb_keys", keysTable));
 	CALL_JET(keysTable.BeginTransaction());
 
-	JET_ERR err = keysTable.Select("tb_keys_app", OP_EQ, T2A(sAppTitle));
+	/*JET_ERR err = keysTable.Select()
+		.Where("tb_keys_app", OP_EQ, T2A(sAppTitle))
+		.Done();
+	*/
+	//JET_ERR err = keysTable.Select("tb_keys_app", OP_EQ, T2A(sAppTitle));
+	JET_ERR err = keysTable.Select()
+		.ByRange("tb_keys_app", T2A(sAppTitle), T2A(sAppTitle))
+		.Done();
 	if (err < 0)
 	{ 
 		CHAR szErrorMsg[1024] = { 0 }; 

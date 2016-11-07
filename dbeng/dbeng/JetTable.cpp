@@ -534,31 +534,41 @@ JET_ERR CJetTable::Done()
 	JET_ERR e = 0;
 	if (m_enCurrentMode == MODE_SELECT)
 	{
-		m_lstBookmarks.cbStruct = sizeof(m_lstBookmarks);
-		e = JetIntersectIndexes(
-			m_pDBEngine->GetSessionID(),
-			m_arrIndexRanges,
-			m_iIndexRangeSize,
-			&m_lstBookmarks,
-			0
-		);
-
-		if (e < 0)
+		if (m_iIndexRangeSize > 1)
 		{
-			return e;
+			m_lstBookmarks.cbStruct = sizeof(m_lstBookmarks);
+			e = JetIntersectIndexes(
+				m_pDBEngine->GetSessionID(),
+				m_arrIndexRanges,
+				m_iIndexRangeSize,
+				&m_lstBookmarks,
+				0
+			);
+
+			if (e < 0)
+			{
+				return e;
+			}
+
+			e = JetMove(m_pDBEngine->GetSessionID(),
+				m_lstBookmarks.tableid,
+				JET_MoveFirst,
+				0);
+
+			if (e < 0)
+			{
+				return e;
+			}
+
+			e = NextRow();
 		}
-
-		e = JetMove(m_pDBEngine->GetSessionID(),
-			m_lstBookmarks.tableid,
-			JET_MoveFirst,
-			0);
-
-		if (e < 0)
+		else // assume just one table was duplicated
 		{
-			return e;
+			JetCloseTable(m_pDBEngine->GetSessionID(), m_tblID);
+			m_tblID = m_arrIndexRanges[0].tableid;
+			m_arrIndexRanges[0].tableid = 0;
+			m_iIndexRangeSize = 0;
 		}
-
-		e = NextRow();
 	}
 	else
 	{
@@ -722,21 +732,20 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, int lowValue, int upValue)
 	return *this;
 }
 
-CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue)
+CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue)
 {
 	return ByRange(
 		lpszColumnName,
-		ConvA2W(lowValue).c_str(),
-		ConvA2W(upValue).c_str()
+		ConvW2A(lowValue).c_str(),
+		ConvW2A(upValue).c_str()
 		);
 }
 
-CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue)
+CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue)
 {
 	JET_ERR e = 0;
 	JET_TABLEID tblid = GetCursor();
 	JET_SESID sessID = m_pDBEngine->GetSessionID();
-	std::string sLow = ConvW2A(lowValue);
 	e = SetColIndex(lpszColumnName, tblid);
 	
 	if (e < 0)
@@ -747,8 +756,8 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR u
 	e = JetMakeKey(
 		sessID,
 		tblid,
-		sLow.c_str(),
-		sLow.size(),
+		lowValue,
+		lstrlenA(lowValue),
 		JET_bitNewKey | JET_bitPartialColumnStartLimit
 	);
 
@@ -757,7 +766,7 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR u
 		return *this;
 	}
 
-	e = JetSeek(sessID, tblid, OP_GE);
+	e = JetSeek(sessID, tblid, JET_bitSeekGE);
 	if (e < 0)
 	{
 		return *this;
@@ -767,14 +776,14 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR u
 		m_pDBEngine->GetSessionID(),
 		tblid,
 		upValue,
-		lstrlen(upValue),
-		JET_bitNewKey | JET_bitPartialColumnEndLimit
+		lstrlenA(upValue),
+		JET_bitNewKey | JET_bitPartialColumnEndLimit //| JET_bitSubStrLimit
 	);
 
 	e = JetSetIndexRange(
 		m_pDBEngine->GetSessionID(),
 		tblid,
-		JET_bitRangeInclusive | JET_bitRangeUpperLimit
+		JET_bitRangeUpperLimit | JET_bitRangeInclusive
 	);
 
 	return *this;
