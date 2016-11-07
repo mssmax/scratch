@@ -386,6 +386,10 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
 			0,
 			0
 			);
+		if (e < 0)
+		{
+			return e;
+		}
 		StringCchCopy(pszBuffer, size, ConvA2W(s.c_str(), CP_UTF8).c_str());
 	}
 

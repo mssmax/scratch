@@ -177,6 +177,15 @@ JET_ERR CDBEngine::RestoreDatabase(LPCSTR lpszBackupPath)
 	CloseDatabase();
 	Term();
 
+	// TODO: make this functionality parameterized so that the caller can choose whether to back up original database or not
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	std::string sBackupName(szDBName);
+	sBackupName.append(".bak");
+	BOOL b = SetFileAttributesA(sBackupName.c_str(), GetFileAttributesA(sBackupName.c_str()) & ~FILE_ATTRIBUTE_READONLY);
+	b = MoveFileExA(szDBName, sBackupName.c_str(), MOVEFILE_REPLACE_EXISTING);
+	b = SetFileAttributesA(sBackupName.c_str(), GetFileAttributesA(sBackupName.c_str()) | FILE_ATTRIBUTE_READONLY);
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	Init(szDBPath, szFileNamePrefix, lpszBackupPath);
 	OpenDatabase(szDBName, FALSE);
 

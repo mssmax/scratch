@@ -69,7 +69,11 @@ void CMyKeysDlg::ReloadData()
 				// we'll deal with it at some point
 				if (i < 3)
 				{
-					CALL_JET(tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr)));
+					e = tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr));
+					if (e != JET_errSuccess)
+					{
+						break;
+					}
 					m_lstKeys.SetItemText(iItem, i, szStr);
 				}
 				else
@@ -87,7 +91,7 @@ void CMyKeysDlg::ReloadData()
 		}
 
 		CALL_JET(tbl.CommitTransaction());
-		m_lstKeys.SetItemState(0, LVNI_FOCUSED | LVNI_SELECTED, LVNI_FOCUSED | LVNI_SELECTED);
+		m_lstKeys.SetItemState(0, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
 	}
 
 EXIT:
@@ -336,6 +340,7 @@ void CMyKeysDlg::OnClickedBtnbackup()
 		}
 	}
 
+	CWaitCursor wc;
 	USES_CONVERSION;	
 	CALL_JET(g_DB.BackupDatabase(T2A(sBackupPath)));
 
