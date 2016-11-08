@@ -44,7 +44,7 @@ UINT CDBSchema::MapStringToJetColType(LPCWSTR lpszStringType)
 	else if (_wcsicmp(lpszStringType, L"binary") == 0)
 		return JET_coltypLongBinary;
 
-	// we failed to recognize the file
+	// we failed to recognize the type
 	return 0;
 }
 
