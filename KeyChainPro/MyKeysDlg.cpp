@@ -43,6 +43,8 @@ void CMyKeysDlg::ReloadData()
 	m_vecPasswords.clear();
 	m_bShowPlainPwds = FALSE;
 
+
+
 	USES_CONVERSION;
 	CJetTable tbl;
 	JET_ERR e = 0;

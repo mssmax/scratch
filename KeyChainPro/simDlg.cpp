@@ -486,6 +486,7 @@ void CSimDlg::OnCopyPaster()
 		CString s = dlg.GetPasteableText();
 		if (s.GetLength() > 0)
 		{
+			// TODO: consider using Clipboard for better reliability
 			SendString(s, FALSE);
 		}
 	}
