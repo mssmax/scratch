@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(CMyCopyPaste, CDialog)
 	ON_NOTIFY(LVN_ITEMCHANGED, IDC_CP_LIST, &CMyCopyPaste::OnLvnItemchangedCpList)
 	ON_NOTIFY(LVN_KEYDOWN, IDC_CP_LIST, &CMyCopyPaste::OnLvnKeydownCpList)
 	ON_NOTIFY(NM_DBLCLK, IDC_CP_LIST, &CMyCopyPaste::OnNMDblclkCpList)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 BOOL CMyCopyPaste::OnInitDialog()
@@ -253,4 +254,11 @@ void CMyCopyPaste::OnNMDblclkCpList(NMHDR *pNMHDR, LRESULT *pResult)
 	}
 
 	*pResult = 0;
+}
+
+
+BOOL CMyCopyPaste::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OpenHelp();
+	return TRUE;
 }

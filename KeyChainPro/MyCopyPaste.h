@@ -40,4 +40,5 @@ public:
 	afx_msg void OnLvnItemchangedCpList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnLvnKeydownCpList(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnNMDblclkCpList(NMHDR *pNMHDR, LRESULT *pResult);
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };

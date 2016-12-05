@@ -34,6 +34,7 @@ BEGIN_MESSAGE_MAP(CMyKeysDlg, CDialog)
 	ON_NOTIFY(HDN_ITEMCLICK, 0, &CMyKeysDlg::OnHdnItemclickLstKeys)
 	ON_BN_CLICKED(IDC_BTNBACKUP, &CMyKeysDlg::OnClickedBtnbackup)
 	ON_BN_CLICKED(IDC_BTNRESTORE, &CMyKeysDlg::OnClickedBtnrestore)
+	ON_WM_HELPINFO()
 END_MESSAGE_MAP()
 
 
@@ -387,4 +388,11 @@ void CMyKeysDlg::OnClickedBtnrestore()
 
 EXIT:
 	;
+}
+
+
+BOOL CMyKeysDlg::OnHelpInfo(HELPINFO* pHelpInfo)
+{
+	OpenHelp();
+	return TRUE;
 }

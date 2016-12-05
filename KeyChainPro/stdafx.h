@@ -44,6 +44,8 @@ extern HCRYPTKEY g_hKey;
 HRESULT EncryptPassword(LPCTSTR lpszPassword, IStream *pStrm);
 HRESULT DecryptPassword(IStream *pStrm, LPTSTR lpszPassword);
 
+void OpenHelp();
+
 #define CALL_JET(err) \
 	if(err < 0) \
     { \

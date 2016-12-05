@@ -47,4 +47,5 @@ public:
 	afx_msg void OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult);
 	afx_msg void OnClickedBtnbackup();
 	afx_msg void OnClickedBtnrestore();
+	afx_msg BOOL OnHelpInfo(HELPINFO* pHelpInfo);
 };
