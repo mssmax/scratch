@@ -16,5 +16,13 @@ namespace mailer
         {
             InitializeComponent();
         }
+
+        private void Send_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;
+            m_bSending = !m_bSending;
+            btn.Text = (m_bSending) ? "Stop" : "Start";
+            // continue with creating separate thread to send emails
+        }
     }
 }

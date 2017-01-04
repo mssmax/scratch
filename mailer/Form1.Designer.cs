@@ -6,6 +6,7 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
+        private bool m_bSending = false;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -109,6 +110,7 @@
             this.Send.TabIndex = 8;
             this.Send.Text = "Start";
             this.Send.UseVisualStyleBackColor = true;
+            this.Send.Click += new System.EventHandler(this.Send_Click);
             // 
             // BodyText
             // 
