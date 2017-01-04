@@ -185,6 +185,11 @@
             // betweenBatches
             // 
             this.betweenBatches.Location = new System.Drawing.Point(141, 59);
+            this.betweenBatches.Maximum = new decimal(new int[] {
+            1440,
+            0,
+            0,
+            0});
             this.betweenBatches.Name = "betweenBatches";
             this.betweenBatches.Size = new System.Drawing.Size(51, 20);
             this.betweenBatches.TabIndex = 1;
