@@ -32,11 +32,11 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.Password = new System.Windows.Forms.TextBox();
-            this.UserName = new System.Windows.Forms.TextBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtUserName = new System.Windows.Forms.TextBox();
             this.Send = new System.Windows.Forms.Button();
-            this.BodyText = new System.Windows.Forms.TextBox();
-            this.Subject = new System.Windows.Forms.TextBox();
+            this.txtSubject = new System.Windows.Forms.TextBox();
+            this.txtBodyFile = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btnSelectBody = new System.Windows.Forms.Button();
@@ -47,8 +47,8 @@
             this.betweenEmails = new System.Windows.Forms.NumericUpDown();
             this.btnSelectRcpt = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.Recipients = new System.Windows.Forms.TextBox();
-            this.From = new System.Windows.Forms.TextBox();
+            this.txtRcptFile = new System.Windows.Forms.TextBox();
+            this.txtFrom = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -60,8 +60,8 @@
             // 
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.Password);
-            this.groupBox1.Controls.Add(this.UserName);
+            this.groupBox1.Controls.Add(this.txtPassword);
+            this.groupBox1.Controls.Add(this.txtUserName);
             this.groupBox1.Location = new System.Drawing.Point(25, 25);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(197, 115);
@@ -87,20 +87,20 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "User:";
             // 
-            // Password
+            // txtPassword
             // 
-            this.Password.Location = new System.Drawing.Point(14, 82);
-            this.Password.Name = "Password";
-            this.Password.Size = new System.Drawing.Size(172, 20);
-            this.Password.TabIndex = 1;
-            this.Password.UseSystemPasswordChar = true;
+            this.txtPassword.Location = new System.Drawing.Point(14, 82);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(172, 20);
+            this.txtPassword.TabIndex = 1;
+            this.txtPassword.UseSystemPasswordChar = true;
             // 
-            // UserName
+            // txtUserName
             // 
-            this.UserName.Location = new System.Drawing.Point(14, 38);
-            this.UserName.Name = "UserName";
-            this.UserName.Size = new System.Drawing.Size(172, 20);
-            this.UserName.TabIndex = 0;
+            this.txtUserName.Location = new System.Drawing.Point(14, 38);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(172, 20);
+            this.txtUserName.TabIndex = 0;
             // 
             // Send
             // 
@@ -112,19 +112,19 @@
             this.Send.UseVisualStyleBackColor = true;
             this.Send.Click += new System.EventHandler(this.Send_Click);
             // 
-            // BodyText
+            // txtSubject
             // 
-            this.BodyText.Location = new System.Drawing.Point(25, 223);
-            this.BodyText.Name = "BodyText";
-            this.BodyText.Size = new System.Drawing.Size(551, 20);
-            this.BodyText.TabIndex = 2;
+            this.txtSubject.Location = new System.Drawing.Point(25, 223);
+            this.txtSubject.Name = "txtSubject";
+            this.txtSubject.Size = new System.Drawing.Size(551, 20);
+            this.txtSubject.TabIndex = 2;
             // 
-            // Subject
+            // txtBodyFile
             // 
-            this.Subject.Location = new System.Drawing.Point(25, 278);
-            this.Subject.Name = "Subject";
-            this.Subject.Size = new System.Drawing.Size(521, 20);
-            this.Subject.TabIndex = 3;
+            this.txtBodyFile.Location = new System.Drawing.Point(25, 278);
+            this.txtBodyFile.Name = "txtBodyFile";
+            this.txtBodyFile.Size = new System.Drawing.Size(521, 20);
+            this.txtBodyFile.TabIndex = 3;
             // 
             // label3
             // 
@@ -231,19 +231,19 @@
             this.label7.TabIndex = 8;
             this.label7.Text = "Recipient file (CSV):";
             // 
-            // Recipients
+            // txtRcptFile
             // 
-            this.Recipients.Location = new System.Drawing.Point(25, 331);
-            this.Recipients.Name = "Recipients";
-            this.Recipients.Size = new System.Drawing.Size(521, 20);
-            this.Recipients.TabIndex = 5;
+            this.txtRcptFile.Location = new System.Drawing.Point(25, 331);
+            this.txtRcptFile.Name = "txtRcptFile";
+            this.txtRcptFile.Size = new System.Drawing.Size(521, 20);
+            this.txtRcptFile.TabIndex = 5;
             // 
-            // From
+            // txtFrom
             // 
-            this.From.Location = new System.Drawing.Point(25, 177);
-            this.From.Name = "From";
-            this.From.Size = new System.Drawing.Size(194, 20);
-            this.From.TabIndex = 1;
+            this.txtFrom.Location = new System.Drawing.Point(25, 177);
+            this.txtFrom.Name = "txtFrom";
+            this.txtFrom.Size = new System.Drawing.Size(194, 20);
+            this.txtFrom.TabIndex = 1;
             // 
             // label8
             // 
@@ -260,16 +260,16 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 420);
             this.Controls.Add(this.label8);
-            this.Controls.Add(this.From);
+            this.Controls.Add(this.txtFrom);
             this.Controls.Add(this.btnSelectRcpt);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.Recipients);
+            this.Controls.Add(this.txtRcptFile);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.btnSelectBody);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.Subject);
-            this.Controls.Add(this.BodyText);
+            this.Controls.Add(this.txtBodyFile);
+            this.Controls.Add(this.txtSubject);
             this.Controls.Add(this.Send);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -290,13 +290,13 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.TextBox Password;
-        private System.Windows.Forms.TextBox UserName;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button Send;
-        private System.Windows.Forms.TextBox BodyText;
-        private System.Windows.Forms.TextBox Subject;
+        private System.Windows.Forms.TextBox txtSubject;
+        private System.Windows.Forms.TextBox txtBodyFile;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSelectBody;
@@ -307,8 +307,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSelectRcpt;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox Recipients;
-        private System.Windows.Forms.TextBox From;
+        private System.Windows.Forms.TextBox txtRcptFile;
+        private System.Windows.Forms.TextBox txtFrom;
         private System.Windows.Forms.Label label8;
     }
 }
