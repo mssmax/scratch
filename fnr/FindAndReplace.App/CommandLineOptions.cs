@@ -14,31 +14,28 @@ namespace FindAndReplace.App
 		[ParserState]
 		public IParserState LastParserState { get; set; }
 
-		[Option("cl", HelpText = "Required to run on command line.")]
-		public bool UseCommandLine { get; set; }
-
-		[Option("find", Required = true, HelpText = "Text to find.")]
+		[Option("f", Required = true, HelpText = "Text to find.")]
 		public string FindText { get; set; }
 
-		[Option("replace", HelpText = "Replacement text.")]
+		[Option("r", HelpText = "Replacement text.")]
 		public string ReplaceText { get; set; }
 
-		[Option("caseSensitive", HelpText = "Case-sensitive.")]
+		[Option("i", HelpText = "Case-sensitive.")]
 		public bool IsCaseSensitive { get; set; }
 
-		[Option("useRegEx", HelpText = "Find text has Regular Expression.")]
+		[Option("rx", HelpText = "Find text has Regular Expression.")]
 		public bool IsFindTextHasRegEx { get; set; }
 
-		[Option("dir", Required = true, HelpText = "Directory path.")]
+		[Option("dir", HelpText = "Directory path. By default current directory is used.")]
 		public string Dir { get; set; }
 
-		[Option("includeSubDirectories", HelpText = "Include files in SubDirectories.")]
+		[Option("d", HelpText = "Include files in SubDirectories.")]
 		public bool IncludeSubDirectories { get; set; }
 
-		[Option("fileMask", Required = true, HelpText = "File mask.")]
-		public string FileMask { get; set; }
+		[OptionList("m", Separator =';', Required = true, HelpText = "File mask.")]
+		public IList<string> FileMask { get; set; }
 
-		[Option("excludeFileMask", HelpText = "Exclude file mask.")]
+		[Option("e", HelpText = "Exclude file mask.")]
 		public string ExcludeFileMask { get; set; }
 
 		[Option("skipBinaryFileDetection", HelpText = "Ignore detection of binary files.")]
@@ -60,7 +57,7 @@ namespace FindAndReplace.App
 		[Option("setErrorLevelIfAnyFileErrors", HelpText = "Return ErrorLevel 2 if any files have read/write errors.")]
 		public bool SetErrorLevelIfAnyFileErrors { get; set; }
 
-		[Option("silent", HelpText = "Supress the command window output.")]
+		[Option("q", HelpText = "Supress the command window output.")]
 		public bool Silent { get; set; }
 
 		[Option("logFile", HelpText = "Path to log file where to save command output.")]
@@ -69,12 +66,11 @@ namespace FindAndReplace.App
 		[Option("useEscapeChars", HelpText = "Escape special chars.")]
 		public bool UseEscapeChars { get; set; }
 
+        #endregion
 
-		#endregion
+        #region Specialized Option Attribute
 
-		#region Specialized Option Attribute
-
-		[HelpOption("help", HelpText = "Display this help screen.")]
+        [HelpOption("help", HelpText = "Display this help screen.")]
 		public string GetUsage()
 		{
 			var help = new HelpText("Find And Replace");
@@ -88,7 +84,7 @@ namespace FindAndReplace.App
 			else
 			{
 				help.AddPreOptionsLine(
-					"Usage: \n\nfnr.exe --cl --find \"Text To Find\" --replace \"Text To Replace\"  --caseSensitive  --dir \"Directory Path\" --fileMask \"*.*\"  --includeSubDirectories --useRegEx");
+					"Usage: \n\nfnr.exe --find \"Text To Find\" --replace \"Text To Replace\"  --caseSensitive  --dir \"Directory Path\" --fileMask \"*.*\"  --includeSubDirectories --useRegEx");
 				help.AddPreOptionsLine("\n");
 				help.AddPreOptionsLine("Mask new line and quote characters using \\n and \\\".");
 
@@ -98,7 +94,6 @@ namespace FindAndReplace.App
 			return help;
 		}
 
-
 		private void HandleParsingErrorsInHelp(HelpText help)
 		{
 			var errors = help.RenderParsingErrorsText(this, 2); // indent with two spaces
@@ -107,7 +102,7 @@ namespace FindAndReplace.App
 				help.MaximumDisplayWidth = 160;
 				help.AddPreOptionsLine(string.Concat("\n", "ERROR(S):"));
 				help.AddPreOptionsLine(errors);
-				help.AddPreOptionsLine("Use 'fnr.exe --cl --help' to see help for this command.");
+				help.AddPreOptionsLine("Use 'fnr.exe --help' to see help for this command.");
 			}
 		}
 

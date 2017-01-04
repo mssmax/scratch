@@ -40,40 +40,42 @@ namespace FindAndReplace.App
 			// from http://blogs.msdn.com/b/microsoft_press/archive/2010/02/03/jeffrey-richter-excerpt-2-from-clr-via-c-third-edition.aspx
 			AppDomain.CurrentDomain.AssemblyResolve += ResolveEventHandler;
 
-			if (args.Length != 0 && args.Contains("--cl"))
-			{
-				//Get a pointer to the forground window.  The idea here is that
-				//IF the user is starting our application from an existing console
-				//shell, that shell will be the uppermost window.  We'll get it
-				//and attach to it
-				IntPtr ptr = GetForegroundWindow();
+            if (args.Length != 0)
+            {
+                //Get a pointer to the forground window.  The idea here is that
+                //IF the user is starting our application from an existing console
+                //shell, that shell will be the uppermost window.  We'll get it
+                //and attach to it
+                /*
+                                IntPtr ptr = GetForegroundWindow();
 
-				int u;
+                                int u;
 
-				GetWindowThreadProcessId(ptr, out u);
+                                GetWindowThreadProcessId(ptr, out u);
 
-				Process process = Process.GetProcessById(u);
+                                Process process = Process.GetProcessById(u);
 
-				if (process.ProcessName == "cmd") //Is the uppermost window a cmd process?
-				{
-					AttachConsole(process.Id);
-				}
-				else
-				{
-					//no console AND we're in console mode ... create a new console.
+                                if (process.ProcessName == "cmd") //Is the uppermost window a cmd process?
+                                {
+                                    AttachConsole(process.Id);
+                                }
+                                else
+                                {
+                                    //no console AND we're in console mode ... create a new console.
 
-					AllocConsole();
-				}
+                                    AllocConsole();
+                                }
+                */
 
-				var clRunner = new CommandLineRunner();
-				int dosErrorLevel = clRunner.Run(args);
+                var clRunner = new CommandLineRunner();
+                int dosErrorLevel = clRunner.Run(args);
 
-				FreeConsole();
-				return dosErrorLevel;
+                return dosErrorLevel;
 			}
 			else
 			{
-				Application.EnableVisualStyles();
+                FreeConsole();
+                Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 				Application.Run(new MainForm());
 
@@ -122,15 +124,19 @@ namespace FindAndReplace.App
 			_options = new CommandLineOptions();
 			if (!CommandLine.Parser.Default.ParseArguments(args, _options))
 			{
-				Console.ReadKey();
+				//Console.ReadKey();
 				Environment.Exit(1);
 			}
+
+            if (String.IsNullOrEmpty(_options.Dir))
+            {
+                _options.Dir = Environment.CurrentDirectory;
+            }
 
 			var validationResultList = new List<ValidationResult>();
 
 			validationResultList.Add(ValidationUtils.IsDirValid(_options.Dir, "dir"));
-			validationResultList.Add(ValidationUtils.IsNotEmpty(_options.FileMask, "fileMask"));
-			validationResultList.Add(ValidationUtils.IsNotEmpty(_options.FindText, "find"));
+//			validationResultList.Add(ValidationUtils.IsNotEmpty(_options.FileMask, "fileMask"));
 			validationResultList.Add(ValidationUtils.IsNotEmpty(_options.FindText, "find"));
 
 			if (_options.IsFindTextHasRegEx)
@@ -180,64 +186,69 @@ namespace FindAndReplace.App
 
 				if (_options.ReplaceText == null)
 				{
-					var finder = new Finder();
-					finder.Dir = _options.Dir;
-					finder.IncludeSubDirectories = _options.IncludeSubDirectories;
-					finder.FileMask = _options.FileMask;
-					finder.ExcludeFileMask = _options.ExcludeFileMask;
+                    foreach (string s in _options.FileMask)
+                    {
+                        var finder = new Finder();
+                        finder.Dir = _options.Dir;
+                        finder.IncludeSubDirectories = _options.IncludeSubDirectories;
+                        finder.FileMask = s;//_options.FileMask;
+                        finder.ExcludeFileMask = _options.ExcludeFileMask;
 
-					finder.FindText = CommandLineUtils.DecodeText(_options.FindText, false, hasRegEx, _options.UseEscapeChars);
-					finder.IsCaseSensitive = _options.IsCaseSensitive;
-					finder.FindTextHasRegEx = hasRegEx;
-					finder.SkipBinaryFileDetection = _options.SkipBinaryFileDetection;
-					finder.IncludeFilesWithoutMatches = _options.IncludeFilesWithoutMatches;
+                        finder.FindText = CommandLineUtils.DecodeText(_options.FindText, false, hasRegEx, _options.UseEscapeChars);
+                        finder.IsCaseSensitive = _options.IsCaseSensitive;
+                        finder.FindTextHasRegEx = hasRegEx;
+                        finder.SkipBinaryFileDetection = _options.SkipBinaryFileDetection;
+                        finder.IncludeFilesWithoutMatches = _options.IncludeFilesWithoutMatches;
 
-					finder.AlwaysUseEncoding = Utils.GetEncodingByName(_options.AlwaysUseEncoding);
-					finder.DefaultEncodingIfNotDetected = Utils.GetEncodingByName(_options.DefaultEncodingIfNotDetected);
-					finder.UseEscapeChars = _options.UseEscapeChars;
+                        finder.AlwaysUseEncoding = Utils.GetEncodingByName(_options.AlwaysUseEncoding);
+                        finder.DefaultEncodingIfNotDetected = Utils.GetEncodingByName(_options.DefaultEncodingIfNotDetected);
+                        finder.UseEscapeChars = _options.UseEscapeChars;
 
-					finder.IsSilent = _options.Silent;
+                        finder.IsSilent = _options.Silent;
 
-					finder.FileProcessed += OnFinderFileProcessed;
+                        finder.FileProcessed += OnFinderFileProcessed;
 
-					var findResult = finder.Find();
+                        var findResult = finder.Find();
 
 
-					if (_options.SetErrorLevelIfAnyFileErrors)
-						if (findResult.Stats.Files.FailedToRead > 0)
-							dosErrorLevel = DosErrorLevel.ErrorsInSomeFiles;
+                        if (_options.SetErrorLevelIfAnyFileErrors)
+                            if (findResult.Stats.Files.FailedToRead > 0)
+                                dosErrorLevel = DosErrorLevel.ErrorsInSomeFiles;
+                    }
 				}
 				else
 				{
-					var replacer = new Replacer();
-					replacer.Dir = _options.Dir;
+                    foreach (string s in _options.FileMask)
+                    {
+                        var replacer = new Replacer();
+                        replacer.Dir = _options.Dir;
 
-					replacer.IncludeSubDirectories = _options.IncludeSubDirectories;
+                        replacer.IncludeSubDirectories = _options.IncludeSubDirectories;
+                        replacer.FileMask = s;// _options.FileMask;
+                        replacer.ExcludeFileMask = _options.ExcludeFileMask;
 
-					replacer.FileMask = _options.FileMask;
-					replacer.ExcludeFileMask = _options.ExcludeFileMask;
+                        replacer.FindText = CommandLineUtils.DecodeText(_options.FindText, false, hasRegEx, _options.UseEscapeChars);
+                        replacer.IsCaseSensitive = _options.IsCaseSensitive;
+                        replacer.FindTextHasRegEx = _options.IsFindTextHasRegEx;
+                        replacer.SkipBinaryFileDetection = _options.SkipBinaryFileDetection;
+                        replacer.IncludeFilesWithoutMatches = _options.IncludeFilesWithoutMatches;
 
-					replacer.FindText = CommandLineUtils.DecodeText(_options.FindText, false, hasRegEx, _options.UseEscapeChars);
-					replacer.IsCaseSensitive = _options.IsCaseSensitive;
-					replacer.FindTextHasRegEx = _options.IsFindTextHasRegEx;
-					replacer.SkipBinaryFileDetection = _options.SkipBinaryFileDetection;
-					replacer.IncludeFilesWithoutMatches = _options.IncludeFilesWithoutMatches;
+                        replacer.ReplaceText = CommandLineUtils.DecodeText(_options.ReplaceText, true, _options.IsFindTextHasRegEx, _options.UseEscapeChars);
 
-					replacer.ReplaceText = CommandLineUtils.DecodeText(_options.ReplaceText, true, _options.IsFindTextHasRegEx, _options.UseEscapeChars);
+                        replacer.AlwaysUseEncoding = Utils.GetEncodingByName(_options.AlwaysUseEncoding);
+                        replacer.DefaultEncodingIfNotDetected = Utils.GetEncodingByName(_options.DefaultEncodingIfNotDetected);
+                        replacer.UseEscapeChars = _options.UseEscapeChars;
 
-					replacer.AlwaysUseEncoding = Utils.GetEncodingByName(_options.AlwaysUseEncoding);
-					replacer.DefaultEncodingIfNotDetected = Utils.GetEncodingByName(_options.DefaultEncodingIfNotDetected);
-					replacer.UseEscapeChars = _options.UseEscapeChars;
+                        replacer.IsSilent = _options.Silent;
 
-					replacer.IsSilent = _options.Silent;
+                        replacer.FileProcessed += OnReplacerFileProcessed;
 
-					replacer.FileProcessed += OnReplacerFileProcessed;
+                        var replaceResult = replacer.Replace();
 
-					var replaceResult = replacer.Replace();
-
-					if (_options.SetErrorLevelIfAnyFileErrors)
-						if (replaceResult.Stats.Files.FailedToRead > 0 || replaceResult.Stats.Files.FailedToWrite > 0)
-							dosErrorLevel = DosErrorLevel.ErrorsInSomeFiles;
+                        if (_options.SetErrorLevelIfAnyFileErrors)
+                            if (replaceResult.Stats.Files.FailedToRead > 0 || replaceResult.Stats.Files.FailedToWrite > 0)
+                                dosErrorLevel = DosErrorLevel.ErrorsInSomeFiles;
+                    }
 				}
 			}
 
