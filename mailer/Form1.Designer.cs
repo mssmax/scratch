@@ -41,10 +41,12 @@
             this.label4 = new System.Windows.Forms.Label();
             this.btnSelectBody = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.udBatchSize = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.betweenBatches = new System.Windows.Forms.NumericUpDown();
-            this.betweenEmails = new System.Windows.Forms.NumericUpDown();
+            this.udBetweenBatches = new System.Windows.Forms.NumericUpDown();
+            this.udBetweenEmails = new System.Windows.Forms.NumericUpDown();
             this.btnSelectRcpt = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
             this.txtRcptFile = new System.Windows.Forms.TextBox();
@@ -52,8 +54,9 @@
             this.label8 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.betweenBatches)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betweenEmails)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBetweenBatches)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBetweenEmails)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -74,33 +77,39 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(56, 13);
+            this.label2.Size = new System.Drawing.Size(64, 15);
             this.label2.TabIndex = 3;
             this.label2.Text = "Password:";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.SystemColors.Control;
+            this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(11, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(32, 13);
+            this.label1.Size = new System.Drawing.Size(36, 15);
             this.label1.TabIndex = 2;
             this.label1.Text = "User:";
             // 
             // txtPassword
             // 
+            this.txtPassword.BackColor = System.Drawing.Color.Red;
             this.txtPassword.Location = new System.Drawing.Point(14, 82);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(172, 20);
             this.txtPassword.TabIndex = 1;
             this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtUserName
             // 
+            this.txtUserName.BackColor = System.Drawing.Color.Red;
             this.txtUserName.Location = new System.Drawing.Point(14, 38);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(172, 20);
             this.txtUserName.TabIndex = 0;
+            this.txtUserName.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // Send
             // 
@@ -114,24 +123,28 @@
             // 
             // txtSubject
             // 
+            this.txtSubject.BackColor = System.Drawing.Color.Red;
             this.txtSubject.Location = new System.Drawing.Point(25, 223);
             this.txtSubject.Name = "txtSubject";
-            this.txtSubject.Size = new System.Drawing.Size(551, 20);
+            this.txtSubject.Size = new System.Drawing.Size(546, 20);
             this.txtSubject.TabIndex = 2;
+            this.txtSubject.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtBodyFile
             // 
-            this.txtBodyFile.Location = new System.Drawing.Point(25, 278);
+            this.txtBodyFile.BackColor = System.Drawing.Color.Red;
+            this.txtBodyFile.Location = new System.Drawing.Point(48, 278);
             this.txtBodyFile.Name = "txtBodyFile";
-            this.txtBodyFile.Size = new System.Drawing.Size(521, 20);
-            this.txtBodyFile.TabIndex = 3;
+            this.txtBodyFile.Size = new System.Drawing.Size(523, 20);
+            this.txtBodyFile.TabIndex = 4;
+            this.txtBodyFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(25, 207);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.Size = new System.Drawing.Size(51, 15);
             this.label3.TabIndex = 4;
             this.label3.Text = "Subject:";
             // 
@@ -140,74 +153,98 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(25, 259);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(80, 13);
+            this.label4.Size = new System.Drawing.Size(89, 15);
             this.label4.TabIndex = 5;
             this.label4.Text = "Body file (TXT):";
             // 
             // btnSelectBody
             // 
-            this.btnSelectBody.Location = new System.Drawing.Point(552, 278);
+            this.btnSelectBody.Location = new System.Drawing.Point(23, 278);
             this.btnSelectBody.Name = "btnSelectBody";
             this.btnSelectBody.Size = new System.Drawing.Size(24, 21);
-            this.btnSelectBody.TabIndex = 4;
+            this.btnSelectBody.TabIndex = 3;
             this.btnSelectBody.Text = "...";
             this.btnSelectBody.UseVisualStyleBackColor = true;
+            this.btnSelectBody.Click += new System.EventHandler(this.btnSelectBody_Click);
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.udBatchSize);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Controls.Add(this.betweenBatches);
-            this.groupBox2.Controls.Add(this.betweenEmails);
+            this.groupBox2.Controls.Add(this.udBetweenBatches);
+            this.groupBox2.Controls.Add(this.udBetweenEmails);
             this.groupBox2.Location = new System.Drawing.Point(377, 41);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(199, 98);
+            this.groupBox2.Size = new System.Drawing.Size(208, 100);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Intervals";
+            this.groupBox2.Text = "Batch parameters";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(15, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(66, 15);
+            this.label9.TabIndex = 5;
+            this.label9.Text = "Batch size:";
+            // 
+            // udBatchSize
+            // 
+            this.udBatchSize.Location = new System.Drawing.Point(157, 22);
+            this.udBatchSize.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.udBatchSize.Name = "udBatchSize";
+            this.udBatchSize.Size = new System.Drawing.Size(44, 20);
+            this.udBatchSize.TabIndex = 0;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(17, 63);
+            this.label6.Location = new System.Drawing.Point(15, 74);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(118, 13);
+            this.label6.Size = new System.Drawing.Size(136, 15);
             this.label6.TabIndex = 3;
             this.label6.Text = "Between batches (min):";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 33);
+            this.label5.Location = new System.Drawing.Point(15, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(110, 13);
+            this.label5.Size = new System.Drawing.Size(128, 15);
             this.label5.TabIndex = 2;
             this.label5.Text = "Between emails (sec):";
             // 
-            // betweenBatches
+            // udBetweenBatches
             // 
-            this.betweenBatches.Location = new System.Drawing.Point(141, 59);
-            this.betweenBatches.Maximum = new decimal(new int[] {
+            this.udBetweenBatches.Location = new System.Drawing.Point(157, 71);
+            this.udBetweenBatches.Maximum = new decimal(new int[] {
             1440,
             0,
             0,
             0});
-            this.betweenBatches.Name = "betweenBatches";
-            this.betweenBatches.Size = new System.Drawing.Size(51, 20);
-            this.betweenBatches.TabIndex = 1;
-            this.betweenBatches.Value = new decimal(new int[] {
+            this.udBetweenBatches.Name = "udBetweenBatches";
+            this.udBetweenBatches.Size = new System.Drawing.Size(44, 20);
+            this.udBetweenBatches.TabIndex = 2;
+            this.udBetweenBatches.Value = new decimal(new int[] {
             60,
             0,
             0,
             0});
             // 
-            // betweenEmails
+            // udBetweenEmails
             // 
-            this.betweenEmails.Location = new System.Drawing.Point(141, 29);
-            this.betweenEmails.Name = "betweenEmails";
-            this.betweenEmails.Size = new System.Drawing.Size(51, 20);
-            this.betweenEmails.TabIndex = 0;
-            this.betweenEmails.Value = new decimal(new int[] {
+            this.udBetweenEmails.Location = new System.Drawing.Point(157, 46);
+            this.udBetweenEmails.Name = "udBetweenEmails";
+            this.udBetweenEmails.Size = new System.Drawing.Size(44, 20);
+            this.udBetweenEmails.TabIndex = 1;
+            this.udBetweenEmails.Value = new decimal(new int[] {
             5,
             0,
             0,
@@ -215,42 +252,47 @@
             // 
             // btnSelectRcpt
             // 
-            this.btnSelectRcpt.Location = new System.Drawing.Point(552, 330);
+            this.btnSelectRcpt.Location = new System.Drawing.Point(25, 331);
             this.btnSelectRcpt.Name = "btnSelectRcpt";
             this.btnSelectRcpt.Size = new System.Drawing.Size(24, 21);
-            this.btnSelectRcpt.TabIndex = 6;
+            this.btnSelectRcpt.TabIndex = 5;
             this.btnSelectRcpt.Text = "...";
             this.btnSelectRcpt.UseVisualStyleBackColor = true;
+            this.btnSelectRcpt.Click += new System.EventHandler(this.btnSelectRcpt_Click);
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(25, 312);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(101, 13);
+            this.label7.Size = new System.Drawing.Size(115, 15);
             this.label7.TabIndex = 8;
             this.label7.Text = "Recipient file (CSV):";
             // 
             // txtRcptFile
             // 
-            this.txtRcptFile.Location = new System.Drawing.Point(25, 331);
+            this.txtRcptFile.BackColor = System.Drawing.Color.Red;
+            this.txtRcptFile.Location = new System.Drawing.Point(50, 331);
             this.txtRcptFile.Name = "txtRcptFile";
             this.txtRcptFile.Size = new System.Drawing.Size(521, 20);
-            this.txtRcptFile.TabIndex = 5;
+            this.txtRcptFile.TabIndex = 6;
+            this.txtRcptFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtFrom
             // 
+            this.txtFrom.BackColor = System.Drawing.Color.Red;
             this.txtFrom.Location = new System.Drawing.Point(25, 177);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(194, 20);
             this.txtFrom.TabIndex = 1;
+            this.txtFrom.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(25, 159);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(33, 13);
+            this.label8.Size = new System.Drawing.Size(39, 15);
             this.label8.TabIndex = 10;
             this.label8.Text = "From:";
             // 
@@ -280,8 +322,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.betweenBatches)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.betweenEmails)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBetweenBatches)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udBetweenEmails)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -301,8 +344,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSelectBody;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.NumericUpDown betweenBatches;
-        private System.Windows.Forms.NumericUpDown betweenEmails;
+        private System.Windows.Forms.NumericUpDown udBetweenBatches;
+        private System.Windows.Forms.NumericUpDown udBetweenEmails;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button btnSelectRcpt;
@@ -310,6 +353,8 @@
         private System.Windows.Forms.TextBox txtRcptFile;
         private System.Windows.Forms.TextBox txtFrom;
         private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown udBatchSize;
     }
 }
 
