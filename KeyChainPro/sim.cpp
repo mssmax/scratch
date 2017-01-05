@@ -51,6 +51,11 @@ BOOL CSimApp::InitInstance()
 	CWinApp::InitInstance();
 
 	SetRegistryKey(_T("KeyChainPro"));
+	
+	TCHAR szPath[512] = { 0 };
+	GetModuleFileName(NULL, szPath, _countof(szPath));
+	*_tcsrchr(szPath, '\\') = 0;
+	SetCurrentDirectory(szPath);
 
 	RegisterAutoRun();
 
