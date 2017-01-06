@@ -34,7 +34,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.txtUserName = new System.Windows.Forms.TextBox();
-            this.Send = new System.Windows.Forms.Button();
+            this.btnSend = new System.Windows.Forms.Button();
             this.txtSubject = new System.Windows.Forms.TextBox();
             this.txtBodyFile = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -94,7 +94,7 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.BackColor = System.Drawing.Color.Red;
+            this.txtPassword.BackColor = System.Drawing.SystemColors.Control;
             this.txtPassword.Location = new System.Drawing.Point(14, 82);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(172, 20);
@@ -104,26 +104,27 @@
             // 
             // txtUserName
             // 
-            this.txtUserName.BackColor = System.Drawing.Color.Red;
+            this.txtUserName.BackColor = System.Drawing.SystemColors.Control;
             this.txtUserName.Location = new System.Drawing.Point(14, 38);
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(172, 20);
             this.txtUserName.TabIndex = 0;
             this.txtUserName.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
-            // Send
+            // btnSend
             // 
-            this.Send.Location = new System.Drawing.Point(25, 376);
-            this.Send.Name = "Send";
-            this.Send.Size = new System.Drawing.Size(133, 31);
-            this.Send.TabIndex = 8;
-            this.Send.Text = "Start";
-            this.Send.UseVisualStyleBackColor = true;
-            this.Send.Click += new System.EventHandler(this.Send_Click);
+            this.btnSend.Enabled = false;
+            this.btnSend.Location = new System.Drawing.Point(25, 376);
+            this.btnSend.Name = "btnSend";
+            this.btnSend.Size = new System.Drawing.Size(133, 31);
+            this.btnSend.TabIndex = 8;
+            this.btnSend.Text = "Start";
+            this.btnSend.UseVisualStyleBackColor = true;
+            this.btnSend.Click += new System.EventHandler(this.Send_Click);
             // 
             // txtSubject
             // 
-            this.txtSubject.BackColor = System.Drawing.Color.Red;
+            this.txtSubject.BackColor = System.Drawing.SystemColors.Control;
             this.txtSubject.Location = new System.Drawing.Point(25, 223);
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(546, 20);
@@ -132,7 +133,7 @@
             // 
             // txtBodyFile
             // 
-            this.txtBodyFile.BackColor = System.Drawing.Color.Red;
+            this.txtBodyFile.BackColor = System.Drawing.SystemColors.Control;
             this.txtBodyFile.Location = new System.Drawing.Point(48, 278);
             this.txtBodyFile.Name = "txtBodyFile";
             this.txtBodyFile.Size = new System.Drawing.Size(523, 20);
@@ -202,6 +203,7 @@
             this.udBatchSize.Name = "udBatchSize";
             this.udBatchSize.Size = new System.Drawing.Size(44, 20);
             this.udBatchSize.TabIndex = 0;
+            this.udBatchSize.ValueChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label6
             // 
@@ -271,7 +273,7 @@
             // 
             // txtRcptFile
             // 
-            this.txtRcptFile.BackColor = System.Drawing.Color.Red;
+            this.txtRcptFile.BackColor = System.Drawing.SystemColors.Control;
             this.txtRcptFile.Location = new System.Drawing.Point(50, 331);
             this.txtRcptFile.Name = "txtRcptFile";
             this.txtRcptFile.Size = new System.Drawing.Size(521, 20);
@@ -280,7 +282,7 @@
             // 
             // txtFrom
             // 
-            this.txtFrom.BackColor = System.Drawing.Color.Red;
+            this.txtFrom.BackColor = System.Drawing.SystemColors.Control;
             this.txtFrom.Location = new System.Drawing.Point(25, 177);
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(194, 20);
@@ -312,7 +314,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtBodyFile);
             this.Controls.Add(this.txtSubject);
-            this.Controls.Add(this.Send);
+            this.Controls.Add(this.btnSend);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "Form1";
@@ -337,7 +339,7 @@
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Send;
+        private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.TextBox txtSubject;
         private System.Windows.Forms.TextBox txtBodyFile;
         private System.Windows.Forms.Label label3;

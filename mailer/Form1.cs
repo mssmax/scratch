@@ -33,14 +33,14 @@ namespace mailer
 
         private void RecolorTextBox(object sender, EventArgs e)
         {
-            TextBox txt = sender as TextBox;
-            if (txt.Text.Length > 0)
+            
+            if (IsValidInput())
             {
-                txt.BackColor = Color.LightGreen;
+                btnSend.Enabled = true;
             }
             else
             {
-                txt.BackColor = Color.Red;
+                btnSend.Enabled = false;
             }
         }
 
