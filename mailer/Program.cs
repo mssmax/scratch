@@ -16,12 +16,6 @@ namespace mailer
         [STAThread]
         static void Main()
         {
-/*
-            SmtpClient c = new SmtpClient("smtp.gmail.com", 587);
-            c.Credentials = new NetworkCredential("mssmax@gmail.com", "papaxray");
-            c.EnableSsl = true;
-            c.Send("mssmax@gmail.com", "olpinika@gmail.com", "From Malta with love", "Hey, join our corporation. С русским текстом.");
-*/
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
