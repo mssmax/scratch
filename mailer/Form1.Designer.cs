@@ -109,6 +109,7 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(172, 20);
             this.txtUserName.TabIndex = 0;
+            this.txtUserName.Text = "mssmax@gmail.com";
             this.txtUserName.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // btnSend
@@ -129,6 +130,7 @@
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(546, 20);
             this.txtSubject.TabIndex = 2;
+            this.txtSubject.Text = "Fantastic offer";
             this.txtSubject.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtBodyFile
@@ -138,6 +140,7 @@
             this.txtBodyFile.Name = "txtBodyFile";
             this.txtBodyFile.Size = new System.Drawing.Size(523, 20);
             this.txtBodyFile.TabIndex = 4;
+            this.txtBodyFile.Text = "data\\body.txt";
             this.txtBodyFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label3
@@ -203,6 +206,11 @@
             this.udBatchSize.Name = "udBatchSize";
             this.udBatchSize.Size = new System.Drawing.Size(44, 20);
             this.udBatchSize.TabIndex = 0;
+            this.udBatchSize.Value = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.udBatchSize.ValueChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label6
@@ -235,7 +243,7 @@
             this.udBetweenBatches.Size = new System.Drawing.Size(44, 20);
             this.udBetweenBatches.TabIndex = 2;
             this.udBetweenBatches.Value = new decimal(new int[] {
-            60,
+            1,
             0,
             0,
             0});
@@ -278,6 +286,7 @@
             this.txtRcptFile.Name = "txtRcptFile";
             this.txtRcptFile.Size = new System.Drawing.Size(521, 20);
             this.txtRcptFile.TabIndex = 6;
+            this.txtRcptFile.Text = "data\\rcpt.txt";
             this.txtRcptFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtFrom
@@ -287,6 +296,7 @@
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(194, 20);
             this.txtFrom.TabIndex = 1;
+            this.txtFrom.Text = "mssmax@gmail.com";
             this.txtFrom.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label8
@@ -329,6 +339,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mailer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
