@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +13,9 @@ namespace mailer
 {
     public partial class Form1 : Form
     {
+        private bool m_bSending;
+        private Thread m_Thread;
+
         public Form1()
         {
             InitializeComponent();
@@ -58,16 +62,62 @@ namespace mailer
             return i != 0;
         }
 
+        private void SenderThread()
+        {
+            string sServer = System.Configuration.ConfigurationManager.AppSettings["server"];
+            int iPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["port"]);
+            Random rnd = new Random();
+
+            string sRcpts = txtRcptFile.Text;
+            string sBody = txtBodyFile.Text;
+            string sFrom = txtFrom.Text;
+            string sUser = txtUserName.Text;
+            string sPassword = txtPassword.Text;
+            string sSubject = txtSubject.Text;
+
+            int iBatchSize = (int)udBatchSize.Value;
+            int iEmailDelay = (int)udBetweenEmails.Value;
+            int iBatchDelay = (int)udBetweenBatches.Value;
+
+            for (int i = 1; i < 100; i++)
+            {
+                string sText = String.Empty;
+                bool bBatchDelay = ((i % iBatchSize) == 0);
+
+                sText = String.Format("Sending to {0}...", i);
+                if (bBatchDelay)
+                {
+                    sText += "and pausing between batches...";
+                }
+
+                lblProgress.Invoke((MethodInvoker)delegate
+                {
+                    lblProgress.Text = sText;
+                });
+
+                // send the email to the recipient
+
+                Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
+            }
+        }
+
         private void Send_Click(object sender, EventArgs e)
         {
-            if (IsValidInput())
+            Button btn = (Button)sender;
+            m_bSending = !m_bSending;
+            btn.Text = (m_bSending) ? "Stop" : "Start";
+            if (m_bSending)
             {
-                Button btn = (Button)sender;
-                m_bSending = !m_bSending;
-                btn.Text = (m_bSending) ? "Stop" : "Start";
                 // continue with creating separate thread to send emails
-                string sServer = System.Configuration.ConfigurationManager.AppSettings["server"];
-                int iPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["port"]);
+                m_Thread = new Thread(SenderThread);
+                m_Thread.Start();
+            }
+            else
+            {
+                m_Thread.Abort();
+                m_Thread.Join();
+                m_Thread = null;
+                lblProgress.Text = String.Empty;
             }
         }
 

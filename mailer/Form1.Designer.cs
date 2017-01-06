@@ -6,7 +6,6 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private bool m_bSending = false;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -52,6 +51,7 @@
             this.txtRcptFile = new System.Windows.Forms.TextBox();
             this.txtFrom = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).BeginInit();
@@ -298,11 +298,20 @@
             this.label8.TabIndex = 10;
             this.label8.Text = "From:";
             // 
+            // lblProgress
+            // 
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Location = new System.Drawing.Point(201, 384);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(0, 15);
+            this.lblProgress.TabIndex = 11;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 420);
+            this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtFrom);
             this.Controls.Add(this.btnSelectRcpt);
@@ -357,6 +366,7 @@
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown udBatchSize;
+        private System.Windows.Forms.Label lblProgress;
     }
 }
 
