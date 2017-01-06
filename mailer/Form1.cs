@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,10 +18,17 @@ namespace mailer
     {
         private bool m_bSending;
         private Thread m_Thread;
+        private SmtpClient m_Smtp;
 
         public Form1()
         {
             InitializeComponent();
+
+            string sServer = System.Configuration.ConfigurationManager.AppSettings["server"];
+            int iPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["port"]);
+
+            m_Smtp = new SmtpClient(sServer, iPort);
+            m_Smtp.EnableSsl = true;
         }
 
         private string GetSelectedFileName()
@@ -65,8 +74,6 @@ namespace mailer
 
         private void SenderThread()
         {
-            string sServer = System.Configuration.ConfigurationManager.AppSettings["server"];
-            int iPort = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["port"]);
             Random rnd = new Random();
 
             string sBody = String.Empty;
@@ -107,9 +114,11 @@ namespace mailer
                 return;
             }
 
-            string sFrom = txtFrom.Text;
             string sUser = txtUserName.Text;
             string sPassword = txtPassword.Text;
+            m_Smtp.Credentials = new NetworkCredential(sUser, sPassword);
+
+            string sFrom = txtFrom.Text;
             string sSubject = txtSubject.Text;
 
             int iBatchSize = (int)udBatchSize.Value;
@@ -121,9 +130,9 @@ namespace mailer
             {
                 string sText = String.Empty;
                 bool bBatchDelay = ((i % iBatchSize) == 0);
-                ++i;
 
-                sText = String.Format("Sending to {0}...", sRcpt);
+                sText = String.Format("Sending to {0} ( {1} of {2} )...", sRcpt, i, lstRcpts.Count);
+                ++i;
                 if (bBatchDelay)
                 {
                     sText += "and pausing between batches...";
@@ -135,17 +144,19 @@ namespace mailer
                 });
 
                 // send the email to the recipient
-                SendEmail(sFrom, sRcpt, sUser, sPassword, sBody);
+                SendEmail(sFrom, sRcpt, sSubject, sBody);
 
                 Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
             }
+
+            StopSending();
         }
 
-        private void SendEmail(string sFrom, string sRcpt, string sUser, string sPassword, string sBody)
+        private void SendEmail(string sFrom, string sRcpt, string sSubject, string sBody)
         {
             try
             {
-
+                m_Smtp.Send(sFrom, sRcpt, sSubject, sBody);
             }
             catch(Exception e)
             {
@@ -158,7 +169,8 @@ namespace mailer
             //TODO: look into more efficient way of logging, e.g. without re-opening the file all the time
             using (TextWriter w = new StreamWriter("errors.txt", true))
             {
-                w.WriteLine(String.Format("Failed to send mail to {0}, error {1}", sRcpt, e));
+                w.WriteLine(String.Format("Failed to send mail to [[[ {0} ]]], error === {1} ===", sRcpt, e));
+                w.WriteLine("===========================================================================================================");
             }
         }
 
@@ -208,7 +220,10 @@ namespace mailer
             {
                 if(ctrl != btnSend && ctrl != lblProgress)
                 {
-                    ctrl.Enabled = v;
+                    ctrl.Invoke((MethodInvoker)delegate
+                    {
+                        ctrl.Enabled = v;
+                    });                    
                 }
             }
         }
