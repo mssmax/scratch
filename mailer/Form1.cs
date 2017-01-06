@@ -29,6 +29,7 @@ namespace mailer
 
             m_Smtp = new SmtpClient(sServer, iPort);
             m_Smtp.EnableSsl = true;
+            m_Smtp.DeliveryFormat = SmtpDeliveryFormat.International;
         }
 
         private string GetSelectedFileName()
