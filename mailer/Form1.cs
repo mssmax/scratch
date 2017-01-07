@@ -34,15 +34,19 @@ namespace mailer
 
         private string GetSelectedFileName(string sPrevText)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.Multiselect = false;
-            if (dlg.ShowDialog() == DialogResult.OK)
+            using (OpenFileDialog dlg = new OpenFileDialog())
             {
-                return dlg.FileName;
-            }
-            else
-            {
-                return sPrevText;
+                dlg.Multiselect = false;
+                dlg.InitialDirectory = Environment.CurrentDirectory;
+                dlg.FileName = sPrevText;
+                if (dlg.ShowDialog() == DialogResult.OK)
+                {
+                    return dlg.FileName;
+                }
+                else
+                {
+                    return sPrevText;
+                }
             }
         }
 
