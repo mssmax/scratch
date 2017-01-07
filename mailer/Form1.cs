@@ -32,7 +32,7 @@ namespace mailer
             m_Smtp.DeliveryFormat = SmtpDeliveryFormat.International;
         }
 
-        private string GetSelectedFileName()
+        private string GetSelectedFileName(string sPrevText)
         {
             OpenFileDialog dlg = new OpenFileDialog();
             dlg.Multiselect = false;
@@ -42,7 +42,7 @@ namespace mailer
             }
             else
             {
-                return String.Empty;
+                return sPrevText;
             }
         }
 
@@ -77,20 +77,7 @@ namespace mailer
         {
             Random rnd = new Random();
 
-            string sBody = String.Empty;
-            try
-            {
-                using (TextReader r = new StreamReader(txtBodyFile.Text))
-                {
-                    sBody = r.ReadToEnd();
-                }
-            }
-            catch(Exception e)
-            {
-                MessageBox.Show(String.Format("Exception occurred while reading body file: {0}", e), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                StopSending();
-                return;
-            }
+            string sBody = txtBodyFile.Text;
 
             List<string> lstRcpts = new List<string>();
 
@@ -147,7 +134,15 @@ namespace mailer
                 // send the email to the recipient
                 SendEmail(sFrom, sRcpt, sSubject, sBody);
 
-                Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
+                // no need to sleep over the last recipient
+                if(i < lstRcpts.Count)
+                    Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
+            }
+
+            string errs = Environment.CurrentDirectory + "\\errors.txt";
+            if (File.Exists(errs))
+            {
+                MessageBox.Show(String.Format("There were errors while sending the mailout, please check {0} for more information", errs), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             StopSending();
@@ -157,7 +152,20 @@ namespace mailer
         {
             try
             {
-                m_Smtp.Send(sFrom, sRcpt, sSubject, sBody);
+                using (MailMessage msg = new MailMessage(sFrom, sRcpt))
+                {
+                    msg.Subject = sSubject;
+                    msg.SubjectEncoding = Encoding.UTF8;
+                    string sExt = Path.GetExtension(sBody).TrimStart('.');
+
+                    if (sExt == "txt")
+                        sExt = "plain";
+
+                    AlternateView view = new AlternateView(sBody, "text/" + sExt);
+                    msg.AlternateViews.Add(view);
+                    msg.BodyEncoding = Encoding.UTF8;
+                    m_Smtp.Send(msg);
+                }
             }
             catch(Exception e)
             {
@@ -246,12 +254,12 @@ namespace mailer
 
         private void btnSelectBody_Click(object sender, EventArgs e)
         {
-            txtBodyFile.Text = GetSelectedFileName();
+            txtBodyFile.Text = GetSelectedFileName(txtBodyFile.Text);
         }
 
         private void btnSelectRcpt_Click(object sender, EventArgs e)
         {
-            txtRcptFile.Text = GetSelectedFileName();
+            txtRcptFile.Text = GetSelectedFileName(txtRcptFile.Text);
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)

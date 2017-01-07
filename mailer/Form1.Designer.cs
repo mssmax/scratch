@@ -77,7 +77,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(14, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 15);
+            this.label2.Size = new System.Drawing.Size(56, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Password:";
             // 
@@ -88,7 +88,7 @@
             this.label1.ForeColor = System.Drawing.Color.Black;
             this.label1.Location = new System.Drawing.Point(11, 21);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 15);
+            this.label1.Size = new System.Drawing.Size(32, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "User:";
             // 
@@ -119,7 +119,7 @@
             this.btnSend.Name = "btnSend";
             this.btnSend.Size = new System.Drawing.Size(133, 31);
             this.btnSend.TabIndex = 8;
-            this.btnSend.Text = "Start";
+            this.btnSend.Text = "&Start";
             this.btnSend.UseVisualStyleBackColor = true;
             this.btnSend.Click += new System.EventHandler(this.Send_Click);
             // 
@@ -140,7 +140,7 @@
             this.txtBodyFile.Name = "txtBodyFile";
             this.txtBodyFile.Size = new System.Drawing.Size(523, 20);
             this.txtBodyFile.TabIndex = 4;
-            this.txtBodyFile.Text = "data\\body.txt";
+            this.txtBodyFile.Text = "data\\body.html";
             this.txtBodyFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label3
@@ -148,7 +148,7 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(25, 207);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(51, 15);
+            this.label3.Size = new System.Drawing.Size(46, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "Subject:";
             // 
@@ -157,7 +157,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(25, 259);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 15);
+            this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 5;
             this.label4.Text = "Body file (TXT):";
             // 
@@ -191,7 +191,7 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(15, 25);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(66, 15);
+            this.label9.Size = new System.Drawing.Size(59, 13);
             this.label9.TabIndex = 5;
             this.label9.Text = "Batch size:";
             // 
@@ -218,7 +218,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(15, 74);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(136, 15);
+            this.label6.Size = new System.Drawing.Size(118, 13);
             this.label6.TabIndex = 3;
             this.label6.Text = "Between batches (min):";
             // 
@@ -227,7 +227,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(15, 49);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(128, 15);
+            this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 2;
             this.label5.Text = "Between emails (sec):";
             // 
@@ -275,7 +275,7 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(25, 312);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(115, 15);
+            this.label7.Size = new System.Drawing.Size(101, 13);
             this.label7.TabIndex = 8;
             this.label7.Text = "Recipient file (CSV):";
             // 
@@ -304,7 +304,7 @@
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(25, 159);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(39, 15);
+            this.label8.Size = new System.Drawing.Size(33, 13);
             this.label8.TabIndex = 10;
             this.label8.Text = "From:";
             // 
@@ -313,7 +313,7 @@
             this.lblProgress.AutoSize = true;
             this.lblProgress.Location = new System.Drawing.Point(201, 384);
             this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(0, 15);
+            this.lblProgress.Size = new System.Drawing.Size(0, 13);
             this.lblProgress.TabIndex = 11;
             // 
             // Form1
