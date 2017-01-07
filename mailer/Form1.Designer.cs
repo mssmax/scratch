@@ -52,6 +52,8 @@
             this.txtFrom = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.lblProgress = new System.Windows.Forms.Label();
+            this.lstAtts = new System.Windows.Forms.ListBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).BeginInit();
@@ -128,7 +130,7 @@
             this.txtSubject.BackColor = System.Drawing.SystemColors.Control;
             this.txtSubject.Location = new System.Drawing.Point(25, 223);
             this.txtSubject.Name = "txtSubject";
-            this.txtSubject.Size = new System.Drawing.Size(546, 20);
+            this.txtSubject.Size = new System.Drawing.Size(350, 20);
             this.txtSubject.TabIndex = 2;
             this.txtSubject.Text = "Fantastic offer";
             this.txtSubject.TextChanged += new System.EventHandler(this.RecolorTextBox);
@@ -136,9 +138,9 @@
             // txtBodyFile
             // 
             this.txtBodyFile.BackColor = System.Drawing.SystemColors.Control;
-            this.txtBodyFile.Location = new System.Drawing.Point(48, 278);
+            this.txtBodyFile.Location = new System.Drawing.Point(48, 273);
             this.txtBodyFile.Name = "txtBodyFile";
-            this.txtBodyFile.Size = new System.Drawing.Size(523, 20);
+            this.txtBodyFile.Size = new System.Drawing.Size(327, 20);
             this.txtBodyFile.TabIndex = 4;
             this.txtBodyFile.Text = "data\\body.html";
             this.txtBodyFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
@@ -155,7 +157,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(25, 259);
+            this.label4.Location = new System.Drawing.Point(25, 254);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(80, 13);
             this.label4.TabIndex = 5;
@@ -163,7 +165,7 @@
             // 
             // btnSelectBody
             // 
-            this.btnSelectBody.Location = new System.Drawing.Point(23, 278);
+            this.btnSelectBody.Location = new System.Drawing.Point(23, 273);
             this.btnSelectBody.Name = "btnSelectBody";
             this.btnSelectBody.Size = new System.Drawing.Size(24, 21);
             this.btnSelectBody.TabIndex = 3;
@@ -262,7 +264,7 @@
             // 
             // btnSelectRcpt
             // 
-            this.btnSelectRcpt.Location = new System.Drawing.Point(25, 331);
+            this.btnSelectRcpt.Location = new System.Drawing.Point(25, 325);
             this.btnSelectRcpt.Name = "btnSelectRcpt";
             this.btnSelectRcpt.Size = new System.Drawing.Size(24, 21);
             this.btnSelectRcpt.TabIndex = 5;
@@ -273,7 +275,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(25, 312);
+            this.label7.Location = new System.Drawing.Point(25, 306);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(101, 13);
             this.label7.TabIndex = 8;
@@ -282,9 +284,9 @@
             // txtRcptFile
             // 
             this.txtRcptFile.BackColor = System.Drawing.SystemColors.Control;
-            this.txtRcptFile.Location = new System.Drawing.Point(50, 331);
+            this.txtRcptFile.Location = new System.Drawing.Point(50, 325);
             this.txtRcptFile.Name = "txtRcptFile";
-            this.txtRcptFile.Size = new System.Drawing.Size(521, 20);
+            this.txtRcptFile.Size = new System.Drawing.Size(325, 20);
             this.txtRcptFile.TabIndex = 6;
             this.txtRcptFile.Text = "data\\rcpt.txt";
             this.txtRcptFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
@@ -316,11 +318,34 @@
             this.lblProgress.Size = new System.Drawing.Size(0, 13);
             this.lblProgress.TabIndex = 11;
             // 
+            // lstAtts
+            // 
+            this.lstAtts.FormattingEnabled = true;
+            this.lstAtts.HorizontalScrollbar = true;
+            this.lstAtts.Location = new System.Drawing.Point(380, 223);
+            this.lstAtts.Name = "lstAtts";
+            this.lstAtts.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.lstAtts.Size = new System.Drawing.Size(205, 121);
+            this.lstAtts.TabIndex = 12;
+            this.lstAtts.DoubleClick += new System.EventHandler(this.lstAtts_DoubleClick);
+            this.lstAtts.KeyUp += new System.Windows.Forms.KeyEventHandler(this.lstAtts_KeyUp);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(380, 207);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(69, 13);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Attachments:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(596, 420);
+            this.Controls.Add(this.label10);
+            this.Controls.Add(this.lstAtts);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.txtFrom);
@@ -336,6 +361,7 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.KeyPreview = true;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mailer";
@@ -378,6 +404,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.NumericUpDown udBatchSize;
         private System.Windows.Forms.Label lblProgress;
+        private System.Windows.Forms.ListBox lstAtts;
+        private System.Windows.Forms.Label label10;
     }
 }
 

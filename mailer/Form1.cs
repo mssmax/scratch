@@ -180,6 +180,14 @@ namespace mailer
                     AlternateView view = new AlternateView(sBody, "text/" + sExt);
                     msg.AlternateViews.Add(view);
                     msg.BodyEncoding = Encoding.UTF8;
+
+                    //add attachments if any
+                    foreach(string att in lstAtts.Items)
+                    {
+                        // TODO: look into disposing of attachments properly since it seems to implement Dispose
+                        msg.Attachments.Add(new Attachment(att));
+                    }
+
                     m_Smtp.Send(msg);
                 }
             }
@@ -284,6 +292,25 @@ namespace mailer
             {
                 m_Thread.Abort();
                 m_Thread.Join();
+            }
+        }
+
+        private void lstAtts_DoubleClick(object sender, EventArgs e)
+        {
+            string sFile = GetSelectedFileName(String.Empty);
+            string sFileName = Path.GetFileName(sFile);
+
+            lstAtts.Items.Add(sFile);
+        }
+
+        private void lstAtts_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                for(; lstAtts.SelectedIndices.Count > 0;)
+                {
+                    lstAtts.Items.Remove(lstAtts.SelectedItem);
+                }
             }
         }
     }
