@@ -30,6 +30,19 @@ namespace mailer
             m_Smtp = new SmtpClient(sServer, iPort);
             m_Smtp.EnableSsl = true;
             m_Smtp.DeliveryFormat = SmtpDeliveryFormat.International;
+
+            string s = System.Configuration.ConfigurationManager.AppSettings["defbody"];
+            if (!String.IsNullOrEmpty(s))
+                txtBodyFile.Text = s;
+            s = System.Configuration.ConfigurationManager.AppSettings["defrcpt"];
+            if (!String.IsNullOrEmpty(s))
+                txtRcptFile.Text = s;
+            s = System.Configuration.ConfigurationManager.AppSettings["deffrom"];
+            if (!String.IsNullOrEmpty(s))
+                txtFrom.Text = s;
+            s = System.Configuration.ConfigurationManager.AppSettings["defusername"];
+            if (!String.IsNullOrEmpty(s))
+                txtUserName.Text = s;
         }
 
         private string GetSelectedFileName(string sPrevText)
@@ -51,8 +64,7 @@ namespace mailer
         }
 
         private void RecolorTextBox(object sender, EventArgs e)
-        {
-            
+        {          
             if (IsValidInput())
             {
                 btnSend.Enabled = true;
