@@ -111,7 +111,6 @@
             this.txtUserName.Name = "txtUserName";
             this.txtUserName.Size = new System.Drawing.Size(172, 20);
             this.txtUserName.TabIndex = 0;
-            this.txtUserName.Text = "mssmax@gmail.com";
             this.txtUserName.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // btnSend
@@ -132,7 +131,6 @@
             this.txtSubject.Name = "txtSubject";
             this.txtSubject.Size = new System.Drawing.Size(350, 20);
             this.txtSubject.TabIndex = 2;
-            this.txtSubject.Text = "Fantastic offer";
             this.txtSubject.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtBodyFile
@@ -142,7 +140,6 @@
             this.txtBodyFile.Name = "txtBodyFile";
             this.txtBodyFile.Size = new System.Drawing.Size(327, 20);
             this.txtBodyFile.TabIndex = 4;
-            this.txtBodyFile.Text = "data\\body.html";
             this.txtBodyFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label3
@@ -209,7 +206,7 @@
             this.udBatchSize.Size = new System.Drawing.Size(44, 20);
             this.udBatchSize.TabIndex = 0;
             this.udBatchSize.Value = new decimal(new int[] {
-            5,
+            480,
             0,
             0,
             0});
@@ -237,7 +234,7 @@
             // 
             this.udBetweenBatches.Location = new System.Drawing.Point(157, 71);
             this.udBetweenBatches.Maximum = new decimal(new int[] {
-            1440,
+            50000,
             0,
             0,
             0});
@@ -245,7 +242,7 @@
             this.udBetweenBatches.Size = new System.Drawing.Size(44, 20);
             this.udBetweenBatches.TabIndex = 2;
             this.udBetweenBatches.Value = new decimal(new int[] {
-            1,
+            1445,
             0,
             0,
             0});
@@ -257,7 +254,7 @@
             this.udBetweenEmails.Size = new System.Drawing.Size(44, 20);
             this.udBetweenEmails.TabIndex = 1;
             this.udBetweenEmails.Value = new decimal(new int[] {
-            5,
+            20,
             0,
             0,
             0});
@@ -288,7 +285,6 @@
             this.txtRcptFile.Name = "txtRcptFile";
             this.txtRcptFile.Size = new System.Drawing.Size(325, 20);
             this.txtRcptFile.TabIndex = 6;
-            this.txtRcptFile.Text = "data\\rcpt.txt";
             this.txtRcptFile.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // txtFrom
@@ -298,7 +294,6 @@
             this.txtFrom.Name = "txtFrom";
             this.txtFrom.Size = new System.Drawing.Size(194, 20);
             this.txtFrom.TabIndex = 1;
-            this.txtFrom.Text = "mssmax@gmail.com";
             this.txtFrom.TextChanged += new System.EventHandler(this.RecolorTextBox);
             // 
             // label8
