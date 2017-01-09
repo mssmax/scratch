@@ -54,11 +54,14 @@
             this.lblProgress = new System.Windows.Forms.Label();
             this.lstAtts = new System.Windows.Forms.ListBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.udMaxBCC = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBetweenBatches)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBetweenEmails)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMaxBCC)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -172,6 +175,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.udMaxBCC);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.udBatchSize);
             this.groupBox2.Controls.Add(this.label6);
@@ -180,7 +185,7 @@
             this.groupBox2.Controls.Add(this.udBetweenEmails);
             this.groupBox2.Location = new System.Drawing.Point(377, 41);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(208, 100);
+            this.groupBox2.Size = new System.Drawing.Size(208, 120);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Batch parameters";
@@ -206,7 +211,7 @@
             this.udBatchSize.Size = new System.Drawing.Size(44, 20);
             this.udBatchSize.TabIndex = 0;
             this.udBatchSize.Value = new decimal(new int[] {
-            480,
+            25,
             0,
             0,
             0});
@@ -250,11 +255,16 @@
             // udBetweenEmails
             // 
             this.udBetweenEmails.Location = new System.Drawing.Point(157, 46);
+            this.udBetweenEmails.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.udBetweenEmails.Name = "udBetweenEmails";
             this.udBetweenEmails.Size = new System.Drawing.Size(44, 20);
             this.udBetweenEmails.TabIndex = 1;
             this.udBetweenEmails.Value = new decimal(new int[] {
-            20,
+            60,
             0,
             0,
             0});
@@ -334,6 +344,37 @@
             this.label10.TabIndex = 13;
             this.label10.Text = "Attachments:";
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 98);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(54, 13);
+            this.label11.TabIndex = 7;
+            this.label11.Text = "Max BCC:";
+            // 
+            // udMaxBCC
+            // 
+            this.udMaxBCC.Location = new System.Drawing.Point(157, 95);
+            this.udMaxBCC.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.udMaxBCC.Minimum = new decimal(new int[] {
+            14,
+            0,
+            0,
+            0});
+            this.udMaxBCC.Name = "udMaxBCC";
+            this.udMaxBCC.Size = new System.Drawing.Size(44, 20);
+            this.udMaxBCC.TabIndex = 6;
+            this.udMaxBCC.Value = new decimal(new int[] {
+            14,
+            0,
+            0,
+            0});
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -368,6 +409,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.udBatchSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBetweenBatches)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.udBetweenEmails)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.udMaxBCC)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -401,6 +443,8 @@
         private System.Windows.Forms.Label lblProgress;
         private System.Windows.Forms.ListBox lstAtts;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown udMaxBCC;
     }
 }
 

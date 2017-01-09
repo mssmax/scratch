@@ -128,15 +128,17 @@ namespace mailer
             int iBatchSize = (int)udBatchSize.Value;
             int iEmailDelay = (int)udBetweenEmails.Value;
             int iBatchDelay = (int)udBetweenBatches.Value;
+            int iMaxBCC = (int)udMaxBCC.Value;
 
             int i = 1;
+            MailAddressCollection rcpts = new MailAddressCollection();
             foreach(string sRcpt in lstRcpts)
             {
                 string sText = String.Empty;
                 bool bBatchDelay = ((i % iBatchSize) == 0);
 
                 sText = String.Format("Sending to {0} ( {1} of {2} )...", sRcpt, i, lstRcpts.Count);
-                ++i;
+                rcpts.Add(sRcpt);
                 if (bBatchDelay)
                 {
                     sText += "and pausing between batches...";
@@ -148,11 +150,21 @@ namespace mailer
                 });
 
                 // send the email to the recipient
-                SendEmail(sFrom, sRcpt, sSubject, sBody);
+                if ((i % iMaxBCC) == 0)
+                {
+                    SendEmail(sFrom, rcpts, sSubject, sBody);
+                    rcpts = new MailAddressCollection();
+                    // no need to sleep over the last recipient
+                    if (i < lstRcpts.Count)
+                        Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
+                }
+                ++i;
+            }
 
-                // no need to sleep over the last recipient
-                if(i < lstRcpts.Count)
-                    Thread.Sleep((bBatchDelay) ? iBatchDelay * 1000 * 60 : rnd.Next(iEmailDelay * 1000));
+            // send to the remaining recipients
+            if (rcpts.Count > 0)
+            {
+                SendEmail(sFrom, rcpts, sSubject, sBody);
             }
 
             string errs = Environment.CurrentDirectory + "\\errors.txt";
@@ -164,12 +176,18 @@ namespace mailer
             StopSending();
         }
 
-        private void SendEmail(string sFrom, string sRcpt, string sSubject, string sBody)
+        private void SendEmail(string sFrom, MailAddressCollection rcpts, string sSubject, string sBody)
         {
             try
             {
-                using (MailMessage msg = new MailMessage(sFrom, sRcpt))
+                using (MailMessage msg = new MailMessage())
                 {
+                    foreach (var rcpt in rcpts)
+                    {
+                        msg.Bcc.Add(rcpt);
+                    }
+
+                    msg.From = new MailAddress(sFrom);
                     msg.Subject = sSubject;
                     msg.SubjectEncoding = Encoding.UTF8;
                     string sExt = Path.GetExtension(sBody).TrimStart('.');
@@ -193,17 +211,20 @@ namespace mailer
             }
             catch(Exception e)
             {
-                LogError(sRcpt, e);
+                LogError(rcpts, e);
             }
         }
 
-        private void LogError(string sRcpt, Exception e)
+        private void LogError(MailAddressCollection rcpts, Exception e)
         {
             //TODO: look into more efficient way of logging, e.g. without re-opening the file all the time
             using (TextWriter w = new StreamWriter("errors.txt", true))
             {
-                w.WriteLine(String.Format("Failed to send mail to [[[ {0} ]]], error === {1} ===", sRcpt, e));
-                w.WriteLine("===========================================================================================================");
+                foreach (var rcpt in rcpts)
+                {
+                    w.WriteLine(String.Format("Failed to send mail to [[[ {0} ]]], error === {1} ===", rcpt.Address, e));
+                    w.WriteLine("===========================================================================================================");
+                }
             }
         }
 
