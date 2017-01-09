@@ -1,0 +1,40 @@
+﻿private bool HandleDirtyItem()
+        {
+            // there is a bug in .NET 2.0 which causes the listbox to ignore
+            // any changes done in the datasource.  The result is that the UI is not
+            // updated as soon as the changes are applied.  The line below is a workaround
+            // for this and causes the listbox to refresh its items
+            // http://social.msdn.microsoft.com/Forums/en/winformsdatacontrols/thread/8bc55a2c-3699-496d-b015-d14ce3d08123
+            ((CurrencyManager)lstProjects.BindingContext[lstProjects.DataSource]).Refresh();
+
+            return true;
+
+            var msg = string.Format(
+                "You have unsaved data in project [{0}].  Do you want to save?",
+                _currentItem.Target.Name);
+
+            var dr = MessageBox.Show(
+                    msg,
+                    "Unsaved Work",
+                    MessageBoxButtons.YesNoCancel);
+
+            if (dr == DialogResult.Cancel)
+                return false;
+
+            if (dr == DialogResult.Yes)
+            {
+                _currentItem.CommitChanges();
+               
+                // there is a bug in .NET 2.0 which causes the listbox to ignore
+                // any changes done in the datasource.  The result is that the UI is not
+                // updated as soon as the changes are applied.  The line below is a workaround
+                // for this and causes the listbox to refresh its items
+                // http://social.msdn.microsoft.com/Forums/en/winformsdatacontrols/thread/8bc55a2c-3699-496d-b015-d14ce3d08123
+                ((CurrencyManager)lstProjects.BindingContext[lstProjects.DataSource]).Refresh();
+
+                return true;
+            }
+            
+            _currentItem.CancelEdit();
+            return true;
+        }

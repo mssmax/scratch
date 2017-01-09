@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{9854845E-7228-41C5-BD72-4B3F5F6B83E3}"
+	ProjectSection(SolutionItems) = preProject
+		Dependencies\log4net.dll = Dependencies\log4net.dll
+		Dependencies\log4net.xml = Dependencies\log4net.xml
+		Dependencies\NAnt.Core.dll = Dependencies\NAnt.Core.dll
+		Dependencies\NAnt.Core.xml = Dependencies\NAnt.Core.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{CC95E553-D39F-4C53-9670-12E435109DE0}"
+	ProjectSection(SolutionItems) = preProject
+		build.cmd = build.cmd
+		managedbuilder.build = managedbuilder.build
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedBuilder.Core", "ManagedBuilder.Core\ManagedBuilder.Core.csproj", "{6D99B19E-6B5D-4F63-AF3B-537509D6823A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedBuilder.NantTasks", "ManagedBuilder.NantTasks\ManagedBuilder.NantTasks.csproj", "{F6765E2C-F07F-4042-A7CF-E6DB77CA5019}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedBuilder.UI", "ManagedBuilder.UI\ManagedBuilder.UI.csproj", "{AB90DDCE-FA76-4E8D-812F-F3ADC078CB78}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedBuilder.CommandLine", "ManagedBuilder.CommandLine\ManagedBuilder.CommandLine.csproj", "{3C9D6DBE-BA8A-40B8-B888-6700C74FDDD7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6D99B19E-6B5D-4F63-AF3B-537509D6823A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D99B19E-6B5D-4F63-AF3B-537509D6823A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D99B19E-6B5D-4F63-AF3B-537509D6823A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D99B19E-6B5D-4F63-AF3B-537509D6823A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6765E2C-F07F-4042-A7CF-E6DB77CA5019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6765E2C-F07F-4042-A7CF-E6DB77CA5019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6765E2C-F07F-4042-A7CF-E6DB77CA5019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6765E2C-F07F-4042-A7CF-E6DB77CA5019}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB90DDCE-FA76-4E8D-812F-F3ADC078CB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB90DDCE-FA76-4E8D-812F-F3ADC078CB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB90DDCE-FA76-4E8D-812F-F3ADC078CB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB90DDCE-FA76-4E8D-812F-F3ADC078CB78}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C9D6DBE-BA8A-40B8-B888-6700C74FDDD7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C9D6DBE-BA8A-40B8-B888-6700C74FDDD7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C9D6DBE-BA8A-40B8-B888-6700C74FDDD7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C9D6DBE-BA8A-40B8-B888-6700C74FDDD7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
