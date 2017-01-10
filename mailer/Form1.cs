@@ -220,9 +220,17 @@ namespace mailer
             //TODO: look into more efficient way of logging, e.g. without re-opening the file all the time
             using (TextWriter w = new StreamWriter("errors.txt", true))
             {
-                foreach (var rcpt in rcpts)
+                if (rcpts != null)
                 {
-                    w.WriteLine(String.Format("Failed to send mail to [[[ {0} ]]], error === {1} ===", rcpt.Address, e));
+                    foreach (var rcpt in rcpts)
+                    {
+                        w.WriteLine(String.Format("Failed to send mail to [[[ {0} ]]], error === {1} ===", rcpt.Address, e));
+                        w.WriteLine("===========================================================================================================");
+                    }
+                }
+                else
+                {
+                    w.WriteLine(String.Format("General failure, error === {0} ===", e));
                     w.WriteLine("===========================================================================================================");
                 }
             }
