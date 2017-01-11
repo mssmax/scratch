@@ -226,8 +226,8 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 	// Windows is not capable of handling input fast enough ( probably due to thread switching ).
 	if (!bPasswordOnly)
 	{
-		SendString(A2T(szUserName), TRUE);
-		Sleep(200);
+		SendString(A2T(szUserName), FALSE);
+		Sleep(400);
 		SendCode(9);
 		Sleep(200);
 	}
