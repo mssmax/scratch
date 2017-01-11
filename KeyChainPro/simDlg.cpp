@@ -159,17 +159,12 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 	CHAR szUserName[256] = { 0 };
 	TCHAR szPassword[256] = { 0 };
 	CJetTable keysTable;
+	LARGE_INTEGER liZero = { 0 };
+
 	CALL_JET(g_DB.GetTable("tb_keys", keysTable));
 	CALL_JET(keysTable.BeginTransaction());
 
-	/*JET_ERR err = keysTable.Select()
-		.Where("tb_keys_app", OP_EQ, T2A(sAppTitle))
-		.Done();
-	*/
 	JET_ERR err = keysTable.Select("tb_keys_app", OP_EQ, T2A(sAppTitle));
-	//JET_ERR err = keysTable.Select()
-	//	.ByRange("tb_keys_app", T2A(sAppTitle), T2A(sAppTitle))
-	//	.Done();
 	if (err < 0)
 	{ 
 		CHAR szErrorMsg[1024] = { 0 }; 
@@ -188,30 +183,18 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 	}
 	else
 	{
-		ULONG ulRecCount = 0;
-		err = JetIndexRecordCount(g_DB.GetSessionID(), keysTable, &ulRecCount, 0);
-		if (err >= 0)
+		CMyKeysDlg dlg(wnd, keysTable);
+		int iRes = dlg.DoModal();
+		if (iRes == IDOK)
 		{
-			if (ulRecCount > 1)
-			{
-				CMyKeysDlg dlg(wnd, keysTable);
-				int iRes = dlg.DoModal();
-				if (iRes == IDOK)
-				{
-					CALL_JET(keysTable.Select(
-						"tb_keys_keyname", 
-						OP_EQ, 
-						ConvW2A(dlg.GetSelectedKeyName()).c_str()));
-				}
-				else
-				{
-					goto EXIT;
-				}
-			}
+			CALL_JET(keysTable.Select(
+				"tb_keys_keyname",
+				OP_EQ,
+				ConvW2A(dlg.GetSelectedKeyName()).c_str()));
 		}
 		else
 		{
-			CALL_JET(err);
+			goto EXIT;
 		}
 	}
 
@@ -229,6 +212,7 @@ void CSimDlg::PasteCredentials(BOOL bPasswordOnly)
 
 	CALL_JET(keysTable.CommitTransaction());
 
+	spPassStrm->Seek(liZero, STREAM_SEEK_SET, NULL);
 	hr = DecryptPassword(spPassStrm, szPassword);
 	if (FAILED(hr))
 	{

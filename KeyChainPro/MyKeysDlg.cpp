@@ -43,8 +43,7 @@ void CMyKeysDlg::ReloadData()
 	m_lstKeys.DeleteAllItems();
 	m_vecPasswords.clear();
 	m_bShowPlainPwds = FALSE;
-
-
+	LARGE_INTEGER liZero = { 0 };
 
 	USES_CONVERSION;
 	CJetTable tbl;
@@ -58,44 +57,42 @@ void CMyKeysDlg::ReloadData()
 		CALL_JET(g_DB.GetTable("tb_keys", tbl));
 	}
 
-	if (!tbl.IsEmpty())
+	e = tbl.BeginTransaction();
+	CALL_JET(e);
+	for (int iItem = 0; e >= 0; iItem++)
 	{
-		e = tbl.BeginTransaction();
-		CALL_JET(e);
-		for (int iItem = 0; e >= 0; iItem++)
+		WCHAR szStr[1024] = { 0 };
+		m_lstKeys.InsertItem(iItem, _T(""));
+		for (int i = 0; i < _countof(s_KeysColumns); i++)
 		{
-			WCHAR szStr[1024] = { 0 };
-			m_lstKeys.InsertItem(iItem, _T(""));
-			for (int i = 0; i < _countof(s_KeysColumns); i++)
+			// TODO: a bit hacky since we assume the fourth column is password
+			// we'll deal with it at some point
+			if (i < 3)
 			{
-				// a bit hacky since we assume the fourth column is password
-				// we'll deal with it at some point
-				if (i < 3)
+				e = tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr));
+				if (e != JET_errSuccess)
 				{
-					e = tbl.GetColumn(s_KeysColumns[i], szStr, _countof(szStr));
-					if (e != JET_errSuccess)
-					{
-						break;
-					}
-					m_lstKeys.SetItemText(iItem, i, szStr);
+					break;
 				}
-				else
-				{
-					IStreamPtr spStrm;
-					CreateStreamOnHGlobal(0, TRUE, &spStrm);
-					CALL_JET(tbl.GetColumn(s_KeysColumns[i], spStrm));
-					m_lstKeys.SetItemText(iItem, i, _T("********"));
-					TCHAR szPassword[512] = { 0 };
-					DecryptPassword(spStrm, szPassword);
-					m_vecPasswords.push_back(szPassword);
-				}
+				m_lstKeys.SetItemText(iItem, i, szStr);
 			}
-			e = tbl.NextRow();
+			else
+			{
+				IStreamPtr spStrm;
+				CreateStreamOnHGlobal(0, TRUE, &spStrm);
+				CALL_JET(tbl.GetColumn(s_KeysColumns[i], spStrm));
+				spStrm->Seek(liZero, STREAM_SEEK_SET, NULL);
+				m_lstKeys.SetItemText(iItem, i, _T("********"));
+				TCHAR szPassword[512] = { 0 };
+				DecryptPassword(spStrm, szPassword);
+				m_vecPasswords.push_back(szPassword);
+			}
 		}
-
-		CALL_JET(tbl.CommitTransaction());
-		m_lstKeys.SetItemState(0, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
+		e = tbl.NextRow();
 	}
+
+	CALL_JET(tbl.CommitTransaction());
+	m_lstKeys.SetItemState(0, LVIS_FOCUSED | LVIS_SELECTED, LVIS_FOCUSED | LVIS_SELECTED);
 
 EXIT:
 	if(m_bReadOnly)
@@ -120,8 +117,14 @@ BOOL CMyKeysDlg::OnInitDialog()
 	ReloadData();
 
 	m_lstKeys.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
+	if(m_lstKeys.GetItemCount() == 1)
+	{
+		m_sKeyName = m_lstKeys.GetItemText(0, 1);
+		m_sPassword = m_vecPasswords[0].c_str();
+		EndDialog(IDOK);
+	}
 
-	return TRUE;  
+	return TRUE;
 }
 
 
