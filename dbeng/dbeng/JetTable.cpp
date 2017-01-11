@@ -503,11 +503,6 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, IStream *value)
 		retInfo.ibLongValue += sizeof(buffer);
 	}
 
-	LARGE_INTEGER liZero = { 0 };
-	ULARGE_INTEGER ullNewPos = { 0 };
-
-	value->Seek(liZero, STREAM_SEEK_SET, &ullNewPos);
-
 	return e;
 }
 
@@ -892,9 +887,8 @@ JET_ERR CJetTable::Join()
 
 BOOL CJetTable::IsEmpty()
 {
-	ULONG ulRecCount = 0;
-	JET_ERR e = JetIndexRecordCount(m_pDBEngine->GetSessionID(), m_tblID, &ulRecCount, 1);
-	if (e >= 0 && ulRecCount > 0)
+	JET_ERR e = JetMove(m_pDBEngine->GetSessionID(), m_tblID, JET_MoveFirst, 0);
+	if (e == JET_errSuccess)
 	{
 		return FALSE;
 	}
