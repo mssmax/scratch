@@ -3,7 +3,7 @@
 
 extern int TestMe(LPCSTR name);
 
-CPropBag::Factory CPropBag::m_sFactory;
+DECLARE_MOCK_FACTORY_IMPL(CPropBag);
 
 namespace testing
 {

@@ -1,5 +1,6 @@
 #pragma once
 
+// these definitions are to be put in a separate header file shared by all unit tests
 #define SHIM_METHOD(type, mt, params, ...) type mt params { return m_pMock->mt(__VA_ARGS__); }
 #define DECLARE_MOCK_FACTORY(classname) \
 public: \
@@ -9,6 +10,7 @@ public: \
 	classname() : m_pMock(m_sFactory.Create()) {} \
 	virtual ~classname() {}
 
+#define DECLARE_MOCK_FACTORY_IMPL(classname) classname::Factory classname::m_sFactory;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -24,6 +26,7 @@ public:
 	MOCK_METHOD1(Get, std::wstring(int));
 };
 
+/**/
 class CPropBag
 {
 	DECLARE_MOCK_FACTORY(CPropBag)
@@ -31,3 +34,4 @@ class CPropBag
 	SHIM_METHOD(void, Set, (int idx, LPCWSTR value), idx, value)
 	SHIM_METHOD(std::wstring, Get, (int idx), idx)
 };
+/**/
