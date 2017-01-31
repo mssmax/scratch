@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 	{ 
 		CPassword pwd;
 		std::string sOutput = pwd.Encrypt(argv[2]);
-		printf("%s", (sOutput + "plain string").c_str());
+		printf("%s", sOutput.c_str());
 	}
 	else if (_stricmp(argv[1], "-d") == 0)
 	{

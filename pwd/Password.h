@@ -2,6 +2,8 @@
 #include <string>
 #pragma comment(lib, "crypt32.lib")
 
+#define CRYPT_STRING_NOCRLF                 0x40000000
+
 class CPassword
 {
 private:
@@ -89,7 +91,7 @@ public:
 		bRet = CryptBinaryToStringW(
 			blbOut.pbData,
 			blbOut.cbData,
-			CRYPT_STRING_BASE64,
+			CRYPT_STRING_BASE64 | CRYPT_STRING_NOCRLF,
 			NULL,
 			&dwSize);
 		if (bRet)
@@ -98,7 +100,7 @@ public:
 			CryptBinaryToStringW(
 				blbOut.pbData,
 				blbOut.cbData,
-				CRYPT_STRING_BASE64,
+				CRYPT_STRING_BASE64| CRYPT_STRING_NOCRLF,
 				&sOutput[0],
 				&dwSize);
 		}
