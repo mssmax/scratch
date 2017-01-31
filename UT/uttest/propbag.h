@@ -10,8 +10,8 @@ public:
 
 class CPropBag
 {
-	DECLARE_MOCK_FACTORY(CPropBag)
+	DECLARE_MOCK_FACTORY(CPropBag);
 
-	SHIM_METHOD(void, Set, (int idx, LPCWSTR value), idx, value)
-	SHIM_METHOD(std::wstring, Get, (int idx), idx)
+	SHIM_METHOD(void, Set, (int idx, LPCWSTR value), idx, value);
+	SHIM_METHOD(std::wstring, Get, (int idx), idx);
 };
