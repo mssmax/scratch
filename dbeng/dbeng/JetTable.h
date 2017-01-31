@@ -76,22 +76,23 @@ public:
 	BOOL IsEmpty();
 
 	// TODO: temporary solution, this should probably be refactored into a separate class
-	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCWSTR value);
-	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value);
-	CJetTable& SetColumn(LPCSTR lpszColumnName, int value);
-	CJetTable& SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCWSTR value, ULONG tag = 1);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value, ULONG tag = 1);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, int value, ULONG tag = 1);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag = 1);
 	// intended for columns of type "binary"
 	CJetTable& SetColumn(LPCSTR lpszColumnName, IStream *value);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, void *buf, ULONG size, ULONG tag = 1);
 
-	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size);
-	JET_ERR GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size);
-	JET_ERR GetColumn(LPCSTR lpszColumnName, int *pValue);
-	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size, ULONG tag = 1);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, ULONG tag = 1);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag = 1);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag = 1);
 	// intended for columns of type "binary"
 	JET_ERR GetColumn(LPCSTR lpszColumnName, IStream *value);
 
 	// for internal use only, may become documented in the future
-	JET_ERR GetColumn(JET_COLUMNID colID, void *pvData, int size);
+	JET_ERR GetColumn(JET_COLUMNID colID, void *pvData, int size, ULONG tag = 1);
 
 	JET_ERR Done();
 

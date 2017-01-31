@@ -189,10 +189,11 @@ JET_TABLEID CJetTable::GetCursor()
 //////////////////////////////////////////////////////////////////////////////////////////
 // TODO: The following set of functions require additional work wrt error handling
 //////////////////////////////////////////////////////////////////////////////////////////
-CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value)
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	GetColInfo(lpszColumnName, &column);
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
 	JET_ERR e = JetSetColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -200,16 +201,17 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCSTR value)
 		value,
 		lstrlenA(value) + sizeof(CHAR),
 		JET_bitSetOverwriteLV,
-		0);
+		&setInfo);
 
 	return *this;
 }
 
-CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCWSTR value)
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCWSTR value, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	GetColInfo(lpszColumnName, &column);
 	std::string s(ConvW2A(value, CP_UTF8));
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
 	JET_ERR e = JetSetColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -217,16 +219,17 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPCWSTR value)
 		s.c_str(),
 		s.length() + 1,
 		JET_bitSetOverwriteLV,
-		0);
+		&setInfo);
 
 	return *this;
 }
 
 
-CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, int value)
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, int value, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	GetColInfo(lpszColumnName, &column);
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
 
 	JET_ERR e = JetSetColumn(
 		m_pDBEngine->GetSessionID(),
@@ -235,17 +238,18 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, int value)
 		&value,
 		sizeof(value),
 		0,
-		0);
+		&setInfo);
 
 	return *this;
 }
 
-CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value)
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag)
 {
 	double dblTime = 0;
 	SystemTimeToVariantTime(value, &dblTime);
 	JET_COLUMNDEF column = { 0 };
 	GetColInfo(lpszColumnName, &column);
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
 
 	JET_ERR e = JetSetColumn(
 		m_pDBEngine->GetSessionID(),
@@ -254,7 +258,7 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value)
 		&dblTime,
 		sizeof(double),
 		0,
-		0);
+		&setInfo);
 
 	return *this;
 }
@@ -298,6 +302,32 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, IStream *value)
 	return *this;
 }
 
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, void *buf, ULONG size, ULONG tag)
+{
+	JET_ERR e = 0;
+	JET_COLUMNDEF column = { 0 };
+	GetColInfo(lpszColumnName, &column);
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
+
+	JET_GRBIT bit = JET_bitSetAppendLV;
+	if (m_enCurrentMode == MODE_UPDATE)
+	{
+		bit |= JET_bitSetOverwriteLV;
+	}
+
+	e = JetSetColumn(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		buf,
+		size,
+		bit,
+		&setInfo
+	);
+
+	return *this;
+}
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 JET_ERR CJetTable::SetColIndex(LPCSTR pszColName, JET_TABLEID tblID)
@@ -309,8 +339,9 @@ JET_ERR CJetTable::SetColIndex(LPCSTR pszColName, JET_TABLEID tblID)
 	return JetSetCurrentIndex(m_pDBEngine->GetSessionID(), tblID, szIndex);
 }
 
-JET_ERR CJetTable::GetColumn(JET_COLUMNID colID, void *pvData, int size)
+JET_ERR CJetTable::GetColumn(JET_COLUMNID colID, void *pvData, int size, ULONG tag)
 {
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	return  JetRetrieveColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -319,12 +350,12 @@ JET_ERR CJetTable::GetColumn(JET_COLUMNID colID, void *pvData, int size)
 		size,
 		0,
 		0,
-		0
+		&retInfo
 	);
 }
 
 
-JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size)
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	JET_ERR e = GetColInfo(lpszColumnName, &column);
@@ -333,6 +364,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size)
 		return e;
 	}
 
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -341,13 +373,13 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size)
 		size,
 		0,
 		0,
-		0
+		&retInfo
 	);
 
 	return e;
 }
 
-JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	JET_ERR e = GetColInfo(lpszColumnName, &column);
@@ -357,6 +389,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
 	}
 
 	ULONG ulActual = 0;
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -365,7 +398,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
 		0,
 		&ulActual,
 		0,
-		0
+		&retInfo
 		);
 
 	if (e < 0)
@@ -384,7 +417,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
 			ulActual,
 			0,
 			0,
-			0
+			&retInfo
 			);
 		if (e < 0)
 		{
@@ -396,7 +429,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size)
 	return e;
 }
 
-JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue)
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	JET_ERR e = GetColInfo(lpszColumnName, &column);
@@ -405,6 +438,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue)
 		return e;
 	}
 
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -413,13 +447,13 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue)
 		sizeof(int),
 		0,
 		0,
-		0
+		&retInfo
 	);
 
 	return e;
 }
 
-JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value)
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
 	JET_ERR e = GetColInfo(lpszColumnName, &column);
@@ -430,6 +464,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value)
 
 	double dblTime = 0;
 
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
@@ -438,7 +473,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value)
 		sizeof(double),
 		0,
 		0,
-		0
+		&retInfo
 	);
 
 	VariantTimeToSystemTime(dblTime, value);

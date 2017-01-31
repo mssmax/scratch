@@ -7,6 +7,7 @@ char szDBSchema[] = "xml://<schema version=\"666\">" \
 "<column name=\"tb_sys_seq\" type=\"int32\" autoinc=\"yes\" indexed=\"yes\"/>" \
 "<column name=\"tb_sys_schema\" type=\"longtext\" size=\"256\" indexed=\"yes\"/>" \
 "<column name=\"tb_sys_bin\" type=\"binary\"/>" \
+"<column name=\"tb_sys_tag\" type=\"text\" tagged=\"yes\"/>" \
 "</table>" \
 "</schema>";
 
@@ -27,7 +28,6 @@ int main()
 	}
 	printf("DB opened[%d]\n", e);
 	{
-		e = db.BackupDatabase("c:\\temp\\backup");
 		CJetTable table;
 		e = db.GetTable("tb_system", table);
 		/**
@@ -36,10 +36,17 @@ int main()
 		{
 			char buf[512] = { 0 };
 			sprintf(buf, "Inserted record with sys_id %d", count);
-			e = table.InsertRow()
+			table.InsertRow();
+			e = table
 				.SetColumn("tb_sys_id", count)
-				.SetColumn("tb_sys_schema", buf)
-				.Done();
+				.SetColumn("tb_sys_schema", buf);
+			for (int k = 1; k <= 5; k++)
+			{
+				char s[256] = { 0 };
+				sprintf(s, "tagged %d", k + count);
+				e = table.SetColumn("tb_sys_tag", s, 0);
+			}
+			e = table.Done();
 		}
 		e = table.CommitTransaction();
 
@@ -66,14 +73,22 @@ int main()
 		for (; e >= 0;)
 		{
 			char szString[1024] = { 0 };
+			char szSchema[1024] = { 0 };
 			int iVersion = 0;
 			int iSeq = 0;
 			IStreamPtr strmData;
 			SYSTEMTIME curTime = { 0 };
-			e = table.GetColumn("tb_sys_schema", szString, sizeof(szString));
-			e = table.GetColumn("tb_sys_id", &iVersion);
-			e = table.GetColumn("tb_sys_seq", &iSeq);
-			printf("string[%s], version[%d], seq[%d]\n", szString, iVersion, iSeq);
+			BYTE byKey[256] = { 0 };
+			ULONG ulActual = 0;
+			e = JetRetrieveKey(db.GetSessionID(), table, byKey, sizeof(byKey), &ulActual, 0);
+			e = table.GetColumn("tb_sys_schema", szSchema, sizeof(szSchema));
+			printf("schema[%s]\n", szSchema);
+			for (int k = 1; e == 0; k++)
+			{
+				e = table.GetColumn("tb_sys_tag", szString, sizeof(szString), k);
+				if(e == 0)
+					printf("\ttag[%s]\n", szString);
+			}
 			e = table.NextRow();
 		}
 		char szErrStr[1024] = { 0 };

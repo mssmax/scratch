@@ -10,6 +10,7 @@ namespace internal
 		BOOL m_bIndexed;
 		BOOL m_bAutoInc;
 		BOOL m_bUnique;
+		BOOL m_bTagged;
 	public:
 		CDBColumn()
 		{
@@ -18,6 +19,7 @@ namespace internal
 			m_bIndexed = FALSE;
 			m_bAutoInc = FALSE;
 			m_bUnique = FALSE;
+			m_bTagged = FALSE;
 		}
 
 		friend class CDBSchema;

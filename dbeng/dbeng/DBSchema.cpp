@@ -242,6 +242,12 @@ HRESULT CDBSchema::ParseColumn(IXmlReader *pReader, CDBTable &tbl)
 		col.m_bUnique = TRUE;
 	}
 
+	hr = GetAttribute(pReader, L"tagged", &wszAttrValue, &uiAttrSize);
+	if (_wcsnicmp(wszAttrValue, L"yes", 3) == 0)
+	{
+		col.m_bTagged = TRUE;
+	}
+
 	tbl.m_vecColumns.push_back(col);
 
 	return hr;
@@ -279,6 +285,7 @@ JET_ERR CDBSchema::CreateTable(JET_SESID sessionID, JET_DBID dbID, CDBTable &tab
 		columnDef.coltyp = it->m_uiType;
 		columnDef.cbMax = it->m_uiSize;
 		columnDef.grbit = (it->m_bAutoInc) ? JET_bitColumnAutoincrement : 0;
+		columnDef.grbit |= (it->m_bTagged) ? (JET_bitColumnTagged | JET_bitColumnMultiValued) : 0;
 		e = JetAddColumn(sessionID, tblID, W2A(it->m_sColumnName.c_str()), &columnDef, 0, 0, 0);
 		if (e < 0)
 		{
