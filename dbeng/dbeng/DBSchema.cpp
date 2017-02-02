@@ -39,6 +39,8 @@ UINT CDBSchema::MapStringToJetColType(LPCWSTR lpszStringType)
 		return JET_coltypLongText;
 	else if (_wcsicmp(lpszStringType, L"int32") == 0)
 		return JET_coltypLong;
+	else if (_wcsicmp(lpszStringType, L"int64") == 0)
+		return JET_coltypCurrency;
 	else if (_wcsicmp(lpszStringType, L"datetime") == 0)
 		return JET_coltypDateTime;
 	else if (_wcsicmp(lpszStringType, L"binary") == 0)

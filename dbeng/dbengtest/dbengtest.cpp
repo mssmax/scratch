@@ -40,7 +40,7 @@ int main()
 			e = table
 				.SetColumn("tb_sys_id", count)
 				.SetColumn("tb_sys_schema", buf);
-			for (int k = 1; k <= 5; k++)
+			for (int k = 1; k <= 10; k++)
 			{
 				char s[256] = { 0 };
 				sprintf(s, "tagged %d", k + count);
@@ -78,9 +78,6 @@ int main()
 			int iSeq = 0;
 			IStreamPtr strmData;
 			SYSTEMTIME curTime = { 0 };
-			BYTE byKey[256] = { 0 };
-			ULONG ulActual = 0;
-			e = JetRetrieveKey(db.GetSessionID(), table, byKey, sizeof(byKey), &ulActual, 0);
 			e = table.GetColumn("tb_sys_schema", szSchema, sizeof(szSchema));
 			printf("schema[%s]\n", szSchema);
 			for (int k = 1; e == 0; k++)

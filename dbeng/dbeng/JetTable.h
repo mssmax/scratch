@@ -79,6 +79,7 @@ public:
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCWSTR value, ULONG tag = 1);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPCSTR value, ULONG tag = 1);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, int value, ULONG tag = 1);
+	CJetTable& SetColumn(LPCSTR lpszColumnName, __int64 value, ULONG tag = 1);
 	CJetTable& SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag = 1);
 	// intended for columns of type "binary"
 	CJetTable& SetColumn(LPCSTR lpszColumnName, IStream *value);
@@ -87,6 +88,7 @@ public:
 	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSTR pszBuffer, int size, ULONG tag = 1);
 	JET_ERR GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, ULONG tag = 1);
 	JET_ERR GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag = 1);
+	JET_ERR GetColumn(LPCSTR lpszColumnName, __int64 *pValue, ULONG tag = 1);
 	JET_ERR GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag = 1);
 	// intended for columns of type "binary"
 	JET_ERR GetColumn(LPCSTR lpszColumnName, IStream *value);
@@ -101,6 +103,7 @@ public:
 	JET_ERR DeleteRow();
 
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value);
+	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, __int64 value);
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR value);
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value);
 	JET_ERR Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value);
@@ -110,11 +113,13 @@ public:
 	CJetTable& Select();
 
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value);
+	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, __int64 value);
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR value);
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCWSTR value);
 	CJetTable& Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPSYSTEMTIME value);
 
 	CJetTable& ByRange(LPCSTR lpszColumnName, int lowValue, int upValue);
+	CJetTable& ByRange(LPCSTR lpszColumnName, __int64 lowValue, __int64 upValue);
 	CJetTable& ByRange(LPCSTR lpszColumnName, LPCSTR lowValue, LPCSTR upValue);
 	CJetTable& ByRange(LPCSTR lpszColumnName, LPCWSTR lowValue, LPCWSTR upValue);
 	CJetTable& ByRange(LPCSTR lpszColumnName, LPSYSTEMTIME lowValue, LPSYSTEMTIME upValue);

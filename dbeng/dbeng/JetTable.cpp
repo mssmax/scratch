@@ -243,6 +243,24 @@ CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, int value, ULONG tag)
 	return *this;
 }
 
+CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, __int64 value, ULONG tag)
+{
+	JET_COLUMNDEF column = { 0 };
+	GetColInfo(lpszColumnName, &column);
+	JET_SETINFO setInfo = { sizeof(setInfo), 0, tag };
+
+	JET_ERR e = JetSetColumn(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		&value,
+		sizeof(value),
+		0,
+		&setInfo);
+
+	return *this;
+}
+
 CJetTable& CJetTable::SetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag)
 {
 	double dblTime = 0;
@@ -445,6 +463,30 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag)
 		column.columnid,
 		pValue,
 		sizeof(int),
+		0,
+		0,
+		&retInfo
+	);
+
+	return e;
+}
+
+JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, __int64 *pValue, ULONG tag)
+{
+	JET_COLUMNDEF column = { 0 };
+	JET_ERR e = GetColInfo(lpszColumnName, &column);
+	if (e < 0)
+	{
+		return e;
+	}
+
+	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
+	e = JetRetrieveColumn(
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		pValue,
+		sizeof(__int64),
 		0,
 		0,
 		&retInfo
@@ -671,6 +713,11 @@ JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value
 	return Select(m_tblID, lpszColumnName, operand, &value, sizeof(value));
 }
 
+JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, __int64 value)
+{
+	return Select(m_tblID, lpszColumnName, operand, &value, sizeof(value));
+}
+
 JET_ERR CJetTable::Select(LPCSTR lpszColumnName, SEEK_OPERAND operand, LPCSTR value)
 {
 	return Select(m_tblID, lpszColumnName, operand, value, lstrlenA(value));
@@ -701,6 +748,15 @@ CJetTable& CJetTable::Select()
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //TODO: add error checking - possibly exception throwin
 CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value)
+{
+	JET_ERR e = 0;
+
+	e = Select(GetCursor(), lpszColumnName, operand, &value, sizeof(value));
+
+	return *this;
+}
+
+CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, __int64 value)
 {
 	JET_ERR e = 0;
 
@@ -754,6 +810,34 @@ CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, int lowValue, int upValue)
 		tblid,
 		&upValue,
 		sizeof(int),
+		JET_bitNewKey
+	);
+
+	e = JetSetIndexRange(
+		m_pDBEngine->GetSessionID(),
+		tblid,
+		JET_bitRangeInclusive | JET_bitRangeUpperLimit
+	);
+
+	return *this;
+}
+
+CJetTable& CJetTable::ByRange(LPCSTR lpszColumnName, __int64 lowValue, __int64 upValue)
+{
+	JET_ERR e = 0;
+	JET_TABLEID tblid = GetCursor();
+
+	e = Select(tblid, lpszColumnName, OP_GE, &lowValue, sizeof(__int64));
+	if (e < 0)
+	{
+		return *this;
+	}
+
+	e = JetMakeKey(
+		m_pDBEngine->GetSessionID(),
+		tblid,
+		&upValue,
+		sizeof(__int64),
 		JET_bitNewKey
 	);
 
