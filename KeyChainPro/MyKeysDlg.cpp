@@ -117,7 +117,7 @@ BOOL CMyKeysDlg::OnInitDialog()
 	ReloadData();
 
 	m_lstKeys.SetItemState(0, LVIS_SELECTED | LVIS_FOCUSED, LVIS_SELECTED | LVIS_FOCUSED);
-	if(m_lstKeys.GetItemCount() == 1)
+	if(m_vecPasswords.size() == 1)
 	{
 		m_sKeyName = m_lstKeys.GetItemText(0, 1);
 		m_sPassword = m_vecPasswords[0].c_str();
