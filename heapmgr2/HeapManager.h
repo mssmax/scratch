@@ -6,14 +6,14 @@ struct HeapEntry : public SLIST_ENTRY
 };
 
 class CHeapManager;
-class CHeapAlloc
+class CHeapEntry
 {
 private:
 	CHeapManager *m_pMgr;
 	HeapEntry *m_pData;
 public:
-	CHeapAlloc(HeapEntry *pData, CHeapManager *pMgr);
-	~CHeapAlloc();
+	CHeapEntry(HeapEntry *pData, CHeapManager *pMgr);
+	~CHeapEntry();
 
 	operator void*();
 };
@@ -44,15 +44,16 @@ public:
 	}
 	virtual ~CHeapManager()
 	{
-		HeapEntry *pAlloc = static_cast<HeapEntry*>(InterlockedPopEntrySList(&m_slAllocs));
+		HeapEntry *pAlloc = static_cast<HeapEntry*>(InterlockedFlushSList(&m_slAllocs));
 		while (pAlloc)
 		{
+			HeapEntry *pNext = static_cast<HeapEntry*>(pAlloc->Next);
 			_aligned_free(pAlloc);
-			pAlloc = static_cast<HeapEntry*>(InterlockedPopEntrySList(&m_slAllocs));
+			pAlloc = pNext;
 		}
 	}
 
-	CHeapAlloc Alloc()
+	CHeapEntry Alloc()
 	{
 		HeapEntry *entry = static_cast<HeapEntry*>(InterlockedPopEntrySList(&m_slAllocs));
 		if (entry == NULL)
@@ -60,7 +61,7 @@ public:
 			PrepAllocs(m_ulAllocDelta);
 			entry = static_cast<HeapEntry*>(InterlockedPopEntrySList(&m_slAllocs));
 		}
-		return CHeapAlloc(entry, this);
+		return CHeapEntry(entry, this);
 	}
 
 	void Free(HeapEntry *p)
@@ -74,17 +75,17 @@ public:
 	}
 };
 
-CHeapAlloc::CHeapAlloc(HeapEntry *pData, CHeapManager *pMgr)
+CHeapEntry::CHeapEntry(HeapEntry *pData, CHeapManager *pMgr)
 {
 	m_pMgr = pMgr;
 	m_pData = pData;
 }
-CHeapAlloc::~CHeapAlloc()
+CHeapEntry::~CHeapEntry()
 {
 	m_pMgr->Free(m_pData);
 }
 
-CHeapAlloc::operator void*()
+CHeapEntry::operator void*()
 {
 	return m_pData->m;
 }

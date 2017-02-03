@@ -3,15 +3,15 @@
 
 int main()
 {
-	CHeapManager mgr(8192, 3);
+	CHeapManager mgr(3, 8192);
 
 	{
-		CHeapAlloc p = mgr.Alloc();
+		CHeapEntry p = mgr.Alloc();
 		memcpy(p, "some string", 12);
 		printf("Copied some stuff\n");
 	}
 
-	CHeapAlloc p2 = mgr.Alloc();
+	CHeapEntry p2 = mgr.Alloc();
 
 	return 0;
 }
