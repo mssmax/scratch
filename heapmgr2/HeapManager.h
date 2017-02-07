@@ -23,6 +23,7 @@ class CHeapManager
 private:
 	ULONG m_ulAllocDelta;
 	ULONG m_ulSize;
+	ULONG m_ulInitialSize;
 	DECLSPEC_ALIGN(MEMORY_ALLOCATION_ALIGNMENT) SLIST_HEADER m_slAllocs;
 
 	void PrepAllocs(ULONG ulNumAllocs)
@@ -39,6 +40,7 @@ public:
 	{
 		m_ulAllocDelta = ulAllocDelta;
 		m_ulSize = ulSize;
+		m_ulInitialSize = ulNumAllocs;
 		InitializeSListHead(&m_slAllocs);
 		PrepAllocs(ulNumAllocs);
 	}
@@ -71,7 +73,20 @@ public:
 
 	void Recycle()
 	{
+		HeapEntry* pEntry = static_cast<HeapEntry*>(InterlockedFlushSList(&m_slAllocs));
+		PrepAllocs(m_ulInitialSize);
 
+		while (pEntry)
+		{
+			HeapEntry *pNext = static_cast<HeapEntry*>(pEntry->Next);
+			_aligned_free(pEntry);
+			pEntry = pNext;
+		}
+	}
+
+	USHORT CurrentSize()
+	{
+		return QueryDepthSList(&m_slAllocs);
 	}
 };
 
