@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "HeapManager.h"
 
+#define _SECOND 10000000
+
 int main()
 {
+/**/
 	CHeapManager mgr(3, 8192);
 
 	{
@@ -15,7 +18,6 @@ int main()
 
 	USHORT sz = mgr.CurrentSize();
 	mgr.Recycle();
-
+/**/
 	return 0;
 }
-

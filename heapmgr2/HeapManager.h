@@ -46,13 +46,7 @@ public:
 	}
 	virtual ~CHeapManager()
 	{
-		HeapEntry *pAlloc = static_cast<HeapEntry*>(InterlockedFlushSList(&m_slAllocs));
-		while (pAlloc)
-		{
-			HeapEntry *pNext = static_cast<HeapEntry*>(pAlloc->Next);
-			_aligned_free(pAlloc);
-			pAlloc = pNext;
-		}
+		Recycle(FALSE);
 	}
 
 	CHeapEntry Alloc()
@@ -71,10 +65,13 @@ public:
 		InterlockedPushEntrySList(&m_slAllocs, p);
 	}
 
-	void Recycle()
+	void Recycle(BOOL bRealloc = TRUE)
 	{
 		HeapEntry* pEntry = static_cast<HeapEntry*>(InterlockedFlushSList(&m_slAllocs));
-		PrepAllocs(m_ulInitialSize);
+		if (bRealloc)
+		{
+			PrepAllocs(m_ulInitialSize);
+		}
 
 		while (pEntry)
 		{
@@ -84,7 +81,7 @@ public:
 		}
 	}
 
-	USHORT CurrentSize()
+	USHORT Size()
 	{
 		return QueryDepthSList(&m_slAllocs);
 	}
