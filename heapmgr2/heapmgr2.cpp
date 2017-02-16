@@ -16,7 +16,7 @@ int main()
 
 	CHeapEntry p2 = mgr.Alloc();
 
-	USHORT sz = mgr.CurrentSize();
+	USHORT sz = mgr.Size();
 	mgr.Recycle();
 /**/
 	return 0;
