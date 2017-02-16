@@ -10,6 +10,7 @@ CMyKeysDlg::CMyKeysDlg(CWnd* pParent /*=NULL*/, JET_TABLEID tblID /*=NULL*/)
 	m_bShowPlainPwds = FALSE;
 	m_bReadOnly = FALSE;
 	m_tblID = tblID;
+	m_iSortOrder = 1;
 	if (m_tblID != 0)
 	{
 		m_bReadOnly = TRUE;
@@ -86,6 +87,7 @@ void CMyKeysDlg::ReloadData()
 				TCHAR szPassword[512] = { 0 };
 				DecryptPassword(spStrm, szPassword);
 				m_vecPasswords.push_back(szPassword);
+				m_lstKeys.SetItemData(iItem, m_vecPasswords.size() - 1);
 			}
 		}
 		e = tbl.NextRow();
@@ -281,7 +283,7 @@ void CMyKeysDlg::OnOK()
 		if (nSel != -1)
 		{
 			m_sKeyName = m_lstKeys.GetItemText(nSel, 1);
-			m_sPassword = m_vecPasswords[nSel].c_str();
+			m_sPassword = m_vecPasswords[m_lstKeys.GetItemData(nSel)].c_str();
 		}
 		CDialog::OnOK();
 	}
@@ -312,9 +314,28 @@ void CMyKeysDlg::OnHdnItemclickLstKeys(NMHDR *pNMHDR, LRESULT *pResult)
 		for (size_t i = 0; i < m_vecPasswords.size(); i++)
 		{
 			m_lstKeys.SetItemText(i, 3, 
-				(m_bShowPlainPwds) ? m_vecPasswords[i].c_str() : _T("********"));
+				(m_bShowPlainPwds) ? m_vecPasswords[m_lstKeys.GetItemData(i)].c_str() : _T("********"));
 		}
 		m_lstKeys.SetRedraw(TRUE);
+	}
+	else
+	{
+		struct _SORTPARAMS
+		{
+			CListCtrl *lstKeys;
+			int iItem;
+			int iSortOrder;
+		} p = { &m_lstKeys, phdr->iItem, m_iSortOrder };
+		
+		m_iSortOrder *= -1;
+		m_lstKeys.SortItemsEx([](LPARAM item1, LPARAM item2, LPARAM sortParam)
+			{ 
+				_SORTPARAMS *p = reinterpret_cast<_SORTPARAMS*>(sortParam);
+				CString s1 = p->lstKeys->GetItemText(item1, p->iItem);
+				CString s2 = p->lstKeys->GetItemText(item2, p->iItem);
+				return s1.CompareNoCase(s2) * p->iSortOrder;
+			}, 
+			reinterpret_cast<LPARAM>(&p));
 	}
 
 	*pResult = 0;

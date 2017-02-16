@@ -26,6 +26,7 @@ protected:
 	CListCtrl m_lstKeys;
 	std::vector<std::wstring> m_vecPasswords;
 	BOOL m_bShowPlainPwds;
+	int m_iSortOrder;
 
 	void ReloadData();
 
