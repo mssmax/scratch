@@ -1,9 +1,11 @@
 #pragma once
 #include <sshost.h>
+#include <functional>
 
 class CPropBagMock
 {
 public:
+	virtual ~CPropBagMock() {}
 	MOCK_METHOD2(Set, void(int, LPCWSTR));	
 	MOCK_METHOD1(Get, std::wstring(int));
 };
