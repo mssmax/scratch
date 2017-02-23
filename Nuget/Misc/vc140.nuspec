@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>vc140</id>
+    <version>14.0.24210.0</version>
+    <authors>GFI Software Ltd</authors>
+    <description>MSVCRT140 runtime</description>
+  </metadata>
+  <files>
+	<file src="*.*" target="bin"/>
+  </files>
+</package>
