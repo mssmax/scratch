@@ -1,15 +1,33 @@
-// wget.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
-
+#include <atlbase.h>
 
 int main(int argc, char *argv[])
 {
-	if (argc < 3)
+	USES_CONVERSION;
+	if (argc < 2)
 	{
-		printf("Usage: wget <remote file> <local file>\n");
+		printf("Usage: wget <remote file> [<local file>]\n");
 		return 0;
+	}
+
+	WCHAR wszLocalPath[256] = { 0 };
+	WCHAR *pwszLocalPath = wszLocalPath;
+	if (argc == 2)
+	{
+		URL_COMPONENTS url = { 0 };
+		url.dwStructSize = sizeof(url);
+		url.lpszUrlPath = wszLocalPath;
+		url.dwUrlPathLength = _countof(wszLocalPath);
+		BOOL b = WinHttpCrackUrl(A2W(argv[1]), 0, 0, &url);
+		WCHAR *p = wcsrchr(url.lpszUrlPath, '/');
+		if (p)
+		{
+			pwszLocalPath = p + 1;
+		}
+	}
+	else
+	{
+		StringCbCopy(wszLocalPath, sizeof(wszLocalPath), A2W(argv[2]));
 	}
 
 	CoInitialize(0);
@@ -29,7 +47,7 @@ int main(int argc, char *argv[])
 			printf("Creating destination stream...\n");
 			
 			IStreamPtr spDstStrm;
-			HRESULT hr = SHCreateStreamOnFileA(argv[2], STGM_READWRITE | STGM_CREATE, &spDstStrm);
+			HRESULT hr = SHCreateStreamOnFile(pwszLocalPath, STGM_READWRITE | STGM_CREATE, &spDstStrm);
 			if (FAILED(hr))
 			{
 				printf("Failed to open local file, err 0x%X", hr);
