@@ -21,22 +21,23 @@ JET_ERR CDBEngine::Init(LPCSTR lpszDatabasePath, LPCSTR lpszFileNamePrefix, LPCS
 	// TODO: add proper error handling
 	std::string sTempDBPath(lpszFileNamePrefix);
 	sTempDBPath.append(".edb");
-	JET_ERR e = JetCreateInstance(&m_dbInstance, lpszFileNamePrefix);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramLogFilePath, 0, lpszDatabasePath);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramSystemPath, 0, lpszDatabasePath);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramBaseName, 0, lpszFileNamePrefix);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCircularLog, 1, 0);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramCreatePathIfNotExist, 1, 0);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramMaxSessions, 1024, 0);
-	e = JetSetSystemParameter(&m_dbInstance, 0, JET_paramTempPath, 0, sTempDBPath.c_str());
+	JET_ERR e = 0;
+	CALL_JET(JetCreateInstance, &m_dbInstance, lpszFileNamePrefix);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramLogFilePath, 0, lpszDatabasePath);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramSystemPath, 0, lpszDatabasePath);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramBaseName, 0, lpszFileNamePrefix);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramCircularLog, 1, 0);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramCreatePathIfNotExist, 1, 0);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramMaxSessions, 1024, 0);
+	CALL_JET(JetSetSystemParameter, &m_dbInstance, 0, JET_paramTempPath, 0, sTempDBPath.c_str());
 	if (lpszBackupPath)
 	{
 		// before restoring we need to delete any existing files
 		// otherwise restore will fail with badSignature error
 		DeleteAllFiles(lpszDatabasePath);
-		e = JetRestoreInstance(m_dbInstance, lpszBackupPath, lpszDatabasePath, 0);
+		CALL_JET(JetRestoreInstance, m_dbInstance, lpszBackupPath, lpszDatabasePath, 0);
 	}
-	e = JetInit(&m_dbInstance);
+	CALL_JET(JetInit, &m_dbInstance);
 
 	return e;
 }
@@ -76,6 +77,10 @@ JET_SESID CDBEngine::GetSessionID()
 	if (id == 0)
 	{
 		JET_ERR e = JetBeginSession(m_dbInstance, &id, 0, 0);
+		if (e < 0)
+		{
+			return 0;
+		}
 		TlsSetValue(g_dwSessionTLSID, reinterpret_cast<LPVOID>(id));
 	}
 	return id;
@@ -93,7 +98,8 @@ JET_DBID CDBEngine::GetDBID()
 
 JET_ERR CDBEngine::CreateDatabase(LPCSTR lpszDB, LPCSTR lpszSchema)
 {
-	JET_ERR e = JetCreateDatabase(GetSessionID(), lpszDB, 0, &m_dbID, JET_bitDbOverwriteExisting);
+	JET_ERR e = 0;
+	CALL_JET(JetCreateDatabase, GetSessionID(), lpszDB, 0, &m_dbID, JET_bitDbOverwriteExisting);
 	if (e == 0)
 	{
 		StringCbCopyA(m_sDBName, sizeof(m_sDBName), lpszDB);
@@ -111,17 +117,10 @@ JET_ERR CDBEngine::CreateDatabase(LPCSTR lpszDB, LPCSTR lpszSchema)
 
 JET_ERR CDBEngine::OpenDatabase(LPCSTR lpszDB, BOOL bReadOnly)
 {
-	JET_ERR e = JetAttachDatabase(GetSessionID(), lpszDB, (bReadOnly) ? JET_bitDbReadOnly : 0);
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(JetAttachDatabase, GetSessionID(), lpszDB, (bReadOnly) ? JET_bitDbReadOnly : 0);
 	
-	e = JetOpenDatabase(GetSessionID(), lpszDB, 0, &m_dbID, (bReadOnly) ? JET_bitDbReadOnly : 0);
-	if (e < 0)
-	{
-		return e;
-	}
+	CALL_JET(JetOpenDatabase, GetSessionID(), lpszDB, 0, &m_dbID, (bReadOnly) ? JET_bitDbReadOnly : 0);
 
 	StringCbCopyA(m_sDBName, sizeof(m_sDBName), lpszDB);
 	return e;
@@ -129,6 +128,8 @@ JET_ERR CDBEngine::OpenDatabase(LPCSTR lpszDB, BOOL bReadOnly)
 
 JET_ERR CDBEngine::CloseDatabase()
 {
+	// here jet error is not checked explicitly because it is a database closure time and any errors during that period may make little sense
+	// still subject for further investigation
 	JET_ERR e = 0;
 	if (m_dbID)
 	{

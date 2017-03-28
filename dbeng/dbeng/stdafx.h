@@ -19,3 +19,4 @@ std::wstring ConvA2W(LPCSTR lpsz, UINT cp = CP_UTF8);
 
 std::string ConvW2A(LPCWSTR lpsz, UINT cp = CP_UTF8);
 void DeleteAllFiles(LPCSTR lpszPath);
+#define CALL_JET(func, ...) { e = func(__VA_ARGS__); if(e < 0) return e; }
