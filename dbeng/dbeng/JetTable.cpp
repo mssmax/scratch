@@ -131,7 +131,7 @@ JET_ERR CJetTable::NextRow()
 
 		BYTE byBookmark[1024] = { 0 };
 		ULONG ulActual = 0;
-		e = JetRetrieveColumn(
+		CALL_JET(JetRetrieveColumn,
 			m_pDBEngine->GetSessionID(),
 			m_lstBookmarks.tableid,
 			m_lstBookmarks.columnidBookmark,
@@ -141,13 +141,13 @@ JET_ERR CJetTable::NextRow()
 			0,
 			0);
 
-		e = JetGotoBookmark(m_pDBEngine->GetSessionID(),
+		CALL_JET(JetGotoBookmark, m_pDBEngine->GetSessionID(),
 			m_tblID,
 			byBookmark,
 			ulActual
 		);
 
-		e = JetMove(
+		CALL_JET(JetMove,
 			m_pDBEngine->GetSessionID(),
 			m_lstBookmarks.tableid,
 			JET_MoveNext,
@@ -408,7 +408,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, 
 
 	ULONG ulActual = 0;
 	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
-	e = JetRetrieveColumn(
+	CALL_JET(JetRetrieveColumn,
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
 		column.columnid,
@@ -417,32 +417,21 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, 
 		&ulActual,
 		0,
 		&retInfo
-		);
+	);
 
-	if (e < 0)
-	{
-		return e;
-	}
-	else
-	{
-		std::string s;
-		s.resize(ulActual);
-		e = JetRetrieveColumn(
-			m_pDBEngine->GetSessionID(),
-			m_tblID,
-			column.columnid,
-			&s[0],
-			ulActual,
-			0,
-			0,
-			&retInfo
-			);
-		if (e < 0)
-		{
-			return e;
-		}
-		StringCchCopy(pszBuffer, size, ConvA2W(s.c_str(), CP_UTF8).c_str());
-	}
+	std::string s;
+	s.resize(ulActual);
+	CALL_JET(JetRetrieveColumn,
+		m_pDBEngine->GetSessionID(),
+		m_tblID,
+		column.columnid,
+		&s[0],
+		ulActual,
+		0,
+		0,
+		&retInfo
+	);
+	StringCchCopy(pszBuffer, size, ConvA2W(s.c_str(), CP_UTF8).c_str());
 
 	return e;
 }
@@ -450,11 +439,8 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPWSTR pszBuffer, int size, 
 JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
-	JET_ERR e = GetColInfo(lpszColumnName, &column);
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(GetColInfo, lpszColumnName, &column);
 
 	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
@@ -474,11 +460,8 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, int *pValue, ULONG tag)
 JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, __int64 *pValue, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
-	JET_ERR e = GetColInfo(lpszColumnName, &column);
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(GetColInfo, lpszColumnName, &column);
 
 	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
 	e = JetRetrieveColumn(
@@ -498,16 +481,13 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, __int64 *pValue, ULONG tag)
 JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG tag)
 {
 	JET_COLUMNDEF column = { 0 };
-	JET_ERR e = GetColInfo(lpszColumnName, &column);
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(GetColInfo, lpszColumnName, &column);
 
 	double dblTime = 0;
 
 	JET_RETINFO retInfo = { sizeof(retInfo), 0, tag };
-	e = JetRetrieveColumn(
+	CALL_JET(JetRetrieveColumn,
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
 		column.columnid,
@@ -526,17 +506,13 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, LPSYSTEMTIME value, ULONG ta
 JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, IStream *value)
 {
 	JET_COLUMNDEF column = { 0 };
-	JET_ERR e = GetColInfo(lpszColumnName, &column);
-
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(GetColInfo, lpszColumnName, &column);
 
 	// first we need to figure out the size of the column
 	ULONG ulTotalSize = 0;
 	LONG ulRemaining = 0;
-	e = JetRetrieveColumn(
+	CALL_JET(JetRetrieveColumn,
 		m_pDBEngine->GetSessionID(),
 		m_tblID,
 		column.columnid,
@@ -546,11 +522,6 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, IStream *value)
 		0,
 		0
 	);
-
-	if (e < 0)
-	{
-		return e;
-	}
 
 	ulRemaining = static_cast<LONG>(ulTotalSize);
 
@@ -574,7 +545,7 @@ JET_ERR CJetTable::GetColumn(LPCSTR lpszColumnName, IStream *value)
 		if (ulRemaining >= 0)
 		{
 			ULONG ulBytesToWrite = (ulCurrent > sizeof(buffer)) ? sizeof(buffer) : ulCurrent;
-			HRESULT hr = value->Write(buffer, ulBytesToWrite, 0);
+			value->Write(buffer, ulBytesToWrite, 0);
 		}
 		ulRemaining -= sizeof(buffer);
 		retInfo.ibLongValue += sizeof(buffer);
@@ -613,7 +584,7 @@ JET_ERR CJetTable::Done()
 		if (m_iIndexRangeSize > 1)
 		{
 			m_lstBookmarks.cbStruct = sizeof(m_lstBookmarks);
-			e = JetIntersectIndexes(
+			CALL_JET(JetIntersectIndexes,
 				m_pDBEngine->GetSessionID(),
 				m_arrIndexRanges,
 				m_iIndexRangeSize,
@@ -621,20 +592,10 @@ JET_ERR CJetTable::Done()
 				0
 			);
 
-			if (e < 0)
-			{
-				return e;
-			}
-
-			e = JetMove(m_pDBEngine->GetSessionID(),
+			CALL_JET(JetMove, m_pDBEngine->GetSessionID(),
 				m_lstBookmarks.tableid,
 				JET_MoveFirst,
 				0);
-
-			if (e < 0)
-			{
-				return e;
-			}
 
 			e = NextRow();
 		}
@@ -651,7 +612,7 @@ JET_ERR CJetTable::Done()
 		e = JetUpdate(m_pDBEngine->GetSessionID(), m_tblID, 0, 0, 0);
 		if (e < 0)
 		{
-			JET_ERR e2 = JetPrepareUpdate(m_pDBEngine->GetSessionID(), m_tblID, JET_prepCancel);
+			JetPrepareUpdate(m_pDBEngine->GetSessionID(), m_tblID, JET_prepCancel);
 		}
 	}
 
@@ -679,24 +640,16 @@ JET_ERR CJetTable::CleanIndexRanges()
 JET_ERR CJetTable::Select(JET_TABLEID tblID, LPCSTR lpszColumnName, SEEK_OPERAND operand, const void* data, int size)
 {
 	JET_SESID sessID = m_pDBEngine->GetSessionID();
-	JET_ERR e = SetColIndex(lpszColumnName, tblID);
-	if (e < 0)
-	{
-		return e;
-	}
+	JET_ERR e = 0;
+	CALL_JET(SetColIndex, lpszColumnName, tblID);
 
-	e = JetMakeKey(
+	CALL_JET(JetMakeKey,
 		sessID,
 		tblID,
 		data,
 		size,
 		JET_bitNewKey
 	);
-
-	if (e < 0)
-	{
-		return e;
-	}
 
 	e = JetSeek(sessID, tblID, operand | JET_bitSetIndexRange);
 
@@ -746,7 +699,7 @@ CJetTable& CJetTable::Select()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
-//TODO: add error checking - possibly exception throwin
+//TODO: add error checking - possibly exception throwing
 CJetTable& CJetTable::Where(LPCSTR lpszColumnName, SEEK_OPERAND operand, int value)
 {
 	JET_ERR e = 0;

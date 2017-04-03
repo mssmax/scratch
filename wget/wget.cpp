@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 	USES_CONVERSION;
 	if (argc < 2)
 	{
-		printf("Usage: wget <remote file> [<local file>]\n");
+		printf("Usage: wget <remote file> [local file]\n");
 		return 0;
 	}
 
