@@ -59,23 +59,6 @@ BOOL CSimApp::InitInstance()
 
 	RegisterAutoRun();
 
-	// TODO: Consider refactoring this part of code into InitKey
-	if (!CryptAcquireContext(&m_hCryptProv, 0, 0, PROV_RSA_AES, 0))
-	{
-		if (GetLastError() == NTE_BAD_KEYSET)
-		{
-			if (!CryptAcquireContext(&m_hCryptProv, 0, 0, PROV_RSA_AES, CRYPT_NEWKEYSET))
-			{
-				return FALSE;
-
-			}
-		}
-		else
-		{
-			return FALSE;
-		}
-	}
-
 	if (!InitKey())
 	{
 		return FALSE;
@@ -141,6 +124,11 @@ BOOL CSimApp::InitKey()
 	CInputDlg dlg(AfxGetMainWnd(), _T("Enter master password"), TRUE);
 	if (dlg.DoModal() == IDOK)
 	{
+		if (!CryptAcquireContext(&m_hCryptProv, 0, 0, PROV_RSA_AES, CRYPT_VERIFYCONTEXT))
+		{
+			return FALSE;
+		}
+
 		TCHAR s[512] = { 0 };
 		StringCbCopy(s, sizeof(s), dlg.m_sInput);
 		HCRYPTHASH hHash = 0;
